@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class Game {
 
     private Engine eng;
-    public static int port = 60000;
+    public static int PORT = 60000;
 
     public void start() {
 
@@ -18,16 +18,16 @@ public class Game {
         // ALE AGO FAI LA PARTE GRAFICA DI QUESTA COSA
         System.out.println("1 -> server/listener \n0 -> client");
         Scanner s = new Scanner(System.in);
-        int risposta = s.nextInt();
+        int response = s.nextInt();
         s.nextLine();
 
         // CREO LA SOCKET PER LA FUTURA CONNESSIONE TRA I 2 GIOCATORI
         Socket connection = null;
 
-        if (risposta == 1) {
+        if (response == 1) {
             ServerSocket serverSock;
             try {
-                serverSock = new ServerSocket(port);
+                serverSock = new ServerSocket(PORT);
                 System.out.println("Server in attesa di un altro giocatore . . .");
                 connection = serverSock.accept();
             } catch (IOException ex) {
@@ -35,15 +35,15 @@ public class Game {
             }
 
             if (connection != null) {
-                this.eng = new Engine(connection, Player.black);
+                this.eng = new Engine(connection, Player.BLACK);
                 eng.start();
             }
 
-        } else if (risposta == 0) {
+        } else if (response == 0) {
             connection = new Socket();
             System.out.println("Inserisci l' indirizzo ip al quale connettersi");
             String ip = s.nextLine();
-            SocketAddress addr = new InetSocketAddress(ip, port);
+            SocketAddress addr = new InetSocketAddress(ip, PORT);
             try {
                 connection.connect(addr);
             } catch (Exception ex) {
@@ -51,11 +51,12 @@ public class Game {
             }
 
             if (connection != null) {
-                this.eng = new Engine(connection, Player.white);
+                this.eng = new Engine(connection, Player.WHITE);
                 eng.start();
             }
         }
         s.close();
+
         boolean connectionClosed = false;
         do {
             try {
