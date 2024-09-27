@@ -22,7 +22,7 @@ public class Engine {
             boolean result = moveValidation(move, piece);
             System.out.println(
                     "PEDINA SELEZIONATA : id#" + piece.getId() + "," + piece.getOwner() + "," + piece.getPosition());
-            System.out.println("MOSSA SELEZIONATA : " + move.get);
+            System.out.println("MOSSA SELEZIONATA : " + move.getPosition());
         }
     }
 
