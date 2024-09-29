@@ -29,4 +29,8 @@ public class Position {
     public boolean equals(Position other) {
         return row == other.getRow() && column == other.getColumn();
     }
+
+    public Position copy(Position other) {
+        return new Position(other.row, other.column);
+    }
 }
