@@ -25,7 +25,7 @@ public class Game {
         Socket connection = null;
 
         if (response == 1) {
-            ServerSocket serverSock;
+            ServerSocket serverSock = null;
             try {
                 serverSock = new ServerSocket(PORT);
                 System.out.println("Server in attesa di un altro giocatore . . .");
@@ -35,6 +35,11 @@ public class Game {
             }
 
             if (connection != null) {
+                try {
+                    serverSock.close();
+                } catch (Exception ex) {
+                    System.out.println("Errore nella chiusura della server socket" + ex.getMessage());
+                }
                 this.eng = new Engine(connection, Player.BLACK);
                 eng.start();
             }
