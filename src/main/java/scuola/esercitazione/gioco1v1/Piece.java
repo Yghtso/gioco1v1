@@ -4,9 +4,9 @@ import java.util.Vector;
 
 public abstract class Piece {
 
-    private Position position;
-    private Player owner;
-    private int id;
+    protected Position position;
+    protected Player owner;
+    protected int id;
 
     public abstract Vector<Move> calculateMoves();
 
@@ -30,5 +30,9 @@ public abstract class Piece {
 
     public void setPosition(Position position) {
         this.position = position;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

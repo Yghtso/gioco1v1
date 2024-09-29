@@ -16,15 +16,17 @@ public class Engine {
     }
 
     void start() {
+        System.out.println("CONNESSIONE AVVENUTA");
         if (this.player == Player.WHITE) {
             Piece piece = getPiece();
             System.out.println(
-                    "PEDINA SELEZIONATA : id#" + piece.getId() + "," + piece.getOwner() + "," + piece.getPosition().getRow() + "," + piece.getPosition().getColumn());
+                    "PEDINA SELEZIONATA : id#" + piece.getId() + "," + piece.getOwner() + ","
+                            + piece.getPosition().getRow() + "," + piece.getPosition().getColumn());
             Move move = getMove(board, piece);
             System.out.println(
-                    "MOSSA SELEZIONATA : id#" + move.getPiece().getId() + ", MOSSA VERSO : " + move.getPosition().getRow() + "," + move.getPosition().getColumn());
+                    "MOSSA SELEZIONATA : id#" + move.getPiece().getId() + ", MOSSA VERSO : "
+                            + move.getPosition().getRow() + "," + move.getPosition().getColumn());
             boolean result = moveValidation(move, piece);
-            
         }
     }
 
@@ -50,12 +52,12 @@ public class Engine {
     private Move getMove(ChessBoard board, Piece piece) {
         Scanner s = new Scanner(System.in);
         System.out.println("Inserisci la casella dove muovere la pedina : ");
-            
-        int row = s.nextInt();  
+
+        int row = s.nextInt();
         int col = s.nextInt();
-        
         return new Move(new Position(row, col), piece);
     }
+
 }
 
 enum Player {
