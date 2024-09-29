@@ -8,6 +8,7 @@ public class Engine {
     private Socket sock;
     private Player player;
     private ChessBoard board;
+    private MoveChecker checker;
 
     public Engine(Socket sock, Player player) {
         this.sock = sock;
