@@ -21,7 +21,7 @@ public class ChessBoard {
 
         // POPOLO LA TABELLA CON LE PEDINE
 
-        for (int i = 1; i < COLUMNS; i++) {
+        for (int i = 1; i <= COLUMNS; i++) {
             pieces[WHITE_PAWNS_STARTING_ROW - 1][i - 1] = new Pawn(new Position(WHITE_PAWNS_STARTING_ROW, i),
                     Player.WHITE,
                     getFirstAvailableId());
@@ -43,7 +43,7 @@ public class ChessBoard {
         pieces[FIRST_ROW - 1][4] = new King(new Position(FIRST_ROW, 5), Player.WHITE, getFirstAvailableId());
 
         // PEDINE NEGRE
-        for (int i = 1; i < COLUMNS; i++) {
+        for (int i = 1; i <= COLUMNS; i++) {
             pieces[BLACK_PAWNS_STARTING_ROW - 1][i - 1] = new Pawn(new Position(BLACK_PAWNS_STARTING_ROW, i),
                     Player.BLACK, getFirstAvailableId());
         }
