@@ -7,6 +7,7 @@ public abstract class Piece {
     protected Position position;
     protected Player owner;
     protected int id;
+    protected Vector<Move> validMoves;
 
     public abstract Vector<Move> calculateMoves();
 
@@ -14,6 +15,7 @@ public abstract class Piece {
         this.position = position;
         this.owner = owner;
         this.id = id;
+        this.validMoves = new Vector<Move>();
     }
 
     public Position getPosition() {

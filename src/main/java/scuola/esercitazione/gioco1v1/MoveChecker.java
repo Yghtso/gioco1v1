@@ -6,10 +6,22 @@ public class MoveChecker {
 
     private ChessBoard board;
 
+    public MoveChecker(ChessBoard board) {
+        this.board = board;
+    }
+
     public Vector<Move> checkMoves(Vector<Move> moves) {
-        for (Move move : moves) {
+        int moves_to_validate = moves.size();
+        Vector<Move> validatedMoves = new Vector<Move>();
+
+        for (int i = 0; i < moves_to_validate; i++) {
+            Move move = moves.get(i);
+            
+            System.out.println("Validando una mossa . . .");
             if (move.getPiece() instanceof Pawn) {
-                checkForPawns(move);
+                if (!checkForPawns(move)) {
+                    validatedMoves.add(move);
+                }
             } else if (move.getPiece() instanceof Rook) {
                 checkForRooks(move);
             } else if (move.getPiece() instanceof Knight) {
@@ -22,11 +34,51 @@ public class MoveChecker {
                 checkForKings(move);
             }
         }
-        return null;
+        return validatedMoves;
     }
 
-    private Vector<Move> checkForPawns(Move move) {
-        return null;
+    private boolean checkForPawns(Move move) {
+        Pawn pawn = (Pawn)move.getPiece();
+
+        boolean frontOccupied = board.getPiece(pawn.FORWARD_1.getPosition().clone()) != null;
+        boolean frontForwardOccupied = board.getPiece(pawn.FORWARD_2.getPosition().clone()) != null;
+        boolean frontLeftOccupied = board.getPiece(pawn.DIAGONAL_LEFT.getPosition().clone()) != null;
+        boolean frontRightOccupied = board.getPiece(pawn.DIAGONAL_RIGHT.getPosition().clone()) != null;
+
+        if(move.equals(pawn.FORWARD_1)) {
+            if (frontOccupied) {
+                return false;
+            } else {
+                return false;
+            }
+        }
+        
+        if(move.equals(pawn.FORWARD_2)) {
+            if (frontOccupied || frontForwardOccupied) {
+                return false;
+            } else {
+                return false;
+            }
+        }
+        
+        if(move.equals(pawn.DIAGONAL_LEFT)) {
+            if (frontLeftOccupied) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        
+        System.out.println("C" + frontRightOccupied);
+        if (move.equals(pawn.DIAGONAL_RIGHT)) {
+            if (frontRightOccupied) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        return false;
     }
 
     private Vector<Move> checkForRooks(Move move) {

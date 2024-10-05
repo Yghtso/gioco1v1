@@ -2,6 +2,7 @@ package scuola.esercitazione.gioco1v1;
 
 import java.net.Socket;
 import java.util.Scanner;
+import java.util.Vector;
 
 public class Engine {
 
@@ -14,6 +15,7 @@ public class Engine {
         this.sock = sock;
         this.player = player;
         this.board = new ChessBoard();
+        this.checker = new MoveChecker(this.board);
     }
 
     void start() {
@@ -27,12 +29,13 @@ public class Engine {
             System.out.println(
                     "MOSSA SELEZIONATA : id#" + move.getPiece().getId() + ", MOSSA VERSO : "
                             + move.getPosition().getRow() + "," + move.getPosition().getColumn());
-            boolean result = moveValidation(move, piece);
-        }
-    }
+            
+            Vector<Move> validatedMoves = checker.checkMoves(piece.calculateMoves());
 
-    boolean moveValidation(Move move, Piece piece) {
-        return false;
+            for (Move singleMove : validatedMoves) {
+                System.out.println(singleMove.equals(move));
+            }
+        }
     }
 
     // FUNZIONI TEMPORANEE, QUANDO SARA PRESENTE LA PARTE GRAFICA VERRA' LEVATA

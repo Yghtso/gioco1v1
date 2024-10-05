@@ -33,4 +33,12 @@ public class Position {
     public Position copy(Position other) {
         return new Position(other.row, other.column);
     }
+
+    public Position clone() {
+        return new Position(this.row, this.column);
+    }
+
+    public boolean isInBoard() {
+        return (this.getRow() >= 1 && this.getRow() <= 8) && (this.getColumn() >= 1 && this.getColumn() <= 8);
+    }
 }

@@ -89,7 +89,11 @@ public class ChessBoard {
     }
 
     public Piece getPiece(Position position) {
-        return pieces[position.getRow() - 1][position.getColumn() - 1];
+        if (position.isInBoard()) {
+            return pieces[position.getRow() - 1][position.getColumn() - 1];
+        } else {
+            return null;
+        }
     }
 
 }

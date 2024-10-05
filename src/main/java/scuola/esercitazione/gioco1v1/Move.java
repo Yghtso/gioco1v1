@@ -25,4 +25,8 @@ public class Move {
     public void setPiece(Piece piece) {
         this.piece = piece;
     }
+
+    public boolean equals(Move other) {
+        return this.position.getRow() == other.position.getRow() && this.position.getColumn() == other.position.getColumn();
+    }
 }

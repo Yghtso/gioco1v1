@@ -9,16 +9,23 @@ public class Pawn extends Piece {
     private final static int BASE_PAWN_MOVE = 1;
     private final static int STARTING_PAWN_MOVE = 2;
 
+    private Vector<Move> possibleMoves = new Vector<Move>();
+
+    public Move FORWARD_1 = new Move(null, this);
+    public Move FORWARD_2 = new Move(null, this);
+    public Move DIAGONAL_LEFT = new Move(null, this);
+    public Move DIAGONAL_RIGHT = new Move(null, this);
+
     public Vector<Move> calculateMoves() {
-        Vector<Move> moves = new Vector<Move>();
+        validMoves.clear();
+        updateMoves();
 
-        if (this.owner == Player.WHITE) {
-            checkWhiteMoves(moves);
-        } else {
-            checkBlackMoves(moves);
+        for(Move move : possibleMoves) {
+            if(move.getPosition().isInBoard()) {
+                validMoves.add(move);
+            }
         }
-
-        return moves;
+        return this.validMoves;
     }
 
     public void moveTo(Position position) {
@@ -31,59 +38,39 @@ public class Pawn extends Piece {
         this.firstMove = true;
     }
 
-    private void checkWhiteMoves(Vector<Move> moves) {
-        if (firstMove) { // MOSSA INIZIALE 2 IN AVANTI
-            moves.add(new Move(
-                    new Position(ChessBoard.WHITE_PAWNS_STARTING_ROW + STARTING_PAWN_MOVE,
-                            this.getPosition().getColumn()),
-                    this));
-        }
-        if (this.getPosition().getRow() != ChessBoard.LAST_ROW) { // MOSSA BASE 1 IN AVANTI
-            moves.add(new Move(
-                    new Position(this.getPosition().getRow() + BASE_PAWN_MOVE, this.getPosition().getColumn()),
-                    this));
-        }
-        if (this.getPosition().getColumn() != ChessBoard.FIRST_COLUMN
-                || this.getPosition().getRow() != ChessBoard.LAST_ROW) { // MANGIARE IN DIAGONALE A SINISTRA
-            moves.add(new Move(
-                    new Position(this.getPosition().getRow() + BASE_PAWN_MOVE,
-                            this.getPosition().getColumn() - BASE_PAWN_MOVE),
-                    this));
-        }
-        if (this.getPosition().getColumn() != ChessBoard.LAST_COLUMN
-                || this.getPosition().getRow() != ChessBoard.LAST_ROW) { // MANGIARE IN DIAGONALE A DESTRA
-            moves.add(new Move(
-                    new Position(this.getPosition().getRow() + BASE_PAWN_MOVE,
-                            this.getPosition().getColumn() + BASE_PAWN_MOVE),
-                    this));
+    public void updateMoves() {
+        if (this.owner == Player.WHITE) {
+            this.FORWARD_1.setPosition(new Position(this.position.getRow() + BASE_PAWN_MOVE, this.position.getColumn()));
+            this.possibleMoves.add(FORWARD_1);
+            if (firstMove) {
+                this.FORWARD_2.setPosition(new Position(this.position.getRow() + STARTING_PAWN_MOVE, this.position.getColumn()));
+                this.possibleMoves.add(FORWARD_2);
+                this.firstMove = !this.firstMove;
+            } else {
+                this.FORWARD_2.setPosition(null);
+            }
+            this.DIAGONAL_LEFT.setPosition(new Position(this.position.getRow() + BASE_PAWN_MOVE, this.position.getColumn() - BASE_PAWN_MOVE));
+            this.possibleMoves.add(DIAGONAL_LEFT);
+            this.DIAGONAL_RIGHT.setPosition(new Position(this.position.getRow() + BASE_PAWN_MOVE, this.position.getColumn() + BASE_PAWN_MOVE));
+            this.possibleMoves.add(DIAGONAL_RIGHT);
+        }else {
+            this.FORWARD_1.setPosition(new Position(this.position.getRow() - BASE_PAWN_MOVE, this.position.getColumn()));
+            this.possibleMoves.add(FORWARD_1);
+            if (firstMove) {
+                this.FORWARD_2.setPosition(new Position(this.position.getRow() - STARTING_PAWN_MOVE, this.position.getColumn()));
+                this.possibleMoves.add(FORWARD_2);
+                this.firstMove = !this.firstMove;
+            } else {
+                this.FORWARD_2.setPosition(null);
+            }
+            this.DIAGONAL_LEFT.setPosition(new Position(this.position.getRow() - BASE_PAWN_MOVE, this.position.getColumn() + BASE_PAWN_MOVE));
+            this.possibleMoves.add(DIAGONAL_LEFT);
+            this.DIAGONAL_RIGHT.setPosition(new Position(this.position.getRow() - BASE_PAWN_MOVE, this.position.getColumn() - BASE_PAWN_MOVE));
+            this.possibleMoves.add(DIAGONAL_RIGHT);
         }
     }
 
-    private void checkBlackMoves(Vector<Move> moves) {
-        if (firstMove) { // MOSSA INIZIALE 2 IN AVANTI
-            moves.add(new Move(
-                    new Position(ChessBoard.LAST_ROW - ChessBoard.BLACK_PAWNS_STARTING_ROW + STARTING_PAWN_MOVE - 1,
-                            this.getPosition().getColumn()),
-                    this));
-        }
-        if (this.getPosition().getRow() != ChessBoard.LAST_ROW) { // MOSSA BASE 1 IN AVANTI
-            moves.add(new Move(
-                    new Position(this.getPosition().getRow() + BASE_PAWN_MOVE, this.getPosition().getColumn()),
-                    this));
-        }
-        if (this.getPosition().getColumn() != ChessBoard.FIRST_COLUMN
-                || this.getPosition().getRow() != ChessBoard.LAST_ROW) { // MANGIARE IN DIAGONALE A SINISTRA
-            moves.add(new Move(
-                    new Position(this.getPosition().getRow() + BASE_PAWN_MOVE,
-                            this.getPosition().getColumn() - BASE_PAWN_MOVE),
-                    this));
-        }
-        if (this.getPosition().getColumn() != ChessBoard.LAST_COLUMN
-                || this.getPosition().getRow() != ChessBoard.LAST_ROW) { // MANGIARE IN DIAGONALE A DESTRA
-            moves.add(new Move(
-                    new Position(this.getPosition().getRow() + BASE_PAWN_MOVE,
-                            this.getPosition().getColumn() + BASE_PAWN_MOVE),
-                    this));
-        }
+    public Piece clone() {
+        return new Pawn(this.position.clone(), this.owner, this.id);
     }
 }
