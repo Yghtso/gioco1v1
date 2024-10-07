@@ -10,67 +10,47 @@ import java.util.Scanner;
 public class Game {
 
     private Engine eng;
-    public static int PORT = 60000;
+    private ServerNetManager serverSockManager = null;
+    private ClientNetManager clientSockManager = null;
 
     public void start() {
 
-        // LEGGO L INPUT DA LINEA DI COMANDO :
-        // ALE AGO FAI LA PARTE GRAFICA DI QUESTA COSA
         System.out.println("1 -> server/listener \n0 -> client");
         Scanner s = new Scanner(System.in);
         int response = s.nextInt();
         s.nextLine();
 
-        // CREO LA SOCKET PER LA FUTURA CONNESSIONE TRA I 2 GIOCATORI
-        Socket connection = null;
-
         if (response == 1) {
-            ServerSocket serverSock = null;
             try {
-                serverSock = new ServerSocket(PORT);
-                System.out.println("Server in attesa di un altro giocatore . . .");
-                connection = serverSock.accept();
+                serverSockManager = new ServerNetManager(ServerNetManager.PORT);
             } catch (IOException ex) {
                 System.out.println("Errore nella creazione della server socket" + ex.getMessage());
             }
 
-            if (connection != null) {
-                try {
-                    serverSock.close();
-                } catch (Exception ex) {
-                    System.out.println("Errore nella chiusura della server socket" + ex.getMessage());
-                }
-                this.eng = new Engine(connection, Player.BLACK);
-                eng.start();
+            Socket clientSocket = serverSockManager.startListening();
+            while (clientSocket != null) {
+                clientSocket = serverSockManager.startListening();
             }
+            clientSockManager = new ClientNetManager(clientSocket);
+            boolean closed;
+            do {
+                closed = serverSockManager.close();
+            } while (!closed);
+            this.eng = new Engine(clientSockManager, Player.BLACK);
+        }
 
-        } else if (response == 0) {
-            connection = new Socket();
+        else if (response == 0) {
             System.out.println("Inserisci l' indirizzo ip al quale connettersi");
             String ip = s.nextLine();
-            SocketAddress addr = new InetSocketAddress(ip, PORT);
-            try {
-                connection.connect(addr);
-            } catch (Exception ex) {
-                System.out.println("Errore nel connettersi all altro giocatore" + ex.getMessage());
-            }
+            clientSockManager = new ClientNetManager();
+            boolean connected = clientSockManager.connect(ip);
 
-            if (connection != null) {
-                this.eng = new Engine(connection, Player.WHITE);
-                eng.start();
+            while (!connected) {
+                connected = clientSockManager.connect(ip);
             }
+            this.eng = new Engine(clientSockManager, Player.WHITE);
         }
-        s.close();
 
-        boolean connectionClosed = false;
-        do {
-            try {
-                connection.close();
-                connectionClosed = true;
-            } catch (Exception ex) {
-                System.out.println("Errore nella chiusura della connessione" + ex.getMessage());
-            }
-        } while (connectionClosed);
-
+        eng.start();
     }
 }

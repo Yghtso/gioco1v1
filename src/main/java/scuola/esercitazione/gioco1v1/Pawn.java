@@ -9,8 +9,6 @@ public class Pawn extends Piece {
     private final static int BASE_PAWN_MOVE = 1;
     private final static int STARTING_PAWN_MOVE = 2;
 
-    private Vector<Move> possibleMoves = new Vector<Move>();
-
     public Move FORWARD_1 = new Move(null, this);
     public Move FORWARD_2 = new Move(null, this);
     public Move DIAGONAL_LEFT = new Move(null, this);
@@ -18,10 +16,9 @@ public class Pawn extends Piece {
 
     public Vector<Move> calculateMoves() {
         validMoves.clear();
-        updateMoves();
-
-        for(Move move : possibleMoves) {
-            if(move.getPosition().isInBoard()) {
+        Vector<Move> temporaryMoves = updateMoves();
+        for (Move move : temporaryMoves) {
+            if (move.getPosition().isInBoard()) {
                 validMoves.add(move);
             }
         }
@@ -38,36 +35,46 @@ public class Pawn extends Piece {
         this.firstMove = true;
     }
 
-    public void updateMoves() {
+    public Vector<Move> updateMoves() {
+        Vector<Move> temporaryMoves = new Vector<Move>();
         if (this.owner == Player.WHITE) {
-            this.FORWARD_1.setPosition(new Position(this.position.getRow() + BASE_PAWN_MOVE, this.position.getColumn()));
-            this.possibleMoves.add(FORWARD_1);
+            this.FORWARD_1
+                    .setPosition(new Position(this.position.getRow() + BASE_PAWN_MOVE, this.position.getColumn()));
+            temporaryMoves.add(FORWARD_1);
             if (firstMove) {
-                this.FORWARD_2.setPosition(new Position(this.position.getRow() + STARTING_PAWN_MOVE, this.position.getColumn()));
-                this.possibleMoves.add(FORWARD_2);
+                this.FORWARD_2.setPosition(
+                        new Position(this.position.getRow() + STARTING_PAWN_MOVE, this.position.getColumn()));
+                temporaryMoves.add(FORWARD_2);
                 this.firstMove = !this.firstMove;
             } else {
                 this.FORWARD_2.setPosition(null);
             }
-            this.DIAGONAL_LEFT.setPosition(new Position(this.position.getRow() + BASE_PAWN_MOVE, this.position.getColumn() - BASE_PAWN_MOVE));
-            this.possibleMoves.add(DIAGONAL_LEFT);
-            this.DIAGONAL_RIGHT.setPosition(new Position(this.position.getRow() + BASE_PAWN_MOVE, this.position.getColumn() + BASE_PAWN_MOVE));
-            this.possibleMoves.add(DIAGONAL_RIGHT);
-        }else {
-            this.FORWARD_1.setPosition(new Position(this.position.getRow() - BASE_PAWN_MOVE, this.position.getColumn()));
-            this.possibleMoves.add(FORWARD_1);
+            this.DIAGONAL_LEFT.setPosition(
+                    new Position(this.position.getRow() + BASE_PAWN_MOVE, this.position.getColumn() - BASE_PAWN_MOVE));
+            temporaryMoves.add(DIAGONAL_LEFT);
+            this.DIAGONAL_RIGHT.setPosition(
+                    new Position(this.position.getRow() + BASE_PAWN_MOVE, this.position.getColumn() + BASE_PAWN_MOVE));
+            temporaryMoves.add(DIAGONAL_RIGHT);
+        } else {
+            this.FORWARD_1
+                    .setPosition(new Position(this.position.getRow() - BASE_PAWN_MOVE, this.position.getColumn()));
+            temporaryMoves.add(FORWARD_1);
             if (firstMove) {
-                this.FORWARD_2.setPosition(new Position(this.position.getRow() - STARTING_PAWN_MOVE, this.position.getColumn()));
-                this.possibleMoves.add(FORWARD_2);
+                this.FORWARD_2.setPosition(
+                        new Position(this.position.getRow() - STARTING_PAWN_MOVE, this.position.getColumn()));
+                temporaryMoves.add(FORWARD_2);
                 this.firstMove = !this.firstMove;
             } else {
                 this.FORWARD_2.setPosition(null);
             }
-            this.DIAGONAL_LEFT.setPosition(new Position(this.position.getRow() - BASE_PAWN_MOVE, this.position.getColumn() + BASE_PAWN_MOVE));
-            this.possibleMoves.add(DIAGONAL_LEFT);
-            this.DIAGONAL_RIGHT.setPosition(new Position(this.position.getRow() - BASE_PAWN_MOVE, this.position.getColumn() - BASE_PAWN_MOVE));
-            this.possibleMoves.add(DIAGONAL_RIGHT);
+            this.DIAGONAL_LEFT.setPosition(
+                    new Position(this.position.getRow() - BASE_PAWN_MOVE, this.position.getColumn() + BASE_PAWN_MOVE));
+            temporaryMoves.add(DIAGONAL_LEFT);
+            this.DIAGONAL_RIGHT.setPosition(
+                    new Position(this.position.getRow() - BASE_PAWN_MOVE, this.position.getColumn() - BASE_PAWN_MOVE));
+            temporaryMoves.add(DIAGONAL_RIGHT);
         }
+        return temporaryMoves;
     }
 
     public Piece clone() {

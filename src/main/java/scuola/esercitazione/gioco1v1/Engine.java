@@ -6,12 +6,12 @@ import java.util.Vector;
 
 public class Engine {
 
-    private Socket sock;
+    private ClientNetManager sock;
     private Player player;
     private ChessBoard board;
     private MoveChecker checker;
 
-    public Engine(Socket sock, Player player) {
+    public Engine(ClientNetManager sock, Player player) {
         this.sock = sock;
         this.player = player;
         this.board = new ChessBoard();
@@ -22,19 +22,17 @@ public class Engine {
         System.out.println("CONNESSIONE AVVENUTA");
         if (this.player == Player.WHITE) {
             Piece piece = getPiece();
-            System.out.println(
-                    "PEDINA SELEZIONATA : id#" + piece.getId() + "," + piece.getOwner() + ","
-                            + piece.getPosition().getRow() + "," + piece.getPosition().getColumn());
             Move move = getMove(board, piece);
-            System.out.println(
-                    "MOSSA SELEZIONATA : id#" + move.getPiece().getId() + ", MOSSA VERSO : "
-                            + move.getPosition().getRow() + "," + move.getPosition().getColumn());
-            
             Vector<Move> validatedMoves = checker.checkMoves(piece.calculateMoves());
 
             for (Move singleMove : validatedMoves) {
-                System.out.println(singleMove.equals(move));
+                if (singleMove.equals(move)) {
+                    sock.send(move);
+                }
             }
+        } else {
+            Move received = sock.read();
+            System.out.println("DATA RECEIVED : " + received);
         }
     }
 
