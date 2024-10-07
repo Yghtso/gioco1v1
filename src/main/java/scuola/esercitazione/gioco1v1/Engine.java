@@ -28,7 +28,7 @@ public class Engine {
 
             for (Move singleMove : validatedMoves) {
                 if (singleMove.equals(move)) {
-                    System.out.println(sock.send(move));
+                    sock.send(move);
                 }
             }
                 Move mossa = sock.read();
