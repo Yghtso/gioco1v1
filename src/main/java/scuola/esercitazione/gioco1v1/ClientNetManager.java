@@ -16,7 +16,6 @@ public class ClientNetManager {
             ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
             outputStream.writeObject(move);
             outputStream.flush();
-            outputStream.close();
             return true;
         } catch (Exception e) {
             return false;
@@ -26,7 +25,6 @@ public class ClientNetManager {
     public Move read() {
         try {
             ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-            inputStream.close();
             return (Move) inputStream.readObject();
         } catch (Exception e) {
             return null;

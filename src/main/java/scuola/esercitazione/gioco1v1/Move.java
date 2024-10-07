@@ -1,6 +1,8 @@
 package scuola.esercitazione.gioco1v1;
 
-public class Move {
+import java.io.Serializable;
+
+public class Move implements Serializable{
 
     private Position position;
     private Piece piece;

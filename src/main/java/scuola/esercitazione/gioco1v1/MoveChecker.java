@@ -17,10 +17,8 @@ public class MoveChecker {
         for (int i = 0; i < moves_to_validate; i++) {
             Move move = moves.get(i);
 
-            System.out.println("Validando una mossa . . .");
             if (move.getPiece() instanceof Pawn) {
                 if (validForPawns(move)) {
-                    System.out.println("Validazione con successo");
                     validatedMoves.add(move);
                 }
             } else if (move.getPiece() instanceof Rook) {

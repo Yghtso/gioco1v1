@@ -1,8 +1,9 @@
 package scuola.esercitazione.gioco1v1;
 
+import java.io.Serializable;
 import java.util.Vector;
 
-public abstract class Piece {
+public abstract class Piece implements Serializable{
 
     protected Position position;
     protected Player owner;

@@ -26,9 +26,8 @@ public class Game {
             } catch (IOException ex) {
                 System.out.println("Errore nella creazione della server socket" + ex.getMessage());
             }
-
             Socket clientSocket = serverSockManager.startListening();
-            while (clientSocket != null) {
+            while (clientSocket == null) {
                 clientSocket = serverSockManager.startListening();
             }
             clientSockManager = new ClientNetManager(clientSocket);
@@ -37,9 +36,8 @@ public class Game {
                 closed = serverSockManager.close();
             } while (!closed);
             this.eng = new Engine(clientSockManager, Player.BLACK);
-        }
-
-        else if (response == 0) {
+        
+        }else if (response == 0) {
             System.out.println("Inserisci l' indirizzo ip al quale connettersi");
             String ip = s.nextLine();
             clientSockManager = new ClientNetManager();

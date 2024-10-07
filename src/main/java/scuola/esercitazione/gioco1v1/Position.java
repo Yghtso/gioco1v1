@@ -1,6 +1,8 @@
 package scuola.esercitazione.gioco1v1;
 
-public class Position {
+import java.io.Serializable;
+
+public class Position implements Serializable{
 
     private int row;
     private int column;

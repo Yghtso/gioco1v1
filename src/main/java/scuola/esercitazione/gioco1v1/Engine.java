@@ -1,6 +1,5 @@
 package scuola.esercitazione.gioco1v1;
 
-import java.net.Socket;
 import java.util.Scanner;
 import java.util.Vector;
 
@@ -19,20 +18,36 @@ public class Engine {
     }
 
     void start() {
-        System.out.println("CONNESSIONE AVVENUTA");
+
         if (this.player == Player.WHITE) {
-            Piece piece = getPiece();
-            Move move = getMove(board, piece);
-            Vector<Move> validatedMoves = checker.checkMoves(piece.calculateMoves());
+
+            while (true) {
+                Piece piece = getPiece();
+                Move move = getMove(board, piece);
+                Vector<Move> validatedMoves = checker.checkMoves(piece.calculateMoves());
 
             for (Move singleMove : validatedMoves) {
                 if (singleMove.equals(move)) {
-                    sock.send(move);
+                    System.out.println(sock.send(move));
                 }
             }
+                Move mossa = sock.read();
+            }
+
         } else {
-            Move received = sock.read();
-            System.out.println("DATA RECEIVED : " + received);
+            while (true) {
+                // ATTENZIONE AD ESSERE NULL
+                Move mossa = (Move) sock.read();
+                Piece piece = getPiece();
+                Move move = getMove(board, piece);
+                Vector<Move> validatedMoves = checker.checkMoves(piece.calculateMoves());
+
+                for (Move singleMove : validatedMoves) {
+                    if (singleMove.equals(move)) {
+                        System.out.println(sock.send(move));
+                    }
+                }
+            }
         }
     }
 
@@ -46,7 +61,6 @@ public class Engine {
             int col = s.nextInt();
             s.nextLine();
             piece = board.getPiece(new Position(row, col));
-            System.out.println("TROVATO IL PEZZO : " + piece.getClass());
         } while (piece == null);
         return piece;
     }
