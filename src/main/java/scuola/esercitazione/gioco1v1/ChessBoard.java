@@ -1,5 +1,7 @@
 package scuola.esercitazione.gioco1v1;
 
+import java.util.ArrayList;
+
 public class ChessBoard {
 
     public final static int ROWS = 8;
@@ -19,8 +21,7 @@ public class ChessBoard {
         this.pieces = new Piece[ROWS][COLUMNS];
         this.ids = new boolean[LAST_ID];
 
-        // POPOLO LA TABELLA CON LE PEDINE
-
+        // PEINE BIANCHE
         for (int i = 1; i <= COLUMNS; i++) {
             pieces[WHITE_PAWNS_STARTING_ROW - 1][i - 1] = new Pawn(new Position(WHITE_PAWNS_STARTING_ROW, i),
                     Player.WHITE,
@@ -70,7 +71,7 @@ public class ChessBoard {
     }
 
     public void destroyPiece(Piece piece) {
-        destroidId(piece.id);
+        destroiedId(piece.id);
         this.pieces[piece.getPosition().getRow() - 1][piece.getPosition().getColumn() - 1] = null;
     }
 
@@ -84,16 +85,36 @@ public class ChessBoard {
         return 0;
     }
 
-    private void destroidId(int id) {
+    private void destroiedId(int id) {
         this.ids[id - 1] = false;
     }
 
     public Piece getPiece(Position position) {
-        if (position.isInBoard()) {
+        if(position == null) {
+            return null;
+        } else if (position.isInBoard()) {
             return pieces[position.getRow() - 1][position.getColumn() - 1];
         } else {
             return null;
         }
     }
 
+    public void applyMove(Move move) {
+        Position precPosition = move.getPiece().getPosition();
+        this.pieces[precPosition.getRow() - 1][precPosition.getColumn() - 1] = null;
+        move.getPiece().moveTo(move.getPosition());
+        this.pieces[move.getPosition().getRow() - 1][move.getPosition().getColumn() - 1] = move.getPiece();
+    }
+
+    public ArrayList<Piece> getPieces() {
+        ArrayList<Piece> returnedPieces = new ArrayList<>();
+        for (Piece[] row : pieces) {
+            for (Piece piece : row) {
+                if (piece != null) {
+                    returnedPieces.add(piece);
+                }
+            }
+        }
+        return  returnedPieces;
+    }
 }

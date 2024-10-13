@@ -29,6 +29,13 @@ public class Move implements Serializable{
     }
 
     public boolean equals(Move other) {
+        if (other.getPosition() == null) {
+            return false;
+        }
         return this.position.getRow() == other.position.getRow() && this.position.getColumn() == other.position.getColumn();
+    }
+
+    public Move clone() {
+        return new Move(position.clone(), piece);
     }
 }

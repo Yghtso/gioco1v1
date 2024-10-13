@@ -1,7 +1,7 @@
 package scuola.esercitazione.gioco1v1;
 
+import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.Vector;
 
 public class Engine {
 
@@ -17,38 +17,33 @@ public class Engine {
         this.checker = new MoveChecker(this.board);
     }
 
-    void start() {
+    public void start() {
 
-        if (this.player == Player.WHITE) {
+        if (this.player == Player.BLACK) {
+            Move readMove = (Move) sock.read();
+            board.applyMove(readMove);
+        }
 
-            while (true) {
-                Piece piece = getPiece();
-                Move move = getMove(board, piece);
-                Vector<Move> validatedMoves = checker.checkMoves(piece.calculateMoves());
+        do {
+            ArrayList<Piece> pieces = board.getPieces();
+            System.out.println("Stato della scacchiera : ");
+            for (Piece singlePiece : pieces) {
+                System.out.println("Pedina = " + singlePiece + ", id : " + singlePiece.getId() + ", posizione : " + singlePiece.getPosition().getRow() + "," + singlePiece.getPosition().getColumn());
+            }
 
-            for (Move singleMove : validatedMoves) {
-                if (singleMove.equals(move)) {
+            Piece selectedPiece = getPiece();
+            Move move = getMove(board, selectedPiece);
+            checker.checkMoves();
+
+            for (Move iteratorMove : move.getPiece().getValidMoves()) {
+                if (iteratorMove.equals(move)) {
                     sock.send(move);
                 }
             }
-                Move mossa = sock.read();
-            }
 
-        } else {
-            while (true) {
-                // ATTENZIONE AD ESSERE NULL
-                Move mossa = (Move) sock.read();
-                Piece piece = getPiece();
-                Move move = getMove(board, piece);
-                Vector<Move> validatedMoves = checker.checkMoves(piece.calculateMoves());
-
-                for (Move singleMove : validatedMoves) {
-                    if (singleMove.equals(move)) {
-                        System.out.println(sock.send(move));
-                    }
-                }
-            }
-        }
+            Move readMove = sock.read();
+            board.applyMove(readMove);
+        } while(true);
     }
 
     // FUNZIONI TEMPORANEE, QUANDO SARA PRESENTE LA PARTE GRAFICA VERRA' LEVATA

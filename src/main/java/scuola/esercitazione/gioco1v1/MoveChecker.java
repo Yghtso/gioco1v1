@@ -1,6 +1,6 @@
 package scuola.esercitazione.gioco1v1;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 public class MoveChecker {
 
@@ -10,39 +10,42 @@ public class MoveChecker {
         this.board = board;
     }
 
-    public Vector<Move> checkMoves(Vector<Move> moves) {
-        int moves_to_validate = moves.size();
-        Vector<Move> validatedMoves = new Vector<Move>();
+    public void checkMoves() {
 
-        for (int i = 0; i < moves_to_validate; i++) {
-            Move move = moves.get(i);
+        ArrayList<Piece> pieces = board.getPieces();
+        
+        for(Piece piece : pieces) {
 
-            if (move.getPiece() instanceof Pawn) {
-                if (validForPawns(move)) {
-                    validatedMoves.add(move);
+            piece.calculateMoves();
+
+            @SuppressWarnings("unchecked")
+            ArrayList<Move> allMoves = (ArrayList<Move>) piece.getValidMoves().clone();
+
+            if (piece instanceof Pawn) {
+                for(Move move : allMoves) {
+                    if(!validForPawns(move)) {
+                        piece.getValidMoves().remove(move);
+                    }
                 }
-            } else if (move.getPiece() instanceof Rook) {
-                checkForRooks(move);
-            } else if (move.getPiece() instanceof Knight) {
-                checkForKnights(move);
-            } else if (move.getPiece() instanceof Bishop) {
-                checkForBishops(move);
-            } else if (move.getPiece() instanceof Queen) {
-                checkForQueens(move);
-            } else if (move.getPiece() instanceof King) {
-                checkForKings(move);
             }
-        }
-        return validatedMoves;
+
+            if (piece instanceof Rook) {
+                for(Move move : allMoves) {
+                    if(!validForRooks(move)) {
+                        piece.getValidMoves().remove(move);
+                    }
+                }
+            }
+        } 
     }
 
     private boolean validForPawns(Move move) {
         Pawn pawn = (Pawn) move.getPiece();
-
-        boolean frontOccupied = board.getPiece(pawn.FORWARD_1.getPosition().clone()) != null;
-        boolean frontForwardOccupied = board.getPiece(pawn.FORWARD_2.getPosition().clone()) != null;
-        boolean frontLeftOccupied = board.getPiece(pawn.DIAGONAL_LEFT.getPosition().clone()) != null;
-        boolean frontRightOccupied = board.getPiece(pawn.DIAGONAL_RIGHT.getPosition().clone()) != null;
+        
+        boolean frontOccupied = board.getPiece(pawn.FORWARD_1.getPosition()) != null;
+        boolean frontForwardOccupied = board.getPiece(pawn.FORWARD_2.getPosition()) != null;
+        boolean frontLeftOccupied = board.getPiece(pawn.DIAGONAL_LEFT.getPosition()) != null;
+        boolean frontRightOccupied = board.getPiece(pawn.DIAGONAL_RIGHT.getPosition()) != null;
 
         if (move.equals(pawn.FORWARD_1)) {
             return !frontOccupied;
@@ -65,27 +68,51 @@ public class MoveChecker {
         }
 
         return false;
-
     }
 
-    private Vector<Move> checkForRooks(Move move) {
-        return null;
-    }
+    private boolean validForRooks(Move move) {
+        int currentRow = move.getPiece().getPosition().getRow();
+        int currentCol = move.getPiece().getPosition().getColumn();
 
-    private Vector<Move> checkForKnights(Move move) {
-        return null;
-    }
+        boolean orizzontal = move.getPosition().getRow() == currentRow;
+        int difference;
 
-    private Vector<Move> checkForBishops(Move move) {
-        return null;
+        if (orizzontal) {
+            boolean right = move.getPiece().getPosition().getColumn() > currentCol;
+            difference = Math.abs(move.getPiece().getPosition().getColumn() - currentCol);
+            if (right) {
+                for (int i = 1; i < difference; i ++) {
+                    if (board.getPiece(new Position(currentRow, currentCol + i)) != null) {
+                        return false;
+                    }
+                }
+                return true;
+            } else {
+                for (int i = 1; i < difference; i ++) {
+                    if (board.getPiece(new Position(currentRow, currentCol - i)) != null) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        } else {
+            boolean up = move.getPiece().getPosition().getRow() > currentCol;
+            difference = Math.abs(move.getPiece().getPosition().getRow() - currentRow);
+            if (up) {
+                for (int i = 1; i < difference; i ++) {
+                    if (board.getPiece(new Position(currentRow + i, currentCol)) != null) {
+                        return false;
+                    }
+                }
+                return true;
+            } else {
+                for (int i = 1; i < difference; i ++) {
+                    if (board.getPiece(new Position(currentRow, currentCol - i)) != null) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
     }
-
-    private Vector<Move> checkForQueens(Move move) {
-        return null;
-    }
-
-    private Vector<Move> checkForKings(Move move) {
-        return null;
-    }
-
 }
