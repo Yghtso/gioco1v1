@@ -23,9 +23,11 @@ public class ChessBoard {
 
         // PEINE BIANCHE
         for (int i = 1; i <= COLUMNS; i++) {
-            pieces[WHITE_PAWNS_STARTING_ROW - 1][i - 1] = new Pawn(new Position(WHITE_PAWNS_STARTING_ROW, i),
-                    Player.WHITE,
-                    getFirstAvailableId());
+            if (i != 1) {
+                pieces[WHITE_PAWNS_STARTING_ROW - 1][i - 1] = new Pawn(new Position(WHITE_PAWNS_STARTING_ROW, i),
+                Player.WHITE,
+                getFirstAvailableId());
+            } 
         }
 
         pieces[FIRST_ROW - 1][FIRST_COLUMN - 1] = new Rook(new Position(FIRST_ROW, FIRST_COLUMN), Player.WHITE,

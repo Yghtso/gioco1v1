@@ -6,8 +6,8 @@ public class Rook extends Piece {
 
     private boolean firstMove;
 
-    public ArrayList<Move> verticalMoves;
-    public ArrayList<Move> orizzontalMoves;
+    public ArrayList<Move> verticalMoves = new ArrayList<>();
+    public ArrayList<Move> orizzontalMoves = new ArrayList<>();
 
     public void calculateMoves() {
         int row = this.getPosition().getRow();

@@ -37,6 +37,7 @@ public class Engine {
 
             for (Move iteratorMove : move.getPiece().getValidMoves()) {
                 if (iteratorMove.equals(move)) {
+                    System.out.println("Mossa corretta");
                     sock.send(move);
                 }
             }
