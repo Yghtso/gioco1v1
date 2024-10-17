@@ -46,3 +46,7 @@ public class Game {
     }
     
 }
+
+enum Player {
+    WHITE, BLACK,
+}
