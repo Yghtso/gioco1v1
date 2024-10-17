@@ -1,51 +1,48 @@
 package scuola.esercitazione.gioco1v1;
 
-import java.io.IOException;
-import java.net.Socket;
-import java.util.Scanner;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 
 public class Game {
 
-    private Engine eng;
-    private ServerNetManager serverSockManager = null;
-    private ClientNetManager clientSockManager = null;
+    private boolean pieceSelected = false;
+    private Piece selectedPiece = null;
+    private ChessBoard board = new ChessBoard();
+    private Player player;
+    private MoveChecker checker = new MoveChecker(board);
 
-    public void start() {
+    @FXML
+    public void selectPiece(MouseEvent event) {
+        Pane clickedBox = (Pane) event.getSource();
 
-        System.out.println("1 -> server/listener \n0 -> client");
-        Scanner s = new Scanner(System.in);
-        int response = s.nextInt();
-        s.nextLine();
-
-        if (response == 1) {
-            try {
-                serverSockManager = new ServerNetManager(ServerNetManager.PORT);
-            } catch (IOException ex) {
-                System.out.println("Errore nella creazione della server socket" + ex.getMessage());
-            }
-            Socket clientSocket = serverSockManager.startListening();
-            while (clientSocket == null) {
-                clientSocket = serverSockManager.startListening();
-            }
-            clientSockManager = new ClientNetManager(clientSocket);
-            boolean closed;
-            do {
-                closed = serverSockManager.close();
-            } while (!closed);
-            this.eng = new Engine(clientSockManager, Player.BLACK);
+        Integer row = GridPane.getRowIndex(clickedBox) == null ? 1 : GridPane.getRowIndex(clickedBox) + 1;
+        Integer column = GridPane.getColumnIndex(clickedBox) == null ? 1 : GridPane.getRowIndex(clickedBox) + 1;
+        Position pos = new Position(row.intValue(), column.intValue());
         
-        }else if (response == 0) {
-            System.out.println("Inserisci l' indirizzo ip al quale connettersi");
-            String ip = s.nextLine();
-            clientSockManager = new ClientNetManager();
-            boolean connected = clientSockManager.connect(ip);
+        // PEZZO NELLA POSIZIONE CHE HO CLICCATO
+        Piece piece = board.getPiece(pos);
+        
+        // STO FORSE PER ESEGUIRE UNA MOSSA
+        if (pieceSelected) {
+            Move move = new Move(pos, selectedPiece);
+            checker.checkMoves();
 
-            while (!connected) {
-                connected = clientSockManager.connect(ip);
+            for (Move singleMove : selectedPiece.getValidMoves()) {
+                if (move.equals(singleMove)) {
+                    System.out.println("Mossa valida");
+                    board.applyMove(move);
+                    return;
+                }
             }
-            this.eng = new Engine(clientSockManager, Player.WHITE);
         }
 
-        eng.start();
+        // STO SELEZIONANDO PER LA PRIMA VOLTA UNA PEDINA
+        else {
+
+        }
     }
+    
 }

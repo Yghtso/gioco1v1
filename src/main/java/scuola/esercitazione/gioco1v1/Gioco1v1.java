@@ -11,16 +11,11 @@ public class Gioco1v1 extends Application{
     @Override
     public void start(Stage primaryStage) {
         try {
-            // Load the FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Scacchiera.fxml"));
             Parent root = loader.load();
-
-            // Create the scene
             Scene scene = new Scene(root);
-
-            // Set the stage
             primaryStage.setScene(scene);
-            primaryStage.setTitle("JavaFX FXML Example");
+            primaryStage.setTitle("Scacchi");
             primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();
