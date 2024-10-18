@@ -15,15 +15,15 @@ public class Rook extends Piece {
 
         for (int i = 1; i <= ChessBoard.ROWS; i++) {
             if (i != row) {
-                this.verticalMoves.add(new Move(new Position(i, col), this));
-                this.validMoves.add(new Move(new Position(i, col), this));
+                this.verticalMoves.add(new Move(new Position(i, col), this, false));
+                this.validMoves.add(new Move(new Position(i, col), this, false));
             }
         }
 
         for (int i = 1; i <= ChessBoard.COLUMNS; i++) {
             if (i != col) {
-                this.orizzontalMoves.add(new Move(new Position(row, i), this));
-                this.validMoves.add(new Move(new Position(row, i), this));
+                this.orizzontalMoves.add(new Move(new Position(row, i), this, false));
+                this.validMoves.add(new Move(new Position(row, i), this, false));
             }
         }
     }

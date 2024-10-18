@@ -9,10 +9,10 @@ public class Pawn extends Piece {
     private final static int BASE_PAWN_MOVE = 1;
     private final static int STARTING_PAWN_MOVE = 2;
 
-    public Move FORWARD_1 = new Move(null, this);
-    public Move FORWARD_2 = new Move(null, this);
-    public Move DIAGONAL_LEFT = new Move(null, this);
-    public Move DIAGONAL_RIGHT = new Move(null, this);
+    public Move FORWARD_1 = new Move(null, this, false);
+    public Move FORWARD_2 = new Move(null, this, false);
+    public Move DIAGONAL_LEFT = new Move(null, this, false);
+    public Move DIAGONAL_RIGHT = new Move(null, this, false);
 
     public void calculateMoves() {
 
