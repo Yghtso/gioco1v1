@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'FontTimerLed';
+    src: url('Fonts/DS-DIGI.TTF');
+}
+
+.custom-label {
+    -fx-font-family: 'FontTimerLed';
+    -fx-font-size: 130px; 
+}
