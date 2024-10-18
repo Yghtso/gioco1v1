@@ -8,41 +8,53 @@ import javafx.scene.layout.Pane;
 
 public class Game {
 
-    private boolean pieceSelected = false;
+    private boolean isPieceSelected = false;
     private Piece selectedPiece = null;
     private ChessBoard board = new ChessBoard();
-    private Player player;
+    private Player player = Player.WHITE;
     private MoveChecker checker = new MoveChecker(board);
 
     @FXML
     public void selectPiece(MouseEvent event) {
         Pane clickedBox = (Pane) event.getSource();
 
-        Integer row = GridPane.getRowIndex(clickedBox) == null ? 1 : GridPane.getRowIndex(clickedBox) + 1;
-        Integer column = GridPane.getColumnIndex(clickedBox) == null ? 1 : GridPane.getRowIndex(clickedBox) + 1;
+        Integer row = GridPane.getRowIndex(clickedBox) == null ? 8 : 8 - GridPane.getRowIndex(clickedBox);
+        Integer column = GridPane.getColumnIndex(clickedBox) == null ? 1 : GridPane.getColumnIndex(clickedBox) + 1;
         Position pos = new Position(row.intValue(), column.intValue());
 
         Piece piece = board.getPiece(pos);
         Player pieceOwner = piece == null ? null : piece.getOwner();
+        boolean clickedOwnedPiece = pieceOwner == this.player;
 
-        if (pieceSelected) {
-            Move move = new Move(pos, selectedPiece);
-            checker.checkMoves(selectedPiece);
-
-            for (Move singleMove : selectedPiece.getValidMoves()) {
-                if (move.equals(singleMove)) {
-                    System.out.println("Mossa valida");
-                    board.applyMove(move);
-                    return;
-                }
-            }
+        // STO SELEZIONANDO UNA PEDINA PER LA PRIMA VOLTA E SELEZIONO UNA PEDINA NON MIA
+        if (!isPieceSelected && clickedOwnedPiece) {
+            this.isPieceSelected = true;
+            this.selectedPiece = piece;
+            // TODO: far vedere sulla scacchiera le mosse possibili
+            System.out.println("Selezionata una nuova pedina");
+            return;
         }
 
-        // STO SELEZIONANDO PER LA PRIMA VOLTA UNA PEDINA
-        else if (pieceOwner == this.player) {
+        if (isPieceSelected && clickedOwnedPiece) {
+            // TODO: CHECK DELL ARROCCO DA FARE
+            this.isPieceSelected = true;
             this.selectedPiece = piece;
-            this.pieceSelected = true;
-            System.out.println("Selezionata una pedina" + piece);
+            // TODO: far vedere sulla scacchiera le mosse possibili
+            System.out.println("Selezionata una nuova pedina");
+            return;
+        }
+
+        if (isPieceSelected && !clickedOwnedPiece) {
+            checker.checkMoves(piece);
+            Move move = new Move(pos, piece, false);
+
+            for (Move singleMove : piece.getValidMoves()) {
+                if (singleMove.equals(move)) {
+                    System.out.println("Mossa selezionata corretta");
+                }
+            }
+            this.isPieceSelected = false;
+            this.selectedPiece = null;
         }
     }
 
