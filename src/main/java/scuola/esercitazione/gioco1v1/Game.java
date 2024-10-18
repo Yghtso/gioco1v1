@@ -21,14 +21,13 @@ public class Game {
         Integer row = GridPane.getRowIndex(clickedBox) == null ? 1 : GridPane.getRowIndex(clickedBox) + 1;
         Integer column = GridPane.getColumnIndex(clickedBox) == null ? 1 : GridPane.getRowIndex(clickedBox) + 1;
         Position pos = new Position(row.intValue(), column.intValue());
-        
-        // PEZZO NELLA POSIZIONE CHE HO CLICCATO
+
         Piece piece = board.getPiece(pos);
-        
-        // STO FORSE PER ESEGUIRE UNA MOSSA
+        Player pieceOwner = piece == null ? null : piece.getOwner();
+
         if (pieceSelected) {
             Move move = new Move(pos, selectedPiece);
-            checker.checkMoves();
+            checker.checkMoves(selectedPiece);
 
             for (Move singleMove : selectedPiece.getValidMoves()) {
                 if (move.equals(singleMove)) {
@@ -40,11 +39,18 @@ public class Game {
         }
 
         // STO SELEZIONANDO PER LA PRIMA VOLTA UNA PEDINA
-        else {
-
+        else if (pieceOwner == this.player) {
+            this.selectedPiece = piece;
+            this.pieceSelected = true;
+            System.out.println("Selezionata una pedina" + piece);
         }
     }
-    
+
+    @FXML
+    public void arrenditi(ActionEvent event) {
+        System.out.println("Ti sei arreso");
+    }
+
 }
 
 enum Player {

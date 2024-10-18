@@ -10,38 +10,33 @@ public class MoveChecker {
         this.board = board;
     }
 
-    public void checkMoves() {
+    public void checkMoves(Piece piece) {
 
-        ArrayList<Piece> pieces = board.getPieces();
-        
-        for(Piece piece : pieces) {
+        piece.calculateMoves();
 
-            piece.calculateMoves();
+        @SuppressWarnings("unchecked")
+        ArrayList<Move> allMoves = (ArrayList<Move>) piece.getValidMoves().clone();
 
-            @SuppressWarnings("unchecked")
-            ArrayList<Move> allMoves = (ArrayList<Move>) piece.getValidMoves().clone();
-
-            if (piece instanceof Pawn) {
-                for(Move move : allMoves) {
-                    if(!validForPawns(move)) {
-                        piece.getValidMoves().remove(move);
-                    }
+        if (piece instanceof Pawn) {
+            for (Move move : allMoves) {
+                if (!validForPawns(move)) {
+                    piece.getValidMoves().remove(move);
                 }
             }
+        }
 
-            if (piece instanceof Rook) {
-                for(Move move : allMoves) {
-                    if(!validForRooks(move)) {
-                        piece.getValidMoves().remove(move);
-                    }
+        if (piece instanceof Rook) {
+            for (Move move : allMoves) {
+                if (!validForRooks(move)) {
+                    piece.getValidMoves().remove(move);
                 }
             }
-        } 
+        }
     }
 
     private boolean validForPawns(Move move) {
         Pawn pawn = (Pawn) move.getPiece();
-        
+
         boolean frontOccupied = board.getPiece(pawn.FORWARD_1.getPosition()) != null;
         boolean frontForwardOccupied = board.getPiece(pawn.FORWARD_2.getPosition()) != null;
         boolean frontLeftOccupied = board.getPiece(pawn.DIAGONAL_LEFT.getPosition()) != null;
@@ -81,14 +76,14 @@ public class MoveChecker {
             boolean right = move.getPiece().getPosition().getColumn() > currentCol;
             difference = Math.abs(move.getPiece().getPosition().getColumn() - currentCol);
             if (right) {
-                for (int i = 1; i < difference; i ++) {
+                for (int i = 1; i < difference; i++) {
                     if (board.getPiece(new Position(currentRow, currentCol + i)) != null) {
                         return false;
                     }
                 }
                 return true;
             } else {
-                for (int i = 1; i < difference; i ++) {
+                for (int i = 1; i < difference; i++) {
                     if (board.getPiece(new Position(currentRow, currentCol - i)) != null) {
                         return false;
                     }
@@ -99,14 +94,14 @@ public class MoveChecker {
             boolean up = move.getPiece().getPosition().getRow() > currentCol;
             difference = Math.abs(move.getPiece().getPosition().getRow() - currentRow);
             if (up) {
-                for (int i = 1; i < difference; i ++) {
+                for (int i = 1; i < difference; i++) {
                     if (board.getPiece(new Position(currentRow + i, currentCol)) != null) {
                         return false;
                     }
                 }
                 return true;
             } else {
-                for (int i = 1; i < difference; i ++) {
+                for (int i = 1; i < difference; i++) {
                     if (board.getPiece(new Position(currentRow, currentCol - i)) != null) {
                         return false;
                     }
