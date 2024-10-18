@@ -31,7 +31,8 @@ public class Game {
             this.isPieceSelected = true;
             this.selectedPiece = piece;
             // TODO: far vedere sulla scacchiera le mosse possibili
-            System.out.println("Selezionata una nuova pedina");
+            System.out.println("Selezionata per la prima volta una pedina");
+            System.out.println("Pedina selezionata : " + piece);
             return;
         }
 
@@ -40,21 +41,26 @@ public class Game {
             this.isPieceSelected = true;
             this.selectedPiece = piece;
             // TODO: far vedere sulla scacchiera le mosse possibili
-            System.out.println("Selezionata una nuova pedina");
+            System.out.println("Riselezionata una nuova pedina");
+            System.out.println("Pedina selezionata : " + piece);
             return;
         }
 
         if (isPieceSelected && !clickedOwnedPiece) {
-            checker.checkMoves(piece);
-            Move move = new Move(pos, piece, false);
+            System.out.println("Selezionata una casella con una pedina non tua, check della mossa . . .");
+            System.out.println(selectedPiece);
 
-            for (Move singleMove : piece.getValidMoves()) {
+            Move move = new Move(new Position(row, column), selectedPiece, false);
+
+            checker.checkMoves(selectedPiece);
+            for (Move singleMove : selectedPiece.getValidMoves()) {
                 if (singleMove.equals(move)) {
-                    System.out.println("Mossa selezionata corretta");
+                    System.out.println("Mossa valida");
                 }
             }
             this.isPieceSelected = false;
             this.selectedPiece = null;
+            return;
         }
     }
 

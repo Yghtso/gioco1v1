@@ -18,7 +18,7 @@ public class Pawn extends Piece {
 
         validMoves.clear();
         ArrayList<Move> allPossibleMoves = new ArrayList<Move>();
-        
+
         if (this.owner == Player.WHITE) {
             this.FORWARD_1
                     .setPosition(new Position(this.position.getRow() + BASE_PAWN_MOVE, this.position.getColumn()));

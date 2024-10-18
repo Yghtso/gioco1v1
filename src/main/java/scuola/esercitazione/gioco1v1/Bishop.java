@@ -12,15 +12,7 @@ public class Bishop extends Piece {
         int currentCol = this.getPosition().getColumn();
         int currentRow = this.getPosition().getRow();
 
-        while (currentCol > 1 && currentRow > 1) {
-            int row = currentRow;
-            int col = currentCol;
-
-            row--;
-            col--;
-
-            mainDiagonal.add(new Move(new Position(row, col), this, false));
-        }
+        
     }
 
     public Bishop(Position position, Player owner, int id) {
