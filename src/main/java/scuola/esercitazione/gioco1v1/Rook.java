@@ -10,6 +10,11 @@ public class Rook extends Piece {
     public ArrayList<Move> orizzontalMoves = new ArrayList<>();
 
     public void calculateMoves() {
+
+        this.validMoves.clear();
+        this.verticalMoves.clear();
+        this.orizzontalMoves.clear();
+        
         int row = this.getPosition().getRow();
         int col = this.getPosition().getColumn();
 

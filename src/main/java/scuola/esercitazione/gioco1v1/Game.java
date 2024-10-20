@@ -28,34 +28,37 @@ public class Game {
 
         // STO SELEZIONANDO UNA PEDINA PER LA PRIMA VOLTA E SELEZIONO UNA PEDINA NON MIA
         if (!isPieceSelected && clickedOwnedPiece) {
+
             this.isPieceSelected = true;
             this.selectedPiece = piece;
             // TODO: far vedere sulla scacchiera le mosse possibili
-            System.out.println("Selezionata per la prima volta una pedina");
-            System.out.println("Pedina selezionata : " + piece);
+
+            checker.checkMoves(selectedPiece);
             return;
         }
 
         if (isPieceSelected && clickedOwnedPiece) {
+
             // TODO: CHECK DELL ARROCCO DA FARE
             this.isPieceSelected = true;
             this.selectedPiece = piece;
             // TODO: far vedere sulla scacchiera le mosse possibili
-            System.out.println("Riselezionata una nuova pedina");
-            System.out.println("Pedina selezionata : " + piece);
+            
+            checker.checkMoves(selectedPiece);
             return;
         }
 
         if (isPieceSelected && !clickedOwnedPiece) {
-            System.out.println("Selezionata una casella con una pedina non tua, check della mossa . . .");
-            System.out.println(selectedPiece);
 
             Move move = new Move(new Position(row, column), selectedPiece, false);
 
             checker.checkMoves(selectedPiece);
+            System.out.println("Check della mossa . . .");
+
             for (Move singleMove : selectedPiece.getValidMoves()) {
                 if (singleMove.equals(move)) {
                     System.out.println("Mossa valida");
+
                 }
             }
             this.isPieceSelected = false;

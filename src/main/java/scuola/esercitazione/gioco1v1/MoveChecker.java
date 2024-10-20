@@ -27,6 +27,7 @@ public class MoveChecker {
 
         if (piece instanceof Rook) {
             for (Move move : allMoves) {
+                System.out.println("Mossa verso : " + move.getPosition().getRow() + ", " + move.getPosition().getColumn() + ", validita mossa : " + validForRooks(move));
                 if (!validForRooks(move)) {
                     piece.getValidMoves().remove(move);
                 }
@@ -72,41 +73,70 @@ public class MoveChecker {
         boolean orizzontal = move.getPosition().getRow() == currentRow;
         int difference;
 
+        Rook selectedRook = (Rook) move.getPiece();
+        Piece pieceInMoveDest = move.getPiece() == null ? null : board.getPiece(move.getPosition());
+        Player ownerDest = pieceInMoveDest == null ? null : pieceInMoveDest.owner;
+        boolean destinationEmpty = pieceInMoveDest == null ? true : false;
+
         if (orizzontal) {
-            boolean right = move.getPiece().getPosition().getColumn() > currentCol;
-            difference = Math.abs(move.getPiece().getPosition().getColumn() - currentCol);
+            boolean right = move.getPosition().getColumn() > currentCol;
+            difference = Math.abs(move.getPosition().getColumn() - currentCol);
+            
             if (right) {
-                for (int i = 1; i < difference; i++) {
-                    if (board.getPiece(new Position(currentRow, currentCol + i)) != null) {
-                        return false;
+                for (int i = 1; i <= difference; i++) {
+
+                    if (i == difference) {
+                        if (!destinationEmpty) { return selectedRook.getOwner() != ownerDest; } else { return true; }
                     }
+
+                    else if (board.getPiece(new Position(currentRow, currentCol + i)) != null) {
+                        return false;
+                    } 
                 }
                 return true;
             } else {
-                for (int i = 1; i < difference; i++) {
-                    if (board.getPiece(new Position(currentRow, currentCol - i)) != null) {
-                        return false;
+                for (int i = 1; i <= difference; i++) {
+
+                    if (i == difference) {
+                        if (!destinationEmpty) { return selectedRook.getOwner() != ownerDest; } else { return true; }
                     }
+
+                    else if (board.getPiece(new Position(currentRow, currentCol - i)) != null) {
+                        return false;
+                    } 
                 }
                 return true;
             }
         } else {
-            boolean up = move.getPiece().getPosition().getRow() > currentCol;
-            difference = Math.abs(move.getPiece().getPosition().getRow() - currentRow);
+            boolean up = move.getPosition().getRow() > currentRow;
+            difference = Math.abs(move.getPosition().getRow() - currentRow);
+            // SE UNA MOSSA VERSO L ALTO
             if (up) {
-                for (int i = 1; i < difference; i++) {
-                    if (board.getPiece(new Position(currentRow + i, currentCol)) != null) {
-                        return false;
+                for (int i = 1; i <= difference; i++) {
+
+                    if (i == difference) {
+                        if (!destinationEmpty) { return selectedRook.getOwner() != ownerDest; } else { return true; }
                     }
+
+                    else if (board.getPiece(new Position(currentRow + i, currentCol)) != null) {
+                        return false;
+                    } 
                 }
                 return true;
-            } else {
-                for (int i = 1; i < difference; i++) {
-                    if (board.getPiece(new Position(currentRow, currentCol - i)) != null) {
-                        return false;
+            } 
+            // SE VERSO IL BASSO
+            else {
+                for (int i = 1; i <= difference; i++) {
+
+                    if (i == difference) {
+                        if (!destinationEmpty) { return selectedRook.getOwner() != ownerDest; } else { return true; }
                     }
+
+                    else if (board.getPiece(new Position(currentRow - i, currentCol)) != null) {
+                        return false;
+                    } 
                 }
-                return true;
+                return false;
             }
         }
     }
