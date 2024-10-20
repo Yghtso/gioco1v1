@@ -2,6 +2,9 @@ package scuola.esercitazione.gioco1v1;
 
 import java.util.ArrayList;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.geometry.Pos;
+
 public class MoveChecker {
 
     private ChessBoard board;
@@ -27,8 +30,26 @@ public class MoveChecker {
 
         if (piece instanceof Rook) {
             for (Move move : allMoves) {
-                System.out.println("Mossa verso : " + move.getPosition().getRow() + ", " + move.getPosition().getColumn() + ", validita mossa : " + validForRooks(move));
+                System.out.println("Mossa : " + move.getPosition().getRow() + " ," + move.getPosition().getColumn() + ", validita : " + validForRooks(move));
                 if (!validForRooks(move)) {
+                    piece.getValidMoves().remove(move);
+                }
+            }
+        }
+
+        if (piece instanceof Knight) {
+            for (Move move : allMoves) {
+                if (!validForKnights(move)) {
+                    piece.getValidMoves().remove(move);
+                }
+            }
+        }
+
+        if (piece instanceof Bishop) {
+            System.out.println("Mosse disponibili : " + allMoves.size());
+            for (Move move : allMoves) {
+                System.out.println("Mossa : " + move.getPosition().getRow() + " ," + move.getPosition().getColumn());
+                if (!validForBishops(move)) {
                     piece.getValidMoves().remove(move);
                 }
             }
@@ -38,16 +59,16 @@ public class MoveChecker {
     private boolean validForPawns(Move move) {
         Pawn pawn = (Pawn) move.getPiece();
 
-        boolean frontOccupied = board.getPiece(pawn.FORWARD_1.getPosition()) != null;
-        boolean frontForwardOccupied = board.getPiece(pawn.FORWARD_2.getPosition()) != null;
-        boolean frontLeftOccupied = board.getPiece(pawn.DIAGONAL_LEFT.getPosition()) != null;
-        boolean frontRightOccupied = board.getPiece(pawn.DIAGONAL_RIGHT.getPosition()) != null;
+        boolean frontOccupied = board.getPiece(pawn.FORWARD1.getPosition()) != null;
+        boolean frontForwardOccupied = board.getPiece(pawn.FORWARD2.getPosition()) != null;
+        boolean frontLeftOccupied = board.getPiece(pawn.DIAGONALLEFT.getPosition()) != null;
+        boolean frontRightOccupied = board.getPiece(pawn.DIAGONALRIGHT.getPosition()) != null;
 
-        if (move.equals(pawn.FORWARD_1)) {
+        if (move.equals(pawn.FORWARD1)) {
             return !frontOccupied;
         }
 
-        if (move.equals(pawn.FORWARD_2)) {
+        if (move.equals(pawn.FORWARD2)) {
             if (frontOccupied || frontForwardOccupied) {
                 return false;
             } else {
@@ -55,11 +76,11 @@ public class MoveChecker {
             }
         }
 
-        if (move.equals(pawn.DIAGONAL_LEFT)) {
+        if (move.equals(pawn.DIAGONALLEFT)) {
             return frontLeftOccupied;
         }
 
-        if (move.equals(pawn.DIAGONAL_RIGHT)) {
+        if (move.equals(pawn.DIAGONALRIGHT)) {
             return frontRightOccupied;
         }
 
@@ -67,77 +88,111 @@ public class MoveChecker {
     }
 
     private boolean validForRooks(Move move) {
-        int currentRow = move.getPiece().getPosition().getRow();
-        int currentCol = move.getPiece().getPosition().getColumn();
-
-        boolean orizzontal = move.getPosition().getRow() == currentRow;
-        int difference;
-
+        
         Rook selectedRook = (Rook) move.getPiece();
-        Piece pieceInMoveDest = move.getPiece() == null ? null : board.getPiece(move.getPosition());
-        Player ownerDest = pieceInMoveDest == null ? null : pieceInMoveDest.owner;
-        boolean destinationEmpty = pieceInMoveDest == null ? true : false;
+        Piece destinationPiece = board.getPiece(move.getPosition());
+        Player ownerDestinationPiece = destinationPiece == null ? null : destinationPiece.getOwner();
+        int distance;
+        System.out.println("TOP");
 
-        if (orizzontal) {
-            boolean right = move.getPosition().getColumn() > currentCol;
-            difference = Math.abs(move.getPosition().getColumn() - currentCol);
-            
-            if (right) {
-                for (int i = 1; i <= difference; i++) {
+        if (selectedRook.TOP.contains(move)) {
+            distance = move.getPosition().getRow() - selectedRook.getPosition().getRow();
 
-                    if (i == difference) {
-                        if (!destinationEmpty) { return selectedRook.getOwner() != ownerDest; } else { return true; }
-                    }
-
-                    else if (board.getPiece(new Position(currentRow, currentCol + i)) != null) {
-                        return false;
-                    } 
+            for (int i = 1; i <= distance; i++) {
+                if (i == distance) {
+                    return selectedRook.getOwner() != ownerDestinationPiece;
                 }
-                return true;
-            } else {
-                for (int i = 1; i <= difference; i++) {
-
-                    if (i == difference) {
-                        if (!destinationEmpty) { return selectedRook.getOwner() != ownerDest; } else { return true; }
-                    }
-
-                    else if (board.getPiece(new Position(currentRow, currentCol - i)) != null) {
-                        return false;
-                    } 
+                
+                if (board.getPiece(new Position(selectedRook.getPosition().getRow() + i, selectedRook.getPosition().getColumn())) != null) {
+                    return false;
                 }
-                return true;
             }
-        } else {
-            boolean up = move.getPosition().getRow() > currentRow;
-            difference = Math.abs(move.getPosition().getRow() - currentRow);
-            // SE UNA MOSSA VERSO L ALTO
-            if (up) {
-                for (int i = 1; i <= difference; i++) {
+            return true;
+        }
 
-                    if (i == difference) {
-                        if (!destinationEmpty) { return selectedRook.getOwner() != ownerDest; } else { return true; }
-                    }
+        if (selectedRook.RIGHT.contains(move)) {
+            distance = move.getPosition().getColumn() - selectedRook.getPosition().getColumn();
 
-                    else if (board.getPiece(new Position(currentRow + i, currentCol)) != null) {
-                        return false;
-                    } 
+            for (int i = 1; i <= distance; i++) {
+                if (i == distance) {
+                    return selectedRook.getOwner() != ownerDestinationPiece;
                 }
-                return true;
-            } 
-            // SE VERSO IL BASSO
-            else {
-                for (int i = 1; i <= difference; i++) {
-
-                    if (i == difference) {
-                        if (!destinationEmpty) { return selectedRook.getOwner() != ownerDest; } else { return true; }
-                    }
-
-                    else if (board.getPiece(new Position(currentRow - i, currentCol)) != null) {
-                        return false;
-                    } 
+                
+                if (board.getPiece(new Position(selectedRook.getPosition().getRow(), selectedRook.getPosition().getColumn() + i)) != null) {
+                    return false;
                 }
-                return false;
+            }
+            return true;
+        }
+
+        if (selectedRook.BOTTOM.contains(move)) {
+            distance = selectedRook.getPosition().getRow() - move.getPosition().getRow();
+
+            for (int i = 1; i <= distance; i++) {
+                if (i == distance) {
+                    return selectedRook.getOwner() != ownerDestinationPiece;
+                }
+                
+                if (board.getPiece(new Position(selectedRook.getPosition().getRow() - i, selectedRook.getPosition().getColumn())) != null) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        if (selectedRook.LEFT.contains(move)) {
+            distance = selectedRook.getPosition().getColumn() - move.getPosition().getColumn();
+
+            for (int i = 1; i <= distance; i++) {
+                if (i == distance) {
+                    return selectedRook.getOwner() != ownerDestinationPiece;
+                }
+                
+                if (board.getPiece(new Position(selectedRook.getPosition().getRow(), selectedRook.getPosition().getColumn() - i)) != null) {
+                    return false;
+                }
             }
         }
+        return true;
     }
+
+    private boolean validForKnights(Move move) {
+        Piece destPiece = board.getPiece(move.getPosition());
+        boolean destEmpty = destPiece == null ? true : false;
+
+        if (!destEmpty) {
+            return destPiece.getOwner() != move.getPiece().getOwner();
+        }
+        return true;
+    }
+
+    private boolean validForBishops(Move move) {
+
+        Bishop selectedBishop = (Bishop) move.getPiece();
+        for (Move singlMove : selectedBishop.TOPLEFTDIAGONAL) {
+            if (move.equals(singlMove)) {
+                
+            }
+        }
+
+        for (Move singlMove : selectedBishop.BOTTOMLEFTDIAGONAL) {
+            if (move.equals(singlMove)) {
+                
+            }
+        }
+
+        for (Move singlMove : selectedBishop.TOPLEFTDIAGONAL) {
+            if (move.equals(singlMove)) {
+                
+            }
+        }
+        
+        for (Move singlMove : selectedBishop.TOPLEFTDIAGONAL) {
+            if (move.equals(singlMove)) {
+                
+            }
+        }
+        return true;
+    }
+
 }

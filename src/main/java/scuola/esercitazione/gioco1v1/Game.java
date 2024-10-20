@@ -32,8 +32,6 @@ public class Game {
             this.isPieceSelected = true;
             this.selectedPiece = piece;
             // TODO: far vedere sulla scacchiera le mosse possibili
-
-            checker.checkMoves(selectedPiece);
             return;
         }
 
@@ -43,8 +41,6 @@ public class Game {
             this.isPieceSelected = true;
             this.selectedPiece = piece;
             // TODO: far vedere sulla scacchiera le mosse possibili
-            
-            checker.checkMoves(selectedPiece);
             return;
         }
 
@@ -53,12 +49,10 @@ public class Game {
             Move move = new Move(new Position(row, column), selectedPiece, false);
 
             checker.checkMoves(selectedPiece);
-            System.out.println("Check della mossa . . .");
 
             for (Move singleMove : selectedPiece.getValidMoves()) {
                 if (singleMove.equals(move)) {
                     System.out.println("Mossa valida");
-
                 }
             }
             this.isPieceSelected = false;

@@ -44,3 +44,11 @@ public class Position implements Serializable{
         return (this.getRow() >= 1 && this.getRow() <= 8) && (this.getColumn() >= 1 && this.getColumn() <= 8);
     }
 }
+
+enum Orientation {
+    TOP,
+    RIGHT,
+    BOTTOM,
+    LEFT,
+    
+}
