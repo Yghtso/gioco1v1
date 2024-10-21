@@ -23,35 +23,52 @@ public class Rook extends Piece {
         
         int row = this.getPosition().getRow();
         int col = this.getPosition().getColumn();
+        Move calculatedMove;
         Position calculatedPosition = new Position(row + 1, col);
         
+
         while (calculatedPosition.isInBoard()) {
-            validMoves.add(new Move(calculatedPosition.clone(), this , false));
-            TOP.add(new Move(calculatedPosition.clone(), this , false));
+            calculatedMove = new Move(calculatedPosition.clone(), this , false);
+
+            validMoves.add(calculatedMove);
+            TOP.add(calculatedMove);
+
             calculatedPosition.setRow(calculatedPosition.getRow() + 1);
         }
 
-        calculatedPosition = new Position(row, col + 1);
+        calculatedPosition.setRow(row);
+        calculatedPosition.setColumn(col + 1);
 
         while (calculatedPosition.isInBoard()) {
-            validMoves.add(new Move(calculatedPosition.clone(), this , false));
-            RIGHT.add(new Move(calculatedPosition.clone(), this , false));
+            calculatedMove = new Move(calculatedPosition.clone(), this , false);
+
+            validMoves.add(calculatedMove);
+            RIGHT.add(calculatedMove);
+
             calculatedPosition.setColumn(calculatedPosition.getColumn() + 1);
         }
 
-        calculatedPosition = new Position(row - 1, col);
+        calculatedPosition.setRow(row - 1);
+        calculatedPosition.setColumn(col);
 
         while (calculatedPosition.isInBoard()) {
-            validMoves.add(new Move(calculatedPosition.clone(), this , false));
-            RIGHT.add(new Move(calculatedPosition.clone(), this , false));
+            calculatedMove = new Move(calculatedPosition.clone(), this , false);
+
+            validMoves.add(calculatedMove);
+            BOTTOM.add(calculatedMove);
+
             calculatedPosition.setRow(calculatedPosition.getColumn() - 1);
         }
 
-        calculatedPosition = new Position(row, col - 1);
+        calculatedPosition.setRow(row);
+        calculatedPosition.setColumn(col - 1);
 
         while (calculatedPosition.isInBoard()) {
-            validMoves.add(new Move(calculatedPosition.clone(), this , false));
-            RIGHT.add(new Move(calculatedPosition.clone(), this , false));
+            calculatedMove = new Move(calculatedPosition.clone(), this , false);
+            
+            validMoves.add(calculatedMove);
+            LEFT.add(calculatedMove);
+
             calculatedPosition.setColumn(calculatedPosition.getColumn() - 1);
         }
     }

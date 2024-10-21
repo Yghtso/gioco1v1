@@ -28,7 +28,7 @@ public class ChessBoard {
             getFirstAvailableId());
         }
 
-        pieces[FIRST_ROW - 1][FIRST_COLUMN - 1] = new Rook(new Position(FIRST_ROW, FIRST_COLUMN), Player.WHITE,
+        pieces[4 - 1][4 - 1] = new Rook(new Position(4, 4), Player.WHITE,
                 getFirstAvailableId());
         pieces[FIRST_ROW - 1][LAST_COLUMN - 1] = new Rook(new Position(FIRST_ROW, LAST_COLUMN), Player.WHITE,
                 getFirstAvailableId());
