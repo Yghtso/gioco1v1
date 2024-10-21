@@ -2,6 +2,7 @@ package scuola.esercitazione.gioco1v1;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -13,6 +14,15 @@ public class Game {
     private ChessBoard board = new ChessBoard();
     private Player player = Player.WHITE;
     private MoveChecker checker = new MoveChecker(board);
+
+    @FXML
+    private Button InstructionButton;
+    @FXML
+    private Button PlayButton;
+    @FXML
+    private Button QuitButton;
+    @FXML
+    private Button ZanoButton;
 
     @FXML
     public void selectPiece(MouseEvent event) {
@@ -64,6 +74,26 @@ public class Game {
     @FXML
     public void arrenditi(ActionEvent event) {
         System.out.println("Ti sei arreso");
+    }
+
+    @FXML
+    void InstructionButton(ActionEvent event) {
+
+    }
+
+    @FXML
+    void PlayButton(ActionEvent event) {
+
+        PlayButton.setVisible(false);
+        InstructionButton.setVisible(false);
+        QuitButton.setVisible(false);
+        ZanoButton.setVisible(true);
+
+    }
+
+    @FXML
+    void QuitButton(ActionEvent event) {
+
     }
 
 }
