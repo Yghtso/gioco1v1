@@ -23,6 +23,7 @@ public class Rook extends Piece {
         
         int row = this.getPosition().getRow();
         int col = this.getPosition().getColumn();
+        
         Move calculatedMove;
         Position calculatedPosition = new Position(row + 1, col);
         
@@ -57,7 +58,7 @@ public class Rook extends Piece {
             validMoves.add(calculatedMove);
             BOTTOM.add(calculatedMove);
 
-            calculatedPosition.setRow(calculatedPosition.getColumn() - 1);
+            calculatedPosition.setRow(calculatedPosition.getRow() - 1);
         }
 
         calculatedPosition.setRow(row);
