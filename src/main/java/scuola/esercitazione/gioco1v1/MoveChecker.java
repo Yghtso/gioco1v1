@@ -27,9 +27,17 @@ public class MoveChecker {
 
         if (piece instanceof Rook) {
             for (Move move : allMoves) {
-                System.out.println("Mossa verso : " + move.getPosition().getRow() + ", "
-                        + move.getPosition().getColumn() + ", validita mossa : " + validForRooks(move));
                 if (!validForRooks(move)) {
+                    piece.getValidMoves().remove(move);
+                }
+            }
+        }
+
+        if (piece instanceof Knight) {
+            for (Move move : allMoves) {
+                System.out.println("Mossa verso : " + move.getPosition().getRow() + ", "
+                        + move.getPosition().getColumn() + ", validita mossa : " + validForKnights(move));
+                if (!validForKnights(move)) {
                     piece.getValidMoves().remove(move);
                 }
             }
@@ -146,5 +154,13 @@ public class MoveChecker {
         }
         return true;
 
+    }
+
+    private boolean validForKnights(Move move) {
+        Position destination = move.getPosition();
+        boolean destinationEmpty = board.getPiece(destination) == null;
+        Player ownerDestination = destinationEmpty ? null : board.getPiece(destination).getOwner();
+
+        return ownerDestination != move.getPiece().getOwner();
     }
 }

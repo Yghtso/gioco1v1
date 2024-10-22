@@ -49,12 +49,6 @@ public class Game {
             Move move = new Move(new Position(row, column), selectedPiece, false);
 
             checker.checkMoves(selectedPiece);
-            System.out.println("Numero mosse possibili : " + selectedPiece.getValidMoves().size());
-            System.out.println("In alto : " + ((Rook) selectedPiece).TOP.size());
-            System.out.println("In a destra : " + ((Rook) selectedPiece).RIGHT.size());
-            System.out.println("In basso : " + ((Rook) selectedPiece).BOTTOM.size());
-            System.out.println("In a sinistra : " + ((Rook) selectedPiece).LEFT.size());
-
 
             for (Move singleMove : selectedPiece.getValidMoves()) {
                 if (singleMove.equals(move)) {
