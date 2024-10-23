@@ -1,11 +1,16 @@
 package scuola.esercitazione.gioco1v1;
 
+import javafx.animation.ParallelTransition;
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 
 public class Game {
 
@@ -15,14 +20,16 @@ public class Game {
     private Player player = Player.WHITE;
     private MoveChecker checker = new MoveChecker(board);
 
-    @FXML
-    private Button InstructionButton;
+     @FXML
+    private AnchorPane AnchorPaneIniziale;
     @FXML
     private Button PlayButton;
     @FXML
     private Button QuitButton;
     @FXML
     private Button ZanoButton;
+    @FXML
+    private ImageView Logo;
 
     @FXML
     public void selectPiece(MouseEvent event) {
@@ -75,24 +82,46 @@ public class Game {
     public void arrenditi(ActionEvent event) {
         System.out.println("Ti sei arreso");
     }
-
     @FXML
-    void InstructionButton(ActionEvent event) {
+    public void PlayButton(ActionEvent event) {
+
+        //PlayButton.setVisible(false);
+        //QuitButton.setVisible(false);
+        //ZanoButton.setVisible(true);
+
+        Animazione();
 
     }
 
-    @FXML
-    void PlayButton(ActionEvent event) {
+    public void Animazione(){
 
-        PlayButton.setVisible(false);
-        InstructionButton.setVisible(false);
-        QuitButton.setVisible(false);
-        ZanoButton.setVisible(true);
+        TranslateTransition AnimazioneLogo= new TranslateTransition(Duration.seconds(1), Logo);
+
+        double centerX = (Logo.getScene().getWidth() - Logo.getFitWidth()) / 2;
+        double centerY = (Logo.getScene().getHeight() - Logo.getFitHeight()) / 2;
+
+        AnimazioneLogo.setToX(centerX - Logo.getLayoutX());
+        AnimazioneLogo.setToY(-(Logo.getLayoutY() - 50)); 
+
+        TranslateTransition AnimazioneBottone1= new TranslateTransition(Duration.seconds(1), PlayButton);
+
+        AnimazioneBottone1.setToX(centerX+200);
+        AnimazioneBottone1.setToY(-(centerY));
+
+        TranslateTransition AnimazioneBottone2= new TranslateTransition(Duration.seconds(1),QuitButton);
+
+        AnimazioneBottone2.setToX(centerX-350);
+        AnimazioneBottone2.setToY(-(centerY));
+
+        ParallelTransition parallelTransition = new ParallelTransition(AnimazioneLogo, AnimazioneBottone1, AnimazioneBottone2);
+
+        parallelTransition.play();
 
     }
 
     @FXML
     void QuitButton(ActionEvent event) {
+
 
     }
 
