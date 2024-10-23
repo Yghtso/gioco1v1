@@ -22,39 +22,39 @@ public class Pawn extends Piece {
         if (this.owner == Player.WHITE) {
             this.FORWARD1
                     .setPosition(new Position(this.position.getRow() + BASE_PAWN_MOVE, this.position.getColumn()));
-            allPossibleMoves.add(FORWARD1.clone());
+            allPossibleMoves.add(FORWARD1);
             if (firstMove) {
                 this.FORWARD2.setPosition(
                         new Position(this.position.getRow() + STARTING_PAWN_MOVE, this.position.getColumn()));
-                allPossibleMoves.add(FORWARD2.clone());
+                allPossibleMoves.add(FORWARD2);
                 this.firstMove = !this.firstMove;
             } else {
                 this.FORWARD2.setPosition(null);
             }
             this.DIAGONALLEFT.setPosition(
                     new Position(this.position.getRow() + BASE_PAWN_MOVE, this.position.getColumn() - BASE_PAWN_MOVE));
-            allPossibleMoves.add(DIAGONALLEFT.clone());
+            allPossibleMoves.add(DIAGONALLEFT);
             this.DIAGONALRIGHT.setPosition(
                     new Position(this.position.getRow() + BASE_PAWN_MOVE, this.position.getColumn() + BASE_PAWN_MOVE));
-            allPossibleMoves.add(DIAGONALRIGHT.clone());
+            allPossibleMoves.add(DIAGONALRIGHT);
         } else {
             this.FORWARD1
                     .setPosition(new Position(this.position.getRow() - BASE_PAWN_MOVE, this.position.getColumn()));
-            allPossibleMoves.add(FORWARD1.clone());
+            allPossibleMoves.add(FORWARD1);
             if (firstMove) {
                 this.FORWARD2.setPosition(
                         new Position(this.position.getRow() - STARTING_PAWN_MOVE, this.position.getColumn()));
-                allPossibleMoves.add(FORWARD2.clone());
+                allPossibleMoves.add(FORWARD2);
                 this.firstMove = !this.firstMove;
             } else {
                 this.FORWARD2.setPosition(null);
             }
             this.DIAGONALLEFT.setPosition(
                     new Position(this.position.getRow() - BASE_PAWN_MOVE, this.position.getColumn() + BASE_PAWN_MOVE));
-            allPossibleMoves.add(DIAGONALLEFT.clone());
+            allPossibleMoves.add(DIAGONALLEFT);
             this.DIAGONALRIGHT.setPosition(
                     new Position(this.position.getRow() - BASE_PAWN_MOVE, this.position.getColumn() - BASE_PAWN_MOVE));
-            allPossibleMoves.add(DIAGONALRIGHT.clone());
+            allPossibleMoves.add(DIAGONALRIGHT);
         }
 
         for (Move move : allPossibleMoves) {

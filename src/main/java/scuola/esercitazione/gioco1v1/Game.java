@@ -64,8 +64,16 @@ public class Game {
         if (isPieceSelected && !clickedOwnedPiece) {
 
             Move move = new Move(new Position(row, column), selectedPiece, false);
+            selectedPiece.calculateMoves();
 
-            checker.checkMoves(selectedPiece);
+            for (Move singlMove : selectedPiece.getValidMoves()) {
+                System.out.println("Mossa possibile : " + singlMove.getPosition().getRow() + ", " + singlMove.getPosition().getColumn());
+            }
+            System.out.println("Mosse valide :");
+            checker.checkMoves(selectedPiece.getValidMoves());
+            for (Move singlMove : selectedPiece.getValidMoves()) {
+                System.out.println("Mossa possibile : " + singlMove.getPosition().getRow() + ", " + singlMove.getPosition().getColumn());
+            }
 
             for (Move singleMove : selectedPiece.getValidMoves()) {
                 if (singleMove.equals(move)) {
