@@ -6,8 +6,6 @@ public class ChessBoard {
 
     public final static int ROWS = 8;
     public final static int COLUMNS = 8;
-    public final static int WHITE_PAWNS_STARTING_ROW = 2;
-    public final static int BLACK_PAWNS_STARTING_ROW = 7;
     public final static int FIRST_ROW = 1;
     public final static int FIRST_COLUMN = 1;
     public final static int LAST_ROW = ROWS;
@@ -23,42 +21,42 @@ public class ChessBoard {
 
         // PEINE BIANCHE
         for (int i = 1; i <= COLUMNS; i++) {            
-            pieces[WHITE_PAWNS_STARTING_ROW - 1][i - 1] = new Pawn(new Position(WHITE_PAWNS_STARTING_ROW, i),
+            pieces[Pawn.WHITE_PAWNS_STARTING_ROW - 1][i - 1] = new Pawn(new Position(Pawn.WHITE_PAWNS_STARTING_ROW, i),
             Player.WHITE,
             getFirstAvailableId());
         }
 
-        pieces[FIRST_ROW - 1][FIRST_COLUMN - 1] = new Rook(new Position(FIRST_ROW, FIRST_COLUMN), Player.WHITE,
+        pieces[Rook.WHITE_ROOKS_STARTING_ROW - 1][Rook.WHITE_ROOK1_STARTING_COLUMN - 1] = new Rook(new Position(Rook.WHITE_ROOKS_STARTING_ROW, Rook.WHITE_ROOK1_STARTING_COLUMN), Player.WHITE,
                 getFirstAvailableId());
-        pieces[FIRST_ROW - 1][LAST_COLUMN - 1] = new Rook(new Position(FIRST_ROW, LAST_COLUMN), Player.WHITE,
+        pieces[Rook.WHITE_ROOKS_STARTING_ROW - 1][Rook.WHITE_ROOK2_STARTING_COLUMN - 1] = new Rook(new Position(Rook.WHITE_ROOKS_STARTING_ROW, Rook.WHITE_ROOK2_STARTING_COLUMN), Player.WHITE,
                 getFirstAvailableId());
 
-        pieces[FIRST_ROW - 1][2 - 1] = new Knight(new Position(FIRST_ROW, 2), Player.WHITE, getFirstAvailableId());
-        pieces[FIRST_ROW - 1][7 - 1] = new Knight(new Position(FIRST_ROW, 7), Player.WHITE, getFirstAvailableId());
+        pieces[Knight.WHITE_KNIGHTS_STARTING_ROW - 1][Knight.WHITE_KNIGHT1_STARTING_COLUMN - 1] = new Knight(new Position(Knight.WHITE_KNIGHTS_STARTING_ROW, Knight.WHITE_KNIGHT1_STARTING_COLUMN), Player.WHITE, getFirstAvailableId());
+        pieces[Knight.WHITE_KNIGHTS_STARTING_ROW - 1][Knight.WHITE_KNIGHT2_STARTING_COLUMN - 1] = new Knight(new Position(Knight.WHITE_KNIGHTS_STARTING_ROW, Knight.WHITE_KNIGHT2_STARTING_COLUMN), Player.WHITE, getFirstAvailableId());
 
-        pieces[FIRST_ROW - 1][3 - 1] = new Bishop(new Position(FIRST_ROW, 3), Player.WHITE, getFirstAvailableId());
-        pieces[FIRST_ROW - 1][6 - 1] = new Bishop(new Position(FIRST_ROW, 6), Player.WHITE, getFirstAvailableId());
+        pieces[Bishop.WHITE_BISHOPS_STARTING_ROW - 1][Bishop.WHITE_BISHOP1_STARTING_COLUMN - 1] = new Bishop(new Position(Bishop.WHITE_BISHOPS_STARTING_ROW, Bishop.WHITE_BISHOP1_STARTING_COLUMN), Player.WHITE, getFirstAvailableId());
+        pieces[Bishop.WHITE_BISHOPS_STARTING_ROW - 1][Bishop.WHITE_BISHOP2_STARTING_COLUMN - 1] = new Bishop(new Position(Bishop.WHITE_BISHOPS_STARTING_ROW, Bishop.WHITE_BISHOP2_STARTING_COLUMN), Player.WHITE, getFirstAvailableId());
 
         pieces[FIRST_ROW - 1][4 - 1] = new Queen(new Position(FIRST_ROW, 4), Player.WHITE, getFirstAvailableId());
 
         pieces[FIRST_ROW - 1][5 - 1] = new King(new Position(FIRST_ROW, 5), Player.WHITE, getFirstAvailableId());
 
-        // PEDINE NEGRE
+        // PEDINE NERE
         for (int i = 1; i <= COLUMNS; i++) {
-            pieces[BLACK_PAWNS_STARTING_ROW - 1][i - 1] = new Pawn(new Position(BLACK_PAWNS_STARTING_ROW, i),
+            pieces[Pawn.BLACK_PAWNS_STARTING_ROW - 1][i - 1] = new Pawn(new Position(Pawn.BLACK_PAWNS_STARTING_ROW, i),
                     Player.BLACK, getFirstAvailableId());
         }
 
-        pieces[LAST_ROW - 1][FIRST_COLUMN - 1] = new Rook(new Position(LAST_ROW, FIRST_COLUMN), Player.BLACK,
+        pieces[Rook.BLACK_ROOKS_STARTING_ROW - 1][Rook.BLACK_ROOK1_STARTING_COLUMN - 1] = new Rook(new Position(Rook.BLACK_ROOKS_STARTING_ROW, Rook.BLACK_ROOK1_STARTING_COLUMN), Player.BLACK,
                 getFirstAvailableId());
-        pieces[LAST_ROW - 1][LAST_COLUMN - 1] = new Rook(new Position(LAST_ROW, LAST_COLUMN), Player.BLACK,
+        pieces[Rook.BLACK_ROOKS_STARTING_ROW - 1][Rook.BLACK_ROOK2_STARTING_COLUMN - 1] = new Rook(new Position(Rook.BLACK_ROOKS_STARTING_ROW, Rook.BLACK_ROOK1_STARTING_COLUMN), Player.BLACK,
                 getFirstAvailableId());
 
-        pieces[LAST_ROW - 1][2 - 1] = new Knight(new Position(LAST_ROW, 2), Player.BLACK, getFirstAvailableId());
-        pieces[LAST_ROW - 1][7 - 1] = new Knight(new Position(LAST_ROW, 7), Player.BLACK, getFirstAvailableId());
+        pieces[Knight.BLACK_KNIGHTS_STARTING_ROW - 1][Knight.BLACK_KNIGHT1_STARTING_COLUMN - 1] = new Knight(new Position(Knight.BLACK_KNIGHTS_STARTING_ROW, Knight.BLACK_KNIGHT1_STARTING_COLUMN), Player.BLACK, getFirstAvailableId());
+        pieces[Knight.BLACK_KNIGHTS_STARTING_ROW - 1][Knight.BLACK_KNIGHT2_STARTING_COLUMN - 1] = new Knight(new Position(Knight.BLACK_KNIGHTS_STARTING_ROW, Knight.BLACK_KNIGHT2_STARTING_COLUMN), Player.BLACK, getFirstAvailableId());
 
-        pieces[LAST_ROW - 1][3 - 1] = new Bishop(new Position(LAST_ROW, 3), Player.BLACK, getFirstAvailableId());
-        pieces[LAST_ROW - 1][6 - 1] = new Bishop(new Position(LAST_ROW, 6), Player.BLACK, getFirstAvailableId());
+        pieces[Bishop.BLACK_BISHOPS_STARTING_ROW - 1][Bishop.BLACK_BISHOP1_STARTING_COLUMN - 1] = new Bishop(new Position(Bishop.BLACK_BISHOPS_STARTING_ROW, Bishop.BLACK_BISHOP1_STARTING_COLUMN), Player.BLACK, getFirstAvailableId());
+        pieces[Bishop.BLACK_BISHOPS_STARTING_ROW - 1][Bishop.BLACK_BISHOP2_STARTING_COLUMN - 1] = new Bishop(new Position(Bishop.BLACK_BISHOPS_STARTING_ROW, Bishop.BLACK_BISHOP2_STARTING_COLUMN), Player.BLACK, getFirstAvailableId());
 
         pieces[LAST_ROW - 1][4 - 1] = new Queen(new Position(LAST_ROW, 4), Player.BLACK, getFirstAvailableId());
 

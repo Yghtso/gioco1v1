@@ -9,6 +9,13 @@ public class Bishop extends Piece {
     public ArrayList<Move> BOTTOMLEFTDIAGONAL = new ArrayList<>();
     public ArrayList<Move> BOTTOMRIGHTDIAGONAL = new ArrayList<>();
 
+    public final static int WHITE_BISHOPS_STARTING_ROW = 1;
+    public final static int WHITE_BISHOP1_STARTING_COLUMN = 3;
+    public final static int WHITE_BISHOP2_STARTING_COLUMN = 6;
+
+    public final static int BLACK_BISHOPS_STARTING_ROW = 8;
+    public final static int BLACK_BISHOP1_STARTING_COLUMN = 3;
+    public final static int BLACK_BISHOP2_STARTING_COLUMN = 6;
 
     public void calculateMoves() {
 
