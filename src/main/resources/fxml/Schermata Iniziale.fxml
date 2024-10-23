@@ -7,8 +7,8 @@
 
 <AnchorPane fx:id="AnchorPaneIniziale" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="638.0" prefWidth="922.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scuola.esercitazione.gioco1v1.Game">
    <children>
-      <Button fx:id="PlayButton" layoutX="60.0" layoutY="182.0" mnemonicParsing="false" onAction="#PlayButton" prefHeight="50.0" prefWidth="200.0" text="GIOCA" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="400.0" />
-      <Button fx:id="QuitButton" layoutX="41.0" layoutY="320.0" mnemonicParsing="false" onAction="#QuitButton" prefHeight="50.0" prefWidth="200.0" text="ESCI" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="500.0" />
+      <Button fx:id="PlayButton" alignment="CENTER" contentDisplay="CENTER" layoutX="60.0" layoutY="182.0" mnemonicParsing="false" onAction="#PlayButton" prefHeight="50.0" prefWidth="200.0" text="GIOCA" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="400.0" />
+      <Button fx:id="QuitButton" alignment="CENTER" contentDisplay="CENTER" layoutX="41.0" layoutY="320.0" mnemonicParsing="false" onAction="#QuitButton" prefHeight="50.0" prefWidth="200.0" text="ESCI" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="500.0" />
       <Button fx:id="ZanoButton" layoutX="504.0" layoutY="202.0" mnemonicParsing="false" prefHeight="168.0" prefWidth="260.0" text="zano" visible="false" />
       <ImageView fx:id="Logo" fitHeight="195.0" fitWidth="200.0" layoutX="61.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true">
          <image>
