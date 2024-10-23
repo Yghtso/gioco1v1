@@ -2,9 +2,6 @@ package scuola.esercitazione.gioco1v1;
 
 import java.util.ArrayList;
 
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.geometry.Pos;
-
 public class MoveChecker {
 
     private ChessBoard board;
@@ -30,7 +27,6 @@ public class MoveChecker {
 
         if (piece instanceof Rook) {
             for (Move move : allMoves) {
-                System.out.println("Mossa : " + move.getPosition().getRow() + " ," + move.getPosition().getColumn() + ", validita : " + validForRooks(move));
                 if (!validForRooks(move)) {
                     piece.getValidMoves().remove(move);
                 }
@@ -46,9 +42,7 @@ public class MoveChecker {
         }
 
         if (piece instanceof Bishop) {
-            System.out.println("Mosse disponibili : " + allMoves.size());
             for (Move move : allMoves) {
-                System.out.println("Mossa : " + move.getPosition().getRow() + " ," + move.getPosition().getColumn());
                 if (!validForBishops(move)) {
                     piece.getValidMoves().remove(move);
                 }
@@ -88,111 +82,169 @@ public class MoveChecker {
     }
 
     private boolean validForRooks(Move move) {
-        
+
         Rook selectedRook = (Rook) move.getPiece();
         Piece destinationPiece = board.getPiece(move.getPosition());
         Player ownerDestinationPiece = destinationPiece == null ? null : destinationPiece.getOwner();
         int distance;
-        System.out.println("TOP");
+        
+        for (Move singleMove : selectedRook.TOP) {
+            if (singleMove.equals(move)) {
+                distance = move.getPosition().getRow() - selectedRook.getPosition().getRow();
 
-        if (selectedRook.TOP.contains(move)) {
-            distance = move.getPosition().getRow() - selectedRook.getPosition().getRow();
+                for (int i = 1; i <= distance; i++) {
+                    if (i == distance) {
+                        return selectedRook.getOwner() != ownerDestinationPiece;
+                    }
 
-            for (int i = 1; i <= distance; i++) {
-                if (i == distance) {
-                    return selectedRook.getOwner() != ownerDestinationPiece;
+                    if (board.getPiece(new Position(selectedRook.getPosition().getRow() + i,
+                            selectedRook.getPosition().getColumn())) != null) {
+                        return false;
+                    }
                 }
-                
-                if (board.getPiece(new Position(selectedRook.getPosition().getRow() + i, selectedRook.getPosition().getColumn())) != null) {
-                    return false;
-                }
+                return true;
             }
-            return true;
         }
 
-        if (selectedRook.RIGHT.contains(move)) {
-            distance = move.getPosition().getColumn() - selectedRook.getPosition().getColumn();
+        for (Move singleMove : selectedRook.RIGHT) {
+            if (singleMove.equals(move)) {
+                distance = move.getPosition().getColumn() - selectedRook.getPosition().getColumn();
 
-            for (int i = 1; i <= distance; i++) {
-                if (i == distance) {
-                    return selectedRook.getOwner() != ownerDestinationPiece;
+                for (int i = 1; i <= distance; i++) {
+                    if (i == distance) {
+                        return selectedRook.getOwner() != ownerDestinationPiece;
+                    }
+
+                    if (board.getPiece(new Position(selectedRook.getPosition().getRow(),
+                            selectedRook.getPosition().getColumn() + i)) != null) {
+                        return false;
+                    }
                 }
-                
-                if (board.getPiece(new Position(selectedRook.getPosition().getRow(), selectedRook.getPosition().getColumn() + i)) != null) {
-                    return false;
-                }
+                return true;
             }
-            return true;
         }
 
-        if (selectedRook.BOTTOM.contains(move)) {
-            distance = selectedRook.getPosition().getRow() - move.getPosition().getRow();
+        for (Move singleMove : selectedRook.BOTTOM) {
+            if (singleMove.equals(move)) {
+                distance = selectedRook.getPosition().getRow() - move.getPosition().getRow();
 
-            for (int i = 1; i <= distance; i++) {
-                if (i == distance) {
-                    return selectedRook.getOwner() != ownerDestinationPiece;
+                for (int i = 1; i <= distance; i++) {
+                    if (i == distance) {
+                        return selectedRook.getOwner() != ownerDestinationPiece;
+                    }
+
+                    if (board.getPiece(new Position(selectedRook.getPosition().getRow() - i,
+                            selectedRook.getPosition().getColumn())) != null) {
+                        return false;
+                    }
                 }
-                
-                if (board.getPiece(new Position(selectedRook.getPosition().getRow() - i, selectedRook.getPosition().getColumn())) != null) {
-                    return false;
-                }
+                return true;
             }
-            return true;
         }
 
-        if (selectedRook.LEFT.contains(move)) {
-            distance = selectedRook.getPosition().getColumn() - move.getPosition().getColumn();
+        for (Move singleMove : selectedRook.LEFT) {
+            if (singleMove.equals(move)) {
+                distance = selectedRook.getPosition().getColumn() - move.getPosition().getColumn();
 
-            for (int i = 1; i <= distance; i++) {
-                if (i == distance) {
-                    return selectedRook.getOwner() != ownerDestinationPiece;
-                }
-                
-                if (board.getPiece(new Position(selectedRook.getPosition().getRow(), selectedRook.getPosition().getColumn() - i)) != null) {
-                    return false;
+                for (int i = 1; i <= distance; i++) {
+                    if (i == distance) {
+                        return selectedRook.getOwner() != ownerDestinationPiece;
+                    }
+
+                    if (board.getPiece(new Position(selectedRook.getPosition().getRow(),
+                            selectedRook.getPosition().getColumn() - i)) != null) {
+                        return false;
+                    }
                 }
             }
         }
         return true;
+
     }
 
     private boolean validForKnights(Move move) {
-        Piece destPiece = board.getPiece(move.getPosition());
-        boolean destEmpty = destPiece == null ? true : false;
+        Position destination = move.getPosition();
+        boolean destinationEmpty = board.getPiece(destination) == null;
+        Player ownerDestination = destinationEmpty ? null : board.getPiece(destination).getOwner();
 
-        if (!destEmpty) {
-            return destPiece.getOwner() != move.getPiece().getOwner();
-        }
-        return true;
+        return ownerDestination != move.getPiece().getOwner();
     }
 
     private boolean validForBishops(Move move) {
-
         Bishop selectedBishop = (Bishop) move.getPiece();
-        for (Move singlMove : selectedBishop.TOPLEFTDIAGONAL) {
-            if (move.equals(singlMove)) {
-                
-            }
-        }
-
-        for (Move singlMove : selectedBishop.BOTTOMLEFTDIAGONAL) {
-            if (move.equals(singlMove)) {
-                
-            }
-        }
-
-        for (Move singlMove : selectedBishop.TOPLEFTDIAGONAL) {
-            if (move.equals(singlMove)) {
-                
-            }
-        }
+        Piece destinationPiece = board.getPiece(move.getPosition());
+        Player ownerDestinationPiece = destinationPiece == null ? null : destinationPiece.getOwner();
+        int distance;
         
-        for (Move singlMove : selectedBishop.TOPLEFTDIAGONAL) {
-            if (move.equals(singlMove)) {
-                
+        for (Move singleMove : selectedBishop.TOPLEFTDIAGONAL) {
+            if (singleMove.equals(move)) {
+                distance = Math.abs(move.getPosition().getRow() < move.getPosition().getColumn() ? move.getPosition().getRow() - selectedBishop.getPosition().getRow() : move.getPosition().getColumn() - selectedBishop.getPosition().getColumn());
+                for (int i = 1; i <= distance; i++) {
+                    if (i == distance) {
+                        return selectedBishop.getOwner() != ownerDestinationPiece;
+                    }
+
+                    if (board.getPiece(new Position(selectedBishop.getPosition().getRow() + i,
+                            selectedBishop.getPosition().getColumn() - i)) != null) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+
+        for (Move singleMove : selectedBishop.TOPRIGHTDIAGONAL) {
+            if (singleMove.equals(move)) {
+                distance = Math.abs(move.getPosition().getRow() < move.getPosition().getColumn() ? move.getPosition().getRow() - selectedBishop.getPosition().getRow() : move.getPosition().getColumn() - selectedBishop.getPosition().getColumn());
+
+                for (int i = 1; i <= distance; i++) {
+                    if (i == distance) {
+                        return selectedBishop.getOwner() != ownerDestinationPiece;
+                    }
+
+                    if (board.getPiece(new Position(selectedBishop.getPosition().getRow() + i,
+                            selectedBishop.getPosition().getColumn() + i)) != null) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+
+        for (Move singleMove : selectedBishop.BOTTOMRIGHTDIAGONAL) {
+            if (singleMove.equals(move)) {
+                distance = Math.abs(move.getPosition().getRow() < move.getPosition().getColumn() ? move.getPosition().getRow() - selectedBishop.getPosition().getRow() : move.getPosition().getColumn() - selectedBishop.getPosition().getColumn());
+
+                for (int i = 1; i <= distance; i++) {
+                    if (i == distance) {
+                        return selectedBishop.getOwner() != ownerDestinationPiece;
+                    }
+
+                    if (board.getPiece(new Position(selectedBishop.getPosition().getRow() - i,
+                            selectedBishop.getPosition().getColumn() + i)) != null) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+
+        for (Move singleMove : selectedBishop.BOTTOMLEFTDIAGONAL) {
+            if (singleMove.equals(move)) {
+                distance = Math.abs(move.getPosition().getRow() < move.getPosition().getColumn() ? move.getPosition().getRow() - selectedBishop.getPosition().getRow() : move.getPosition().getColumn() - selectedBishop.getPosition().getColumn());
+
+                for (int i = 1; i <= distance; i++) {
+                    if (i == distance) {
+                        return selectedBishop.getOwner() != ownerDestinationPiece;
+                    }
+
+                    if (board.getPiece(new Position(selectedBishop.getPosition().getRow() - i,
+                            selectedBishop.getPosition().getColumn() - i)) != null) {
+                        return false;
+                    }
+                }
             }
         }
         return true;
     }
-
 }

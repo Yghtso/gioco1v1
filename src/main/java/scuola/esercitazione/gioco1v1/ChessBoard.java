@@ -33,15 +33,15 @@ public class ChessBoard {
         pieces[FIRST_ROW - 1][LAST_COLUMN - 1] = new Rook(new Position(FIRST_ROW, LAST_COLUMN), Player.WHITE,
                 getFirstAvailableId());
 
-        pieces[FIRST_ROW - 1][1] = new Knight(new Position(FIRST_ROW, 2), Player.WHITE, getFirstAvailableId());
-        pieces[FIRST_ROW - 1][6] = new Knight(new Position(FIRST_ROW, 7), Player.WHITE, getFirstAvailableId());
+        pieces[FIRST_ROW - 1][2 - 1] = new Knight(new Position(FIRST_ROW, 2), Player.WHITE, getFirstAvailableId());
+        pieces[FIRST_ROW - 1][7 - 1] = new Knight(new Position(FIRST_ROW, 7), Player.WHITE, getFirstAvailableId());
 
-        pieces[FIRST_ROW - 1][2] = new Bishop(new Position(FIRST_ROW, 3), Player.WHITE, getFirstAvailableId());
-        pieces[FIRST_ROW - 1][5] = new Bishop(new Position(FIRST_ROW, 6), Player.WHITE, getFirstAvailableId());
+        pieces[FIRST_ROW - 1][3 - 1] = new Bishop(new Position(FIRST_ROW, 3), Player.WHITE, getFirstAvailableId());
+        pieces[FIRST_ROW - 1][6 - 1] = new Bishop(new Position(FIRST_ROW, 6), Player.WHITE, getFirstAvailableId());
 
-        pieces[FIRST_ROW - 1][3] = new Queen(new Position(FIRST_ROW, 4), Player.WHITE, getFirstAvailableId());
+        pieces[FIRST_ROW - 1][4 - 1] = new Queen(new Position(FIRST_ROW, 4), Player.WHITE, getFirstAvailableId());
 
-        pieces[FIRST_ROW - 1][4] = new King(new Position(FIRST_ROW, 5), Player.WHITE, getFirstAvailableId());
+        pieces[FIRST_ROW - 1][5 - 1] = new King(new Position(FIRST_ROW, 5), Player.WHITE, getFirstAvailableId());
 
         // PEDINE NEGRE
         for (int i = 1; i <= COLUMNS; i++) {
@@ -54,15 +54,15 @@ public class ChessBoard {
         pieces[LAST_ROW - 1][LAST_COLUMN - 1] = new Rook(new Position(LAST_ROW, LAST_COLUMN), Player.BLACK,
                 getFirstAvailableId());
 
-        pieces[LAST_ROW - 1][1] = new Knight(new Position(LAST_ROW, 2), Player.BLACK, getFirstAvailableId());
-        pieces[LAST_ROW - 1][6] = new Knight(new Position(LAST_ROW, 7), Player.BLACK, getFirstAvailableId());
+        pieces[LAST_ROW - 1][2 - 1] = new Knight(new Position(LAST_ROW, 2), Player.BLACK, getFirstAvailableId());
+        pieces[LAST_ROW - 1][7 - 1] = new Knight(new Position(LAST_ROW, 7), Player.BLACK, getFirstAvailableId());
 
-        pieces[LAST_ROW - 1][2] = new Bishop(new Position(LAST_ROW, 3), Player.BLACK, getFirstAvailableId());
-        pieces[LAST_ROW - 1][5] = new Bishop(new Position(LAST_ROW, 6), Player.BLACK, getFirstAvailableId());
+        pieces[LAST_ROW - 1][3 - 1] = new Bishop(new Position(LAST_ROW, 3), Player.BLACK, getFirstAvailableId());
+        pieces[LAST_ROW - 1][6 - 1] = new Bishop(new Position(LAST_ROW, 6), Player.BLACK, getFirstAvailableId());
 
-        pieces[LAST_ROW - 1][3] = new Queen(new Position(LAST_ROW, 4), Player.BLACK, getFirstAvailableId());
+        pieces[LAST_ROW - 1][4 - 1] = new Queen(new Position(LAST_ROW, 4), Player.BLACK, getFirstAvailableId());
 
-        pieces[LAST_ROW - 1][4] = new King(new Position(LAST_ROW, 5), Player.BLACK, getFirstAvailableId());
+        pieces[LAST_ROW - 1][5 - 1] = new King(new Position(LAST_ROW, 5), Player.BLACK, getFirstAvailableId());
     }
 
     public void createPiece(Piece piece) {

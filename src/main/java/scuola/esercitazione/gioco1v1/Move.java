@@ -47,6 +47,6 @@ public class Move implements Serializable {
     }
 
     public Move clone() {
-        return new Move(position.clone(), piece, this.surrender);
+        return new Move(position.clone(), piece.clone(), this.surrender);
     }
 }
