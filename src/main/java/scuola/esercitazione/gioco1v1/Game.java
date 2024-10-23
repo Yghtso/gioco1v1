@@ -97,21 +97,22 @@ public class Game {
 
         TranslateTransition AnimazioneLogo= new TranslateTransition(Duration.seconds(1), Logo);
 
-        double centerX = (Logo.getScene().getWidth() - Logo.getFitWidth()) / 2;
-        double centerY = (Logo.getScene().getHeight() - Logo.getFitHeight()) / 2;
+        double centerXLogo = (Logo.getScene().getWidth() - Logo.getFitWidth()) / 2;
+        double centerXButton = (Logo.getScene().getWidth() -PlayButton.getWidth()) / 2;
+        double centerYButton = (Logo.getScene().getHeight()-PlayButton.getWidth()) / 2;
 
-        AnimazioneLogo.setToX(centerX - Logo.getLayoutX());
+        AnimazioneLogo.setToX(centerXLogo - Logo.getLayoutX());
         AnimazioneLogo.setToY(-(Logo.getLayoutY() - 50)); 
 
         TranslateTransition AnimazioneBottone1= new TranslateTransition(Duration.seconds(1), PlayButton);
 
-        AnimazioneBottone1.setToX(centerX+200);
-        AnimazioneBottone1.setToY(-(centerY));
+        AnimazioneBottone1.setToX(centerXButton - PlayButton.getLayoutX()- centerXButton/2);
+        AnimazioneBottone1.setToY(-(centerYButton + PlayButton.getLayoutY())+100);
 
         TranslateTransition AnimazioneBottone2= new TranslateTransition(Duration.seconds(1),QuitButton);
 
-        AnimazioneBottone2.setToX(centerX-350);
-        AnimazioneBottone2.setToY(-(centerY));
+        AnimazioneBottone2.setToX(centerXButton - PlayButton.getLayoutX()+ centerXButton/2);
+        AnimazioneBottone2.setToY(-(centerYButton + PlayButton.getLayoutY()));
 
         ParallelTransition parallelTransition = new ParallelTransition(AnimazioneLogo, AnimazioneBottone1, AnimazioneBottone2);
 
