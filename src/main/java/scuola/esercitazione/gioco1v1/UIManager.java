@@ -1,21 +1,22 @@
 package scuola.esercitazione.gioco1v1;
 
+import java.io.IOException;
+
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 public class UIManager {
     
@@ -29,6 +30,13 @@ public class UIManager {
     private Button QuitButton;
     @FXML
     private ImageView Logo;
+    @FXML
+    private Button ClientButton;
+    @FXML
+    private Button ServerButton;
+    @FXML
+    private Button ZanoButton;
+
     
     @FXML
     public void clickedSquare(MouseEvent event) {
@@ -88,7 +96,7 @@ public class UIManager {
         Animazione();
 
     }
-
+    @FXML
     public void Animazione(){
 
         TranslateTransition AnimazioneLogo= new TranslateTransition(Duration.seconds(1), Logo);
@@ -116,16 +124,23 @@ public class UIManager {
 
     }
 
+    @FXML
     public void ServerButton(ActionEvent event) throws Exception{
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Scacchiera.fxml"));
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Scacchiera.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace(); 
+        }
 
     }
+        
+        
 
     @FXML
     void QuitButton(ActionEvent event) {
