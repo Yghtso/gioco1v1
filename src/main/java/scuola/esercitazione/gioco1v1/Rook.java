@@ -6,10 +6,10 @@ public class Rook extends Piece {
 
     private boolean firstMove;
 
-    public ArrayList<Move> TOP = new ArrayList<>();
-    public ArrayList<Move> RIGHT = new ArrayList<>();
-    public ArrayList<Move> BOTTOM = new ArrayList<>();
-    public ArrayList<Move> LEFT = new ArrayList<>();
+    private ArrayList<Move> TOP = new ArrayList<>();
+    private ArrayList<Move> RIGHT = new ArrayList<>();
+    private ArrayList<Move> BOTTOM = new ArrayList<>();
+    private ArrayList<Move> LEFT = new ArrayList<>();
 
     public final static int WHITE_ROOKS_STARTING_ROW = 1;
     public final static int WHITE_ROOK1_STARTING_COLUMN = 1;

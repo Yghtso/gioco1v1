@@ -54,19 +54,19 @@ public class MoveChecker {
     }
 
     private boolean validForPawns(Move move) {
-        boolean frontOccupied = board.getPiece(((Pawn) move.getPiece()).FORWARD1.getPosition()) != null;
-        boolean diagonalLeftOccupied = board.getPiece(((Pawn) move.getPiece()).DIAGONALLEFT.getPosition()) != null;
-        boolean diagonalRightOccupied = board.getPiece(((Pawn) move.getPiece()).DIAGONALRIGHT.getPosition()) != null;
+        boolean frontOccupied = board.getPiece(((Pawn) move.getPiece()).getFORWARD1().getPosition()) != null;
+        boolean diagonalLeftOccupied = board.getPiece(((Pawn) move.getPiece()).getDIAGONALLEFT().getPosition()) != null;
+        boolean diagonalRightOccupied = board.getPiece(((Pawn) move.getPiece()).getDIAGONALRIGHT().getPosition()) != null;
 
-        if (move.equals(((Pawn) move.getPiece()).FORWARD2)) {
+        if (move.equals(((Pawn) move.getPiece()).getFORWARD2())) {
             return !frontOccupied;
         }
 
-        if (move.equals(((Pawn) move.getPiece()).DIAGONALLEFT)) {
+        if (move.equals(((Pawn) move.getPiece()).getDIAGONALLEFT())) {
             return diagonalLeftOccupied;
         }
 
-        if (move.equals(((Pawn) move.getPiece()).DIAGONALRIGHT)) {
+        if (move.equals(((Pawn) move.getPiece()).getDIAGONALRIGHT())) {
             return diagonalRightOccupied;
         }
 

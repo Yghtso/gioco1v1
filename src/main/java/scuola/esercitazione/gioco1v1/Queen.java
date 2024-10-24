@@ -3,14 +3,14 @@ package scuola.esercitazione.gioco1v1;
 import java.util.ArrayList;
 public class Queen extends Piece {
 
-    public ArrayList<Move> TOP = new ArrayList<>();
-    public ArrayList<Move> RIGHT = new ArrayList<>();
-    public ArrayList<Move> BOTTOM = new ArrayList<>();
-    public ArrayList<Move> LEFT = new ArrayList<>();
-    public ArrayList<Move> TOPLEFTDIAGONAL = new ArrayList<>();
-    public ArrayList<Move> TOPRIGHTDIAGONAL = new ArrayList<>();
-    public ArrayList<Move> BOTTOMLEFTDIAGONAL = new ArrayList<>();
-    public ArrayList<Move> BOTTOMRIGHTDIAGONAL = new ArrayList<>();
+    private ArrayList<Move> TOP = new ArrayList<>();
+    private ArrayList<Move> RIGHT = new ArrayList<>();
+    private ArrayList<Move> BOTTOM = new ArrayList<>();
+    private ArrayList<Move> LEFT = new ArrayList<>();
+    private ArrayList<Move> TOPLEFTDIAGONAL = new ArrayList<>();
+    private ArrayList<Move> TOPRIGHTDIAGONAL = new ArrayList<>();
+    private ArrayList<Move> BOTTOMLEFTDIAGONAL = new ArrayList<>();
+    private ArrayList<Move> BOTTOMRIGHTDIAGONAL = new ArrayList<>();
     
     public final static int WHITE_QUEEN_STARTING_ROW = 1;
     public final static int BLACK_QUEEN_STARTING_ROW = 8;
