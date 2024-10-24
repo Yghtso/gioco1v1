@@ -47,4 +47,19 @@ public class Knight extends Piece {
     public Knight(Position position, Player owner, int id) {
         super(position, owner, id);
     }
+
+    public Move getFORWARD1() {return null;}
+    public Move getFORWARD2() {return null;}
+    public Move getDIAGONALLEFT() {return null;}
+    public Move getDIAGONALRIGHT() {return null;}
+    public ArrayList<Move> getTOP() {return null;}
+    public ArrayList<Move> getRIGHT() {return null;}
+    public ArrayList<Move> getBOTTOM() {return null;}
+    public ArrayList<Move> getLEFT() {return null;}
+    public ArrayList<Move> getTOPLEFTDIAGONAL() {return null;}
+    public ArrayList<Move> getTOPRIGHTDIAGONAL() {return null;}
+    public ArrayList<Move> getBOTTOMLEFTDIAGONAL() {return null;}
+    public ArrayList<Move> getBOTTOMRIGHTDIAGONAL() {return null;}
+
+    public Piece clone() {return new King(position.clone(), owner, id);}
 }

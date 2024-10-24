@@ -43,7 +43,23 @@ public abstract class Piece implements Serializable{
         return this.validMoves;
     }
 
-    public Piece clone() {
-        return new Pawn(this.position.clone(), this.owner, this.id);
-    }
+    public abstract Piece clone();
+
+    // GETTERS DELLE MOSSE SPECIFICHE PER LE PEDINE
+    // PEDONI
+    public abstract Move getFORWARD1();
+    public abstract Move getFORWARD2();
+    public abstract Move getDIAGONALLEFT();
+    public abstract Move getDIAGONALRIGHT();
+    // TORRI
+    public abstract ArrayList<Move> getTOP();
+    public abstract ArrayList<Move> getRIGHT();
+    public abstract ArrayList<Move> getBOTTOM();
+    public abstract ArrayList<Move> getLEFT();
+    // ALFIERI
+    public abstract ArrayList<Move> getTOPLEFTDIAGONAL();
+    public abstract ArrayList<Move> getTOPRIGHTDIAGONAL();
+    public abstract ArrayList<Move> getBOTTOMLEFTDIAGONAL();
+    public abstract ArrayList<Move> getBOTTOMRIGHTDIAGONAL();
+
 }

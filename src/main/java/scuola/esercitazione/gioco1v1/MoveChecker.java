@@ -36,9 +36,15 @@ public class MoveChecker {
                 if (!validForBishops(move)) {
                     move.getPiece().getValidMoves().remove(move);
                 }
+
+            } else if (move.getPiece() instanceof Queen) {
+                
+                if (!validForBishops(move) || !validForRooks(move)) {
+                    move.getPiece().getValidMoves().remove(move);
+                }
+
             }
         }
-
     }
 
     private boolean destinationOwnedBySame(Move move) {
@@ -69,16 +75,16 @@ public class MoveChecker {
 
     private boolean validForRooks(Move move) {
 
-        Rook selectedRook = (Rook) move.getPiece();
+        Piece selectedPiece = move.getPiece() instanceof Rook ? (Rook) move.getPiece() : (Queen) move.getPiece();
         int distance;
 
-        for (Move singleMove : selectedRook.TOP) {
+        for (Move singleMove : selectedPiece.getTOP()) {
             if (singleMove.equals(move)) {
-                distance = move.getPosition().getRow() - selectedRook.getPosition().getRow();
+                distance = move.getPosition().getRow() - selectedPiece.getPosition().getRow();
 
                 for (int i = 1; i < distance; i++) {
-                    if (board.getPiece(new Position(selectedRook.getPosition().getRow() + i,
-                            selectedRook.getPosition().getColumn())) != null) {
+                    if (board.getPiece(new Position(selectedPiece.getPosition().getRow() + i,
+                            selectedPiece.getPosition().getColumn())) != null) {
                         return false;
                     }
                 }
@@ -86,13 +92,13 @@ public class MoveChecker {
             }
         }
 
-        for (Move singleMove : selectedRook.RIGHT) {
+        for (Move singleMove : selectedPiece.getRIGHT()) {
             if (singleMove.equals(move)) {
-                distance = move.getPosition().getColumn() - selectedRook.getPosition().getColumn();
+                distance = move.getPosition().getColumn() - selectedPiece.getPosition().getColumn();
 
                 for (int i = 1; i < distance; i++) {
-                    if (board.getPiece(new Position(selectedRook.getPosition().getRow(),
-                            selectedRook.getPosition().getColumn() + i)) != null) {
+                    if (board.getPiece(new Position(selectedPiece.getPosition().getRow(),
+                            selectedPiece.getPosition().getColumn() + i)) != null) {
                         return false;
                     }
                 }
@@ -100,13 +106,13 @@ public class MoveChecker {
             }
         }
 
-        for (Move singleMove : selectedRook.BOTTOM) {
+        for (Move singleMove : selectedPiece.getBOTTOM()) {
             if (singleMove.equals(move)) {
-                distance = selectedRook.getPosition().getRow() - move.getPosition().getRow();
+                distance = selectedPiece.getPosition().getRow() - move.getPosition().getRow();
 
                 for (int i = 1; i < distance; i++) {
-                    if (board.getPiece(new Position(selectedRook.getPosition().getRow() - i,
-                            selectedRook.getPosition().getColumn())) != null) {
+                    if (board.getPiece(new Position(selectedPiece.getPosition().getRow() - i,
+                            selectedPiece.getPosition().getColumn())) != null) {
                         return false;
                     }
                 }
@@ -114,13 +120,13 @@ public class MoveChecker {
             }
         }
 
-        for (Move singleMove : selectedRook.LEFT) {
+        for (Move singleMove : selectedPiece.getLEFT()) {
             if (singleMove.equals(move)) {
-                distance = selectedRook.getPosition().getColumn() - move.getPosition().getColumn();
+                distance = selectedPiece.getPosition().getColumn() - move.getPosition().getColumn();
 
                 for (int i = 1; i < distance; i++) {
-                    if (board.getPiece(new Position(selectedRook.getPosition().getRow(),
-                            selectedRook.getPosition().getColumn() - i)) != null) {
+                    if (board.getPiece(new Position(selectedPiece.getPosition().getRow(),
+                            selectedPiece.getPosition().getColumn() - i)) != null) {
                         return false;
                     }
                 }
@@ -131,19 +137,17 @@ public class MoveChecker {
     }
 
     private boolean validForBishops(Move move) {
-        Bishop selectedBishop = (Bishop) move.getPiece();
-        Piece destinationPiece = board.getPiece(move.getPosition());
-        Player ownerDestinationPiece = destinationPiece == null ? null : destinationPiece.getOwner();
+        Piece selectedPiece = move.getPiece() instanceof Bishop ? (Bishop) move.getPiece() : (Queen) move.getPiece();
         int distance;
 
-        for (Move singleMove : selectedBishop.TOPLEFTDIAGONAL) {
+        for (Move singleMove : selectedPiece.getTOPLEFTDIAGONAL()) {
             if (singleMove.equals(move)) {
                 distance = Math.abs(move.getPosition().getRow() < move.getPosition().getColumn()
-                        ? move.getPosition().getRow() - selectedBishop.getPosition().getRow()
-                        : move.getPosition().getColumn() - selectedBishop.getPosition().getColumn());
+                        ? move.getPosition().getRow() - selectedPiece.getPosition().getRow()
+                        : move.getPosition().getColumn() - selectedPiece.getPosition().getColumn());
                 for (int i = 1; i < distance; i++) {
-                    if (board.getPiece(new Position(selectedBishop.getPosition().getRow() + i,
-                            selectedBishop.getPosition().getColumn() - i)) != null) {
+                    if (board.getPiece(new Position(selectedPiece.getPosition().getRow() + i,
+                            selectedPiece.getPosition().getColumn() - i)) != null) {
                         return false;
                     }
                 }
@@ -151,15 +155,15 @@ public class MoveChecker {
             }
         }
 
-        for (Move singleMove : selectedBishop.TOPRIGHTDIAGONAL) {
+        for (Move singleMove : selectedPiece.getTOPRIGHTDIAGONAL()) {
             if (singleMove.equals(move)) {
                 distance = Math.abs(move.getPosition().getRow() < move.getPosition().getColumn()
-                        ? move.getPosition().getRow() - selectedBishop.getPosition().getRow()
-                        : move.getPosition().getColumn() - selectedBishop.getPosition().getColumn());
+                        ? move.getPosition().getRow() - selectedPiece.getPosition().getRow()
+                        : move.getPosition().getColumn() - selectedPiece.getPosition().getColumn());
 
                 for (int i = 1; i < distance; i++) {
-                    if (board.getPiece(new Position(selectedBishop.getPosition().getRow() + i,
-                            selectedBishop.getPosition().getColumn() + i)) != null) {
+                    if (board.getPiece(new Position(selectedPiece.getPosition().getRow() + i,
+                            selectedPiece.getPosition().getColumn() + i)) != null) {
                         return false;
                     }
                 }
@@ -167,15 +171,15 @@ public class MoveChecker {
             }
         }
 
-        for (Move singleMove : selectedBishop.BOTTOMRIGHTDIAGONAL) {
+        for (Move singleMove : selectedPiece.getBOTTOMRIGHTDIAGONAL()) {
             if (singleMove.equals(move)) {
                 distance = Math.abs(move.getPosition().getRow() < move.getPosition().getColumn()
-                        ? move.getPosition().getRow() - selectedBishop.getPosition().getRow()
-                        : move.getPosition().getColumn() - selectedBishop.getPosition().getColumn());
+                        ? move.getPosition().getRow() - selectedPiece.getPosition().getRow()
+                        : move.getPosition().getColumn() - selectedPiece.getPosition().getColumn());
 
                 for (int i = 1; i < distance; i++) {
-                    if (board.getPiece(new Position(selectedBishop.getPosition().getRow() - i,
-                            selectedBishop.getPosition().getColumn() + i)) != null) {
+                    if (board.getPiece(new Position(selectedPiece.getPosition().getRow() - i,
+                            selectedPiece.getPosition().getColumn() + i)) != null) {
                         return false;
                     }
                 }
@@ -183,15 +187,15 @@ public class MoveChecker {
             }
         }
 
-        for (Move singleMove : selectedBishop.BOTTOMLEFTDIAGONAL) {
+        for (Move singleMove : selectedPiece.getBOTTOMLEFTDIAGONAL()) {
             if (singleMove.equals(move)) {
                 distance = Math.abs(move.getPosition().getRow() < move.getPosition().getColumn()
-                        ? move.getPosition().getRow() - selectedBishop.getPosition().getRow()
-                        : move.getPosition().getColumn() - selectedBishop.getPosition().getColumn());
+                        ? move.getPosition().getRow() - selectedPiece.getPosition().getRow()
+                        : move.getPosition().getColumn() - selectedPiece.getPosition().getColumn());
 
                 for (int i = 1; i < distance; i++) {
-                    if (board.getPiece(new Position(selectedBishop.getPosition().getRow() - i,
-                            selectedBishop.getPosition().getColumn() - i)) != null) {
+                    if (board.getPiece(new Position(selectedPiece.getPosition().getRow() - i,
+                            selectedPiece.getPosition().getColumn() - i)) != null) {
                         return false;
                     }
                 }

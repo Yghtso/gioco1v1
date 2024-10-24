@@ -30,6 +30,7 @@ public class UIManager {
     @FXML
     private ImageView Logo;
     
+    // UI RELATIVA ALLA PARTE DEL GAMEPLAY
     @FXML
     public void clickedSquare(MouseEvent event) {
         Pane clickedSquare = (Pane) event.getSource();
@@ -43,7 +44,6 @@ public class UIManager {
         boolean clickedOwnedPiece = pieceOwner == game.getPlayer();
 
         if (!game.getIsPieceSelected() && clickedOwnedPiece) {
-
             game.setIsPieceSelected(true);
             game.setSelectedPiece(piece);
             // TODO: far vedere sulla scacchiera le mosse possibili
@@ -52,7 +52,6 @@ public class UIManager {
 
         
         if (game.getIsPieceSelected() && clickedOwnedPiece) {
-
             // TODO: CHECK DELL ARROCCO DA FARE
             game.setIsPieceSelected(true);
             game.setSelectedPiece(piece);
@@ -63,12 +62,12 @@ public class UIManager {
         if (game.getIsPieceSelected() && !clickedOwnedPiece) {
 
             Move move = new Move(new Position(row, column), game.getSelectedPiece(), false);
-            
             game.getSelectedPiece().calculateMoves();
             game.getChecker().checkMoves(game.getSelectedPiece().getValidMoves());
 
             for (Move singleMove : game.getSelectedPiece().getValidMoves()) {
                 if (singleMove.equals(move)) {
+                    System.out.println("Mossa : " + singleMove.getPosition().getRow() + ", " + singleMove.getPosition().getColumn());
                     System.out.println("Mossa valida");
                 }
             }
@@ -78,6 +77,7 @@ public class UIManager {
         }
     }
 
+    // UI DELLA PARTE DI MENU
     @FXML
     public void PlayButton(ActionEvent event) {
 

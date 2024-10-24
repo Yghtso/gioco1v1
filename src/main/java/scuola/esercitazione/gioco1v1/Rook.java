@@ -89,4 +89,19 @@ public class Rook extends Piece {
         super.moveTo(position);
         this.firstMove = false;
     }
+
+    public Move getFORWARD1() {return null;}
+    public Move getFORWARD2() {return null;}
+    public Move getDIAGONALLEFT() {return null;}
+    public Move getDIAGONALRIGHT() {return null;}
+    public ArrayList<Move> getTOP() {return this.TOP;}
+    public ArrayList<Move> getRIGHT() {return this.RIGHT;}
+    public ArrayList<Move> getBOTTOM() {return this.BOTTOM;}
+    public ArrayList<Move> getLEFT() {return this.LEFT;}
+    public ArrayList<Move> getTOPLEFTDIAGONAL() {return null;}
+    public ArrayList<Move> getTOPRIGHTDIAGONAL() {return null;}
+    public ArrayList<Move> getBOTTOMLEFTDIAGONAL() {return null;}
+    public ArrayList<Move> getBOTTOMRIGHTDIAGONAL() {return null;}
+
+    public Piece clone() {return new Rook(position.clone(), owner, id);}
 }

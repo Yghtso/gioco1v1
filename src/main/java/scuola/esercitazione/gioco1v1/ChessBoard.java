@@ -37,7 +37,7 @@ public class ChessBoard {
         pieces[Bishop.WHITE_BISHOPS_STARTING_ROW - 1][Bishop.WHITE_BISHOP1_STARTING_COLUMN - 1] = new Bishop(new Position(Bishop.WHITE_BISHOPS_STARTING_ROW, Bishop.WHITE_BISHOP1_STARTING_COLUMN), Player.WHITE, getFirstAvailableId());
         pieces[Bishop.WHITE_BISHOPS_STARTING_ROW - 1][Bishop.WHITE_BISHOP2_STARTING_COLUMN - 1] = new Bishop(new Position(Bishop.WHITE_BISHOPS_STARTING_ROW, Bishop.WHITE_BISHOP2_STARTING_COLUMN), Player.WHITE, getFirstAvailableId());
 
-        pieces[FIRST_ROW - 1][4 - 1] = new Queen(new Position(FIRST_ROW, 4), Player.WHITE, getFirstAvailableId());
+        pieces[Queen.WHITE_QUEEN_STARTING_ROW - 1][Queen.WHITE_QUEEN_STARTING_COLUMN - 1] = new Queen(new Position(Queen.WHITE_QUEEN_STARTING_ROW, Queen.WHITE_QUEEN_STARTING_COLUMN), Player.WHITE, getFirstAvailableId());
 
         pieces[FIRST_ROW - 1][5 - 1] = new King(new Position(FIRST_ROW, 5), Player.WHITE, getFirstAvailableId());
 
@@ -58,7 +58,7 @@ public class ChessBoard {
         pieces[Bishop.BLACK_BISHOPS_STARTING_ROW - 1][Bishop.BLACK_BISHOP1_STARTING_COLUMN - 1] = new Bishop(new Position(Bishop.BLACK_BISHOPS_STARTING_ROW, Bishop.BLACK_BISHOP1_STARTING_COLUMN), Player.BLACK, getFirstAvailableId());
         pieces[Bishop.BLACK_BISHOPS_STARTING_ROW - 1][Bishop.BLACK_BISHOP2_STARTING_COLUMN - 1] = new Bishop(new Position(Bishop.BLACK_BISHOPS_STARTING_ROW, Bishop.BLACK_BISHOP2_STARTING_COLUMN), Player.BLACK, getFirstAvailableId());
 
-        pieces[LAST_ROW - 1][4 - 1] = new Queen(new Position(LAST_ROW, 4), Player.BLACK, getFirstAvailableId());
+        pieces[Queen.BLACK_QUEEN_STARTING_ROW - 1][Queen.BLACK_QUEEN_STARTING_COLUMN - 1] = new Queen(new Position(Queen.BLACK_QUEEN_STARTING_ROW, Queen.BLACK_QUEEN_STARTING_COLUMN), Player.BLACK, getFirstAvailableId());
 
         pieces[LAST_ROW - 1][5 - 1] = new King(new Position(LAST_ROW, 5), Player.BLACK, getFirstAvailableId());
     }
@@ -115,4 +115,5 @@ public class ChessBoard {
         }
         return  returnedPieces;
     }
+
 }
