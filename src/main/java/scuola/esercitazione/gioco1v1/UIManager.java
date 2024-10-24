@@ -67,7 +67,6 @@ public class UIManager {
 
             for (Move singleMove : game.getSelectedPiece().getValidMoves()) {
                 if (singleMove.equals(move)) {
-                    System.out.println("Mossa : " + singleMove.getPosition().getRow() + ", " + singleMove.getPosition().getColumn());
                     System.out.println("Mossa valida");
                 }
             }

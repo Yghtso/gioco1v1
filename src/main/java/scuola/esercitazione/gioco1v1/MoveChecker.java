@@ -14,9 +14,15 @@ public class MoveChecker {
 
         @SuppressWarnings("unchecked")
         ArrayList<Move> movesClone = (ArrayList<Move>) moves.clone();
-
+        System.out.println("Numero mosse : " + movesClone.size());
         for (Move move : movesClone) {
+            System.out.println("Mossa : " + move.getPosition().getRow() + ", " + move.getPosition().getColumn());
+
             if (destinationOwnedBySame(move)) {
+                move.getPiece().getValidMoves().remove(move);
+            }
+
+            if (leadsToKingCheck(move)) {
                 move.getPiece().getValidMoves().remove(move);
             }
             
@@ -202,6 +208,26 @@ public class MoveChecker {
             }
         }
         return true;
+    }
+
+    private boolean leadsToKingCheck(Move move) {
+        Player ownerMovedPiece = move.getPiece().getOwner();
+
+        ChessBoard alternativeBoard = this.board.clone();
+        System.out.println("Mossa : " + move.getPosition().getRow() + ", " + move.getPosition().getColumn());
+        //alternativeBoard.applyMove(move);
+        MoveChecker checker = new MoveChecker(alternativeBoard);
+
+        for (Piece singlePiece : alternativeBoard.getPieces()) {
+            singlePiece.calculateMoves();
+            checker.checkMoves(singlePiece.getValidMoves());
+            for (Move singleMove : singlePiece.getValidMoves()) {
+                if (alternativeBoard.getPiece(singleMove.getPosition()) instanceof King) {
+                    return ownerMovedPiece != alternativeBoard.getPiece(singleMove.getPosition()).getOwner();
+                }
+            }
+        }
+        return false;
     }
 
 }

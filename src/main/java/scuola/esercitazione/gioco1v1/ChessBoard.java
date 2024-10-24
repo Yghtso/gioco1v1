@@ -63,6 +63,21 @@ public class ChessBoard {
         pieces[LAST_ROW - 1][5 - 1] = new King(new Position(LAST_ROW, 5), Player.BLACK, getFirstAvailableId());
     }
 
+    public ChessBoard(boolean [] ids, Piece[][] pieces) {
+        this.pieces = new Piece[ROWS][COLUMNS];
+        this.ids = new boolean[LAST_ID];
+
+        for (int i = 0; i < LAST_ID; i++) {
+            this.ids[i] = ids[i];
+        }
+
+        for (int i = 0; i < pieces.length; i++) {
+            for (int j = 0; j < pieces.length; j++) {
+                this.pieces[i][j] = this.pieces[i][j];
+            }
+        }
+    }
+
     public void createPiece(Piece piece) {
         piece.setId(getFirstAvailableId());
         this.pieces[piece.getPosition().getRow() - 1][piece.getPosition().getColumn() - 1] = piece;
@@ -116,4 +131,7 @@ public class ChessBoard {
         return  returnedPieces;
     }
 
+    public ChessBoard clone() {
+        return new ChessBoard(this.ids, this.pieces);
+    }
 }
