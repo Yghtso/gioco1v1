@@ -36,8 +36,6 @@ public class UIManager {
     private Button ClientButton;
     @FXML
     private Button ServerButton;
-    @FXML
-    private Button ZanoButton;
 
     
     // UI RELATIVA ALLA PARTE DEL GAMEPLAY
@@ -108,7 +106,7 @@ public class UIManager {
         TranslateTransition AnimazioneBottone1= new TranslateTransition(Duration.seconds(1), PlayButton);
 
         AnimazioneBottone1.setToX(centerXButton - PlayButton.getLayoutX()- centerXButton/2);
-        AnimazioneBottone1.setToY((centerYButton) - PlayButton.getLayoutY()+100);
+        AnimazioneBottone1.setToY((centerYButton) - PlayButton.getLayoutY()+150);
 
         TranslateTransition AnimazioneBottone2= new TranslateTransition(Duration.seconds(1),QuitButton);
 
