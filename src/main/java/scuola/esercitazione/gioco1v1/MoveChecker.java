@@ -14,9 +14,7 @@ public class MoveChecker {
 
         @SuppressWarnings("unchecked")
         ArrayList<Move> movesClone = (ArrayList<Move>) moves.clone();
-        System.out.println("Numero mosse : " + movesClone.size());
         for (Move move : movesClone) {
-            System.out.println("Mossa : " + move.getPosition().getRow() + ", " + move.getPosition().getColumn());
 
             if (destinationOwnedBySame(move)) {
                 move.getPiece().getValidMoves().remove(move);
@@ -25,7 +23,7 @@ public class MoveChecker {
             if (leadsToKingCheck(move)) {
                 move.getPiece().getValidMoves().remove(move);
             }
-            
+
             if (move.getPiece() instanceof Pawn) {
                 if (!validForPawns(move)) {
                     move.getPiece().getValidMoves().remove(move);
@@ -36,15 +34,15 @@ public class MoveChecker {
                 if (!validForRooks(move)) {
                     move.getPiece().getValidMoves().remove(move);
                 }
-            
+
             } else if (move.getPiece() instanceof Bishop) {
-            
+
                 if (!validForBishops(move)) {
                     move.getPiece().getValidMoves().remove(move);
                 }
 
             } else if (move.getPiece() instanceof Queen) {
-                
+
                 if (!validForBishops(move) || !validForRooks(move)) {
                     move.getPiece().getValidMoves().remove(move);
                 }
@@ -62,7 +60,8 @@ public class MoveChecker {
     private boolean validForPawns(Move move) {
         boolean frontOccupied = board.getPiece(((Pawn) move.getPiece()).getFORWARD1().getPosition()) != null;
         boolean diagonalLeftOccupied = board.getPiece(((Pawn) move.getPiece()).getDIAGONALLEFT().getPosition()) != null;
-        boolean diagonalRightOccupied = board.getPiece(((Pawn) move.getPiece()).getDIAGONALRIGHT().getPosition()) != null;
+        boolean diagonalRightOccupied = board
+                .getPiece(((Pawn) move.getPiece()).getDIAGONALRIGHT().getPosition()) != null;
 
         if (move.equals(((Pawn) move.getPiece()).getFORWARD2())) {
             return !frontOccupied;
@@ -214,13 +213,12 @@ public class MoveChecker {
         Player ownerMovedPiece = move.getPiece().getOwner();
 
         ChessBoard alternativeBoard = this.board.clone();
-        System.out.println("Mossa : " + move.getPosition().getRow() + ", " + move.getPosition().getColumn());
-        //alternativeBoard.applyMove(move);
+        alternativeBoard.applyMove(move);
         MoveChecker checker = new MoveChecker(alternativeBoard);
 
         for (Piece singlePiece : alternativeBoard.getPieces()) {
             singlePiece.calculateMoves();
-            checker.checkMoves(singlePiece.getValidMoves());
+            // checker.checkMoves(singlePiece.getValidMoves());
             for (Move singleMove : singlePiece.getValidMoves()) {
                 if (alternativeBoard.getPiece(singleMove.getPosition()) instanceof King) {
                     return ownerMovedPiece != alternativeBoard.getPiece(singleMove.getPosition()).getOwner();

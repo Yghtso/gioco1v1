@@ -1,5 +1,6 @@
 package scuola.esercitazione.gioco1v1;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class ChessBoard {
@@ -14,56 +15,180 @@ public class ChessBoard {
 
     private boolean[] ids;
     private Piece[][] pieces;
+    private ArrayList<Piece> whitePieces;
+    private ArrayList<Piece> blackPieces;
 
     public ChessBoard() {
         this.pieces = new Piece[ROWS][COLUMNS];
         this.ids = new boolean[LAST_ID];
+        this.whitePieces = new ArrayList<>();
+        this.blackPieces = new ArrayList<>();
 
-        // PEINE BIANCHE
-        for (int i = 1; i <= COLUMNS; i++) {            
-            pieces[Pawn.WHITE_PAWNS_STARTING_ROW - 1][i - 1] = new Pawn(new Position(Pawn.WHITE_PAWNS_STARTING_ROW, i),
+        //          PEDINE BIANCHE
+
+        // PEDONI BIANCHI
+        for (int i = 1; i <= COLUMNS; i++) {
+            Pawn whitePawn = new Pawn(new Position(Pawn.WHITE_PAWNS_STARTING_ROW, i),
+                    Player.WHITE,
+                    getFirstAvailableId());
+
+            pieces[Pawn.WHITE_PAWNS_STARTING_ROW - 1][i - 1] = whitePawn;
+            whitePieces.add(whitePawn);
+        }
+
+        // PRIMA TORRE BIANCA
+        Rook whiteRookLeft = new Rook(
+                new Position(Rook.WHITE_ROOKS_STARTING_ROW, Rook.WHITE_LEFTROOK_STARTING_COLUMN), Player.WHITE,
+                getFirstAvailableId());
+
+        pieces[Rook.WHITE_ROOKS_STARTING_ROW - 1][Rook.WHITE_LEFTROOK_STARTING_COLUMN
+                - 1] = whiteRookLeft;
+        whitePieces.add(whiteRookLeft);
+
+        // SECONDA TORRE BIANCA
+        Rook whiteRookRight = new Rook(
+                new Position(Rook.WHITE_ROOKS_STARTING_ROW, Rook.WHITE_RIGHTROOK_STARTING_COLUMN), Player.WHITE,
+                getFirstAvailableId());
+        pieces[Rook.WHITE_ROOKS_STARTING_ROW - 1][Rook.WHITE_RIGHTROOK_STARTING_COLUMN
+                - 1] = whiteRookRight;
+        whitePieces.add(whiteRookRight);
+
+        // PRIMO CAVALLO BIANCO
+        Knight whiteKnightLeft = new Knight(
+                new Position(Knight.WHITE_KNIGHTS_STARTING_ROW, Knight.WHITE_LEFTKNIGHT_STARTING_COLUMN),
+                Player.WHITE,
+                getFirstAvailableId());
+        pieces[Knight.WHITE_KNIGHTS_STARTING_ROW - 1][Knight.WHITE_LEFTKNIGHT_STARTING_COLUMN
+                - 1] = whiteKnightLeft;
+        whitePieces.add(whiteKnightLeft);
+
+        // SECONDO CAVALLO BIANCO
+        Knight whiteKnightRight = new Knight(
+                new Position(Knight.WHITE_KNIGHTS_STARTING_ROW, Knight.WHITE_RIGHTKNIGHT_STARTING_COLUMN),
+                Player.WHITE,
+                getFirstAvailableId());
+        pieces[Knight.WHITE_KNIGHTS_STARTING_ROW - 1][Knight.WHITE_RIGHTKNIGHT_STARTING_COLUMN
+                - 1] = whiteKnightRight;
+        whitePieces.add(whiteKnightRight);
+
+        // PRIMO ALFIERE BIANCO
+        Bishop whiteBishopLeft = new Bishop(
+                new Position(Bishop.WHITE_BISHOPS_STARTING_ROW, Bishop.WHITE_LEFTBISHOP_STARTING_COLUMN),
+                Player.WHITE,
+                getFirstAvailableId());
+        pieces[Bishop.WHITE_BISHOPS_STARTING_ROW - 1][Bishop.WHITE_LEFTBISHOP_STARTING_COLUMN
+                - 1] = whiteBishopLeft;
+        whitePieces.add(whiteBishopLeft);
+
+        // SECONDO ALFIERE BIANCO
+        Bishop whiteBishopRight = new Bishop(
+                new Position(Bishop.WHITE_BISHOPS_STARTING_ROW, Bishop.WHITE_RIGHTBISHOP_STARTING_COLUMN),
+                Player.WHITE,
+                getFirstAvailableId());
+        pieces[Bishop.WHITE_BISHOPS_STARTING_ROW - 1][Bishop.WHITE_RIGHTBISHOP_STARTING_COLUMN
+                - 1] = whiteBishopRight;
+        whitePieces.add(whiteBishopRight);
+
+        // REGINA BIANCA
+        Queen whiteQueen = new Queen(
+                new Position(Queen.WHITE_QUEEN_STARTING_ROW, Queen.WHITE_QUEEN_STARTING_COLUMN), 
+                Player.WHITE,
+                getFirstAvailableId());
+        pieces[Queen.WHITE_QUEEN_STARTING_ROW - 1][Queen.WHITE_QUEEN_STARTING_COLUMN - 1] = whiteQueen;
+        whitePieces.add(whiteQueen);
+
+        // RE BIANCO
+        King whiteKing = new King(
+            new Position(King.WHITE_KING_STARTING_ROW, King.WHITE_KING_STARTING_COLUMN),
             Player.WHITE,
             getFirstAvailableId());
-        }
+        pieces[King.WHITE_KING_STARTING_ROW - 1][King.WHITE_KING_STARTING_COLUMN - 1] = whiteKing;
 
-        pieces[Rook.WHITE_ROOKS_STARTING_ROW - 1][Rook.WHITE_ROOK1_STARTING_COLUMN - 1] = new Rook(new Position(Rook.WHITE_ROOKS_STARTING_ROW, Rook.WHITE_ROOK1_STARTING_COLUMN), Player.WHITE,
-                getFirstAvailableId());
-        pieces[Rook.WHITE_ROOKS_STARTING_ROW - 1][Rook.WHITE_ROOK2_STARTING_COLUMN - 1] = new Rook(new Position(Rook.WHITE_ROOKS_STARTING_ROW, Rook.WHITE_ROOK2_STARTING_COLUMN), Player.WHITE,
-                getFirstAvailableId());
-
-        pieces[Knight.WHITE_KNIGHTS_STARTING_ROW - 1][Knight.WHITE_KNIGHT1_STARTING_COLUMN - 1] = new Knight(new Position(Knight.WHITE_KNIGHTS_STARTING_ROW, Knight.WHITE_KNIGHT1_STARTING_COLUMN), Player.WHITE, getFirstAvailableId());
-        pieces[Knight.WHITE_KNIGHTS_STARTING_ROW - 1][Knight.WHITE_KNIGHT2_STARTING_COLUMN - 1] = new Knight(new Position(Knight.WHITE_KNIGHTS_STARTING_ROW, Knight.WHITE_KNIGHT2_STARTING_COLUMN), Player.WHITE, getFirstAvailableId());
-
-        pieces[Bishop.WHITE_BISHOPS_STARTING_ROW - 1][Bishop.WHITE_BISHOP1_STARTING_COLUMN - 1] = new Bishop(new Position(Bishop.WHITE_BISHOPS_STARTING_ROW, Bishop.WHITE_BISHOP1_STARTING_COLUMN), Player.WHITE, getFirstAvailableId());
-        pieces[Bishop.WHITE_BISHOPS_STARTING_ROW - 1][Bishop.WHITE_BISHOP2_STARTING_COLUMN - 1] = new Bishop(new Position(Bishop.WHITE_BISHOPS_STARTING_ROW, Bishop.WHITE_BISHOP2_STARTING_COLUMN), Player.WHITE, getFirstAvailableId());
-
-        pieces[Queen.WHITE_QUEEN_STARTING_ROW - 1][Queen.WHITE_QUEEN_STARTING_COLUMN - 1] = new Queen(new Position(Queen.WHITE_QUEEN_STARTING_ROW, Queen.WHITE_QUEEN_STARTING_COLUMN), Player.WHITE, getFirstAvailableId());
-
-        pieces[FIRST_ROW - 1][5 - 1] = new King(new Position(FIRST_ROW, 5), Player.WHITE, getFirstAvailableId());
-
-        // PEDINE NERE
+        //          PEDINE NERE
+        
+        // PEDONI NERI
         for (int i = 1; i <= COLUMNS; i++) {
-            pieces[Pawn.BLACK_PAWNS_STARTING_ROW - 1][i - 1] = new Pawn(new Position(Pawn.BLACK_PAWNS_STARTING_ROW, i),
-                    Player.BLACK, getFirstAvailableId());
+            Pawn blackPawn = new Pawn(new Position(Pawn.BLACK_PAWNS_STARTING_ROW, i),
+                    Player.BLACK,
+                    getFirstAvailableId());
+            pieces[Pawn.WHITE_PAWNS_STARTING_ROW - 1][i - 1] = blackPawn;
+            whitePieces.add(blackPawn);
         }
 
-        pieces[Rook.BLACK_ROOKS_STARTING_ROW - 1][Rook.BLACK_ROOK1_STARTING_COLUMN - 1] = new Rook(new Position(Rook.BLACK_ROOKS_STARTING_ROW, Rook.BLACK_ROOK1_STARTING_COLUMN), Player.BLACK,
+        // PRIMA TORRE NERA
+        Rook blackRookLeft = new Rook(
+                new Position(Rook.BLACK_ROOKS_STARTING_ROW, Rook.BLACK_LEFTROOK_STARTING_COLUMN),
+                Player.BLACK,
                 getFirstAvailableId());
-        pieces[Rook.BLACK_ROOKS_STARTING_ROW - 1][Rook.BLACK_ROOK2_STARTING_COLUMN - 1] = new Rook(new Position(Rook.BLACK_ROOKS_STARTING_ROW, Rook.BLACK_ROOK1_STARTING_COLUMN), Player.BLACK,
+        pieces[Rook.BLACK_LEFTROOK_STARTING_COLUMN - 1][Rook.BLACK_LEFTROOK_STARTING_COLUMN
+                - 1] = blackRookLeft;
+        whitePieces.add(blackRookLeft);
+        
+        // SECONDA TORRE NERA
+        Rook blackRookRight = new Rook(
+                new Position(Rook.BLACK_ROOKS_STARTING_ROW, Rook.BLACK_RIGHTROOK_STARTING_COLUMN),
+                Player.BLACK,
                 getFirstAvailableId());
+        pieces[Rook.BLACK_RIGHTROOK_STARTING_COLUMN - 1][Rook.BLACK_RIGHTROOK_STARTING_COLUMN
+                - 1] = blackRookRight;
+        whitePieces.add(blackRookRight);
 
-        pieces[Knight.BLACK_KNIGHTS_STARTING_ROW - 1][Knight.BLACK_KNIGHT1_STARTING_COLUMN - 1] = new Knight(new Position(Knight.BLACK_KNIGHTS_STARTING_ROW, Knight.BLACK_KNIGHT1_STARTING_COLUMN), Player.BLACK, getFirstAvailableId());
-        pieces[Knight.BLACK_KNIGHTS_STARTING_ROW - 1][Knight.BLACK_KNIGHT2_STARTING_COLUMN - 1] = new Knight(new Position(Knight.BLACK_KNIGHTS_STARTING_ROW, Knight.BLACK_KNIGHT2_STARTING_COLUMN), Player.BLACK, getFirstAvailableId());
+        // PRIMO CAVALLO NERO
+        Knight blackKnightLeft = new Knight(
+                new Position(Knight.BLACK_KNIGHTS_STARTING_ROW, Knight.BLACK_LEFTKNIGHT_STARTING_COLUMN),
+                Player.BLACK,
+                getFirstAvailableId());
+        pieces[Knight.BLACK_LEFTKNIGHT_STARTING_COLUMN - 1][Knight.BLACK_LEFTKNIGHT_STARTING_COLUMN
+                - 1] = blackKnightLeft;
+        whitePieces.add(blackKnightLeft);
 
-        pieces[Bishop.BLACK_BISHOPS_STARTING_ROW - 1][Bishop.BLACK_BISHOP1_STARTING_COLUMN - 1] = new Bishop(new Position(Bishop.BLACK_BISHOPS_STARTING_ROW, Bishop.BLACK_BISHOP1_STARTING_COLUMN), Player.BLACK, getFirstAvailableId());
-        pieces[Bishop.BLACK_BISHOPS_STARTING_ROW - 1][Bishop.BLACK_BISHOP2_STARTING_COLUMN - 1] = new Bishop(new Position(Bishop.BLACK_BISHOPS_STARTING_ROW, Bishop.BLACK_BISHOP2_STARTING_COLUMN), Player.BLACK, getFirstAvailableId());
+        // SECONDO CAVALLO NERO
+        Knight blackKnightRight = new Knight(
+                new Position(Knight.BLACK_KNIGHTS_STARTING_ROW, Knight.BLACK_RIGHTKNIGHT_STARTING_COLUMN),
+                Player.BLACK,
+                getFirstAvailableId());
+        pieces[Knight.BLACK_RIGHTKNIGHT_STARTING_COLUMN - 1][Knight.BLACK_RIGHTKNIGHT_STARTING_COLUMN
+                - 1] = blackKnightRight;
+        whitePieces.add(blackKnightRight);
 
-        pieces[Queen.BLACK_QUEEN_STARTING_ROW - 1][Queen.BLACK_QUEEN_STARTING_COLUMN - 1] = new Queen(new Position(Queen.BLACK_QUEEN_STARTING_ROW, Queen.BLACK_QUEEN_STARTING_COLUMN), Player.BLACK, getFirstAvailableId());
+        // PRIMO ALFIERE NERO
+        Bishop blackBishopLeft = new Bishop(
+                new Position(Bishop.BLACK_BISHOPS_STARTING_ROW, Bishop.BLACK_LEFTBISHOP_STARTING_COLUMN),
+                Player.BLACK,
+                getFirstAvailableId());
+        pieces[Bishop.BLACK_BISHOPS_STARTING_ROW - 1][Bishop.BLACK_LEFTBISHOP_STARTING_COLUMN
+                - 1] = blackBishopLeft;
+        whitePieces.add(blackBishopLeft);
 
-        pieces[LAST_ROW - 1][5 - 1] = new King(new Position(LAST_ROW, 5), Player.BLACK, getFirstAvailableId());
+        // SECONDO ALFIERE NERO
+        Bishop blackBishopRight = new Bishop(
+                new Position(Bishop.BLACK_BISHOPS_STARTING_ROW, Bishop.BLACK_RIGHTBISHOP_STARTING_COLUMN),
+                Player.BLACK,
+                getFirstAvailableId());
+        pieces[Bishop.BLACK_BISHOPS_STARTING_ROW - 1][Bishop.BLACK_RIGHTBISHOP_STARTING_COLUMN
+                - 1] = blackBishopRight;
+        whitePieces.add(blackBishopRight);
+
+        // REGINA NERA
+        Bishop blackQueen = new Bishop(
+                new Position(Queen.BLACK_QUEEN_STARTING_ROW, Queen.BLACK_QUEEN_STARTING_COLUMN),
+                Player.BLACK,
+                getFirstAvailableId());
+        pieces[Queen.BLACK_QUEEN_STARTING_ROW - 1][Queen.BLACK_QUEEN_STARTING_COLUMN
+                - 1] = blackQueen;
+        whitePieces.add(blackQueen);
+
+        // RE NERO
+        King blackKing = new King(
+            new Position(King.BLACK_KING_STARTING_ROW, King.BLACK_KING_STARTING_COLUMN),
+            Player.BLACK,
+            getFirstAvailableId());
+        pieces[King.BLACK_KING_STARTING_ROW - 1][King.BLACK_KING_STARTING_COLUMN - 1] = blackKing; 
+    
     }
 
-    public ChessBoard(boolean [] ids, Piece[][] pieces) {
+    public ChessBoard(boolean[] ids, Piece[][] pieces) {
+        // Clonando la scacchiera
         this.pieces = new Piece[ROWS][COLUMNS];
         this.ids = new boolean[LAST_ID];
 
@@ -73,7 +198,7 @@ public class ChessBoard {
 
         for (int i = 0; i < pieces.length; i++) {
             for (int j = 0; j < pieces.length; j++) {
-                this.pieces[i][j] = this.pieces[i][j];
+                this.pieces[i][j] = pieces[i][j] == null ? null : pieces[i][j].clone();
             }
         }
     }
@@ -103,7 +228,7 @@ public class ChessBoard {
     }
 
     public Piece getPiece(Position position) {
-        if(position == null) {
+        if (position == null) {
             return null;
         } else if (position.isInBoard()) {
             return pieces[position.getRow() - 1][position.getColumn() - 1];
@@ -114,8 +239,13 @@ public class ChessBoard {
 
     public void applyMove(Move move) {
         Position precPosition = move.getPiece().getPosition();
+        System.out.println(
+                "Posizione precedente della pedina : " + precPosition.getRow() + ", " + precPosition.getColumn());
         this.pieces[precPosition.getRow() - 1][precPosition.getColumn() - 1] = null;
         move.getPiece().moveTo(move.getPosition());
+        System.out.println(
+                "Posizione verso dove si muove la pedina : " + move.getPosition().getRow() + ", "
+                        + move.getPosition().getColumn());
         this.pieces[move.getPosition().getRow() - 1][move.getPosition().getColumn() - 1] = move.getPiece();
     }
 
@@ -128,7 +258,7 @@ public class ChessBoard {
                 }
             }
         }
-        return  returnedPieces;
+        return returnedPieces;
     }
 
     public ChessBoard clone() {

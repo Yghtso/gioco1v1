@@ -4,6 +4,12 @@ import java.util.ArrayList;
 
 public class King extends Piece {
 
+    public final static int WHITE_KING_STARTING_ROW = 1;
+    public final static int WHITE_KING_STARTING_COLUMN = 5;
+
+    public final static int BLACK_KING_STARTING_ROW = 1;
+    public final static int BLACK_KING_STARTING_COLUMN = 5;
+
     public void calculateMoves() {
         this.validMoves.clear();
         validMoves.add(new Move(new Position(this.getPosition().getRow() + 1, this.getPosition().getColumn() - 1), this, false));

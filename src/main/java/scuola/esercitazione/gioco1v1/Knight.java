@@ -5,12 +5,12 @@ import java.util.ArrayList;
 public class Knight extends Piece {
 
     public final static int WHITE_KNIGHTS_STARTING_ROW = 1;
-    public final static int WHITE_KNIGHT1_STARTING_COLUMN = 2;
-    public final static int WHITE_KNIGHT2_STARTING_COLUMN = 7;
+    public final static int WHITE_LEFTKNIGHT_STARTING_COLUMN = 2;
+    public final static int WHITE_RIGHTKNIGHT_STARTING_COLUMN = 7;
 
     public final static int BLACK_KNIGHTS_STARTING_ROW = 8;
-    public final static int BLACK_KNIGHT1_STARTING_COLUMN = 2;
-    public final static int BLACK_KNIGHT2_STARTING_COLUMN = 7;
+    public final static int BLACK_LEFTKNIGHT_STARTING_COLUMN = 2;
+    public final static int BLACK_RIGHTKNIGHT_STARTING_COLUMN = 7;
 
     public void calculateMoves() {
         this.validMoves.clear();
