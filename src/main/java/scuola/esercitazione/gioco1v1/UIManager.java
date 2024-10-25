@@ -6,17 +6,19 @@ import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Bounds;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.util.Duration;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class UIManager {
     
@@ -88,10 +90,6 @@ public class UIManager {
     @FXML
     public void PlayButton(ActionEvent event) {
 
-        //PlayButton.setVisible(false);
-        //QuitButton.setVisible(false);
-        //ZanoButton.setVisible(true);
-
         Animazione();
 
     }
@@ -102,27 +100,46 @@ public class UIManager {
 
         double centerXLogo = (Logo.getScene().getWidth() - Logo.getFitWidth()) / 2;
         double centerXButton = (Logo.getScene().getWidth() -PlayButton.getWidth()) / 2;
-        double centerYButton = (Logo.getScene().getHeight()-PlayButton.getWidth()) / 2;
+        double centerYButton = (Logo.getScene().getHeight()-PlayButton.getHeight()) / 2;
 
         AnimazioneLogo.setToX(centerXLogo - Logo.getLayoutX());
-        AnimazioneLogo.setToY(-(Logo.getLayoutY() - 50)); 
+        AnimazioneLogo.setToY(-(Logo.getLayoutY() - 50));
 
         TranslateTransition AnimazioneBottone1= new TranslateTransition(Duration.seconds(1), PlayButton);
 
         AnimazioneBottone1.setToX(centerXButton - PlayButton.getLayoutX()- centerXButton/2);
-        AnimazioneBottone1.setToY(-(centerYButton + PlayButton.getLayoutY())+100);
+        AnimazioneBottone1.setToY((centerYButton) - PlayButton.getLayoutY()+100);
 
         TranslateTransition AnimazioneBottone2= new TranslateTransition(Duration.seconds(1),QuitButton);
 
         AnimazioneBottone2.setToX(centerXButton - PlayButton.getLayoutX()+ centerXButton/2);
-        AnimazioneBottone2.setToY(-(centerYButton + PlayButton.getLayoutY()));
+        AnimazioneBottone2.setToY(centerYButton - PlayButton.getLayoutY());
 
         ParallelTransition parallelTransition = new ParallelTransition(AnimazioneLogo, AnimazioneBottone1, AnimazioneBottone2);
 
         parallelTransition.play();
 
-    }
+        parallelTransition.setOnFinished(event -> {
 
+            Bounds playButtonBounds = PlayButton.localToScene(PlayButton.getBoundsInLocal());
+            Bounds quitButtonBounds = QuitButton.localToScene(QuitButton.getBoundsInLocal());
+
+            ServerButton.setLayoutX(playButtonBounds.getMinX());
+            ServerButton.setLayoutY(playButtonBounds.getMinY());
+
+            ClientButton.setLayoutX(quitButtonBounds.getMinX());
+            ClientButton.setLayoutY(quitButtonBounds.getMinY());
+
+            PlayButton.setVisible(false);
+            QuitButton.setVisible(false);
+            ServerButton.setVisible(true);
+            ClientButton.setVisible(true);
+
+        });
+
+
+    }
+    
     @FXML
     public void ServerButton(ActionEvent event) throws Exception{
 
@@ -144,6 +161,7 @@ public class UIManager {
     @FXML
     void QuitButton(ActionEvent event) {
 
+        System.exit(0);
 
     }
 
