@@ -83,4 +83,19 @@ public class Bishop extends Piece {
     public Bishop(Position position, Player owner, int id) {
         super(position, owner, id);
     }
+
+    public Move getFORWARD1() {return null;}
+    public Move getFORWARD2() {return null;}
+    public Move getDIAGONALLEFT() {return null;}
+    public Move getDIAGONALRIGHT() {return null;}
+    public ArrayList<Move> getTOP() {return null;}
+    public ArrayList<Move> getRIGHT() {return null;}
+    public ArrayList<Move> getBOTTOM() {return null;}
+    public ArrayList<Move> getLEFT() {return null;}
+    public ArrayList<Move> getTOPLEFTDIAGONAL() {return this.TOPLEFTDIAGONAL;}
+    public ArrayList<Move> getTOPRIGHTDIAGONAL() {return this.TOPRIGHTDIAGONAL;}
+    public ArrayList<Move> getBOTTOMLEFTDIAGONAL() {return this.BOTTOMLEFTDIAGONAL;}
+    public ArrayList<Move> getBOTTOMRIGHTDIAGONAL() {return this.BOTTOMRIGHTDIAGONAL;}
+
+    public Piece clone() {return new Bishop(position.clone(), owner, id);}
 }

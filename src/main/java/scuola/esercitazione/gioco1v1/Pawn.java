@@ -9,17 +9,16 @@ public class Pawn extends Piece {
     private final static int BASE_PAWN_MOVE = 1;
     private final static int STARTING_PAWN_MOVE = 2;
 
-    public final static int WHITE_PAWNS_STARTING_ROW = 1;
+    public final static int WHITE_PAWNS_STARTING_ROW = 2;
     public final static int BLACK_PAWNS_STARTING_ROW = 7;
 
 
-    public Move FORWARD1 = new Move(null, this, false);
-    public Move FORWARD2 = new Move(null, this, false);
-    public Move DIAGONALLEFT = new Move(null, this, false);
-    public Move DIAGONALRIGHT = new Move(null, this, false);
+    private Move FORWARD1 = new Move(null, this, false);
+    private Move FORWARD2 = new Move(null, this, false);
+    private Move DIAGONALLEFT = new Move(null, this, false);
+    private Move DIAGONALRIGHT = new Move(null, this, false);
 
     public void calculateMoves() {
-
         validMoves.clear();
         ArrayList<Move> allPossibleMoves = new ArrayList<Move>();
 
@@ -77,4 +76,19 @@ public class Pawn extends Piece {
         super.moveTo(position);
         this.firstMove = false;
     }
+
+    public Move getFORWARD1() {return this.FORWARD1;}
+    public Move getFORWARD2() {return this.FORWARD2;}
+    public Move getDIAGONALLEFT() {return this.DIAGONALLEFT;}
+    public Move getDIAGONALRIGHT() {return this.DIAGONALRIGHT;}
+    public ArrayList<Move> getTOP() {return null;}
+    public ArrayList<Move> getRIGHT() {return null;}
+    public ArrayList<Move> getBOTTOM() {return null;}
+    public ArrayList<Move> getLEFT() {return null;}
+    public ArrayList<Move> getTOPLEFTDIAGONAL() {return null;}
+    public ArrayList<Move> getTOPRIGHTDIAGONAL() {return null;}
+    public ArrayList<Move> getBOTTOMLEFTDIAGONAL() {return null;}
+    public ArrayList<Move> getBOTTOMRIGHTDIAGONAL() {return null;}
+
+    public Piece clone() {return new Pawn(position.clone(), owner, id);}
 }
