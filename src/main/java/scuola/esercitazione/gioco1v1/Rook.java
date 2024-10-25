@@ -12,12 +12,12 @@ public class Rook extends Piece {
     private ArrayList<Move> LEFT = new ArrayList<>();
 
     public final static int WHITE_ROOKS_STARTING_ROW = 1;
-    public final static int WHITE_ROOK1_STARTING_COLUMN = 1;
-    public final static int WHITE_ROOK2_STARTING_COLUMN = 8;
+    public final static int WHITE_LEFTROOK_STARTING_COLUMN = 1;
+    public final static int WHITE_RIGHTROOK_STARTING_COLUMN = 8;
 
     public final static int BLACK_ROOKS_STARTING_ROW = 8;
-    public final static int BLACK_ROOK1_STARTING_COLUMN = 1;
-    public final static int BLACK_ROOK2_STARTING_COLUMN = 8;
+    public final static int BLACK_LEFTROOK_STARTING_COLUMN = 1;
+    public final static int BLACK_RIGHTROOK_STARTING_COLUMN = 8;
     
     public void calculateMoves() {
 
