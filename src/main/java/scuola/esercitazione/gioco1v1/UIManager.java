@@ -1,14 +1,11 @@
 package scuola.esercitazione.gioco1v1;
 
-import java.io.IOException;
-
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -17,6 +14,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -139,7 +137,7 @@ public class UIManager {
     }
     
     @FXML
-    public void ServerButton(ActionEvent event) throws Exception{
+    /*public void ServerButton(ActionEvent event) throws Exception{
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Scacchiera.fxml"));
@@ -150,6 +148,45 @@ public class UIManager {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace(); 
+        }
+
+    }*/
+
+     public void ServerButton(ActionEvent event) throws Exception {
+
+        try {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Server.fxml"));
+            Parent root = loader.load();
+            Stage newWindow = new Stage();
+            newWindow.setTitle("Server");
+            newWindow.initModality(Modality.APPLICATION_MODAL);
+            newWindow.setResizable(false);
+            Scene scene = new Scene(root);
+            newWindow.setScene(scene);
+            newWindow.showAndWait();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void ClientButton(ActionEvent event) throws Exception{
+
+        try {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Client.fxml"));
+            Parent root = loader.load();
+            Stage newWindow = new Stage();
+            newWindow.setTitle("Client");
+            newWindow.initModality(Modality.APPLICATION_MODAL);
+            newWindow.setResizable(false);
+            Scene scene = new Scene(root);
+            newWindow.setScene(scene);
+            newWindow.showAndWait();
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }

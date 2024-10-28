@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="LabelIP" alignment="CENTER" contentDisplay="CENTER" layoutX="136.0" layoutY="155.0" prefHeight="118.0" prefWidth="326.0" text="Froci" textAlignment="CENTER" />
+      <Button fx:id="ServerConnectButton" disable="true" layoutX="137.0" layoutY="300.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="326.0" text="Connettiti" />
+      <Label fx:id="LabelTitoloIP" layoutX="273.0" layoutY="43.0" text="IP">
+         <font>
+            <Font size="64.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

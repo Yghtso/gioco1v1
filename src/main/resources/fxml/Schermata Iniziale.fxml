@@ -15,6 +15,6 @@
          </image>
       </ImageView>
       <Button fx:id="ServerButton" layoutX="159.0" layoutY="294.0" mnemonicParsing="false" onAction="#ServerButton" prefHeight="75.0" prefWidth="250.0" styleClass="chess-button" stylesheets="@../styles/Styles.css" text="SERVER" visible="false" />
-      <Button fx:id="ClientButton" layoutX="37.0" layoutY="196.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="250.0" styleClass="chess-button" stylesheets="@../styles/Styles.css" text="CLIENT" visible="false" />
+      <Button fx:id="ClientButton" layoutX="37.0" layoutY="196.0" mnemonicParsing="false" onAction="#ClientButton" prefHeight="75.0" prefWidth="250.0" styleClass="chess-button" stylesheets="@../styles/Styles.css" text="CLIENT" visible="false" />
    </children>
 </AnchorPane>
