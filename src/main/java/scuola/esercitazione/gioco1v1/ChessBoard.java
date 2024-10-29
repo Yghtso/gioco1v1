@@ -1,6 +1,5 @@
 package scuola.esercitazione.gioco1v1;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class ChessBoard {
@@ -18,13 +17,18 @@ public class ChessBoard {
     private ArrayList<Piece> whitePieces;
     private ArrayList<Piece> blackPieces;
 
+    private Move simulatedMove;
+    private boolean simulationMode;
+
     public ChessBoard() {
         this.pieces = new Piece[ROWS][COLUMNS];
         this.ids = new boolean[LAST_ID];
         this.whitePieces = new ArrayList<>();
         this.blackPieces = new ArrayList<>();
+        this.simulatedMove = null;
+        this.simulationMode = false;
 
-        //          PEDINE BIANCHE
+        // PEDINE BIANCHE
 
         // PEDONI BIANCHI
         for (int i = 1; i <= COLUMNS; i++) {
@@ -91,7 +95,7 @@ public class ChessBoard {
 
         // REGINA BIANCA
         Queen whiteQueen = new Queen(
-                new Position(Queen.WHITE_QUEEN_STARTING_ROW, Queen.WHITE_QUEEN_STARTING_COLUMN), 
+                new Position(Queen.WHITE_QUEEN_STARTING_ROW, Queen.WHITE_QUEEN_STARTING_COLUMN),
                 Player.WHITE,
                 getFirstAvailableId());
         pieces[Queen.WHITE_QUEEN_STARTING_ROW - 1][Queen.WHITE_QUEEN_STARTING_COLUMN - 1] = whiteQueen;
@@ -99,13 +103,13 @@ public class ChessBoard {
 
         // RE BIANCO
         King whiteKing = new King(
-            new Position(King.WHITE_KING_STARTING_ROW, King.WHITE_KING_STARTING_COLUMN),
-            Player.WHITE,
-            getFirstAvailableId());
+                new Position(King.WHITE_KING_STARTING_ROW, King.WHITE_KING_STARTING_COLUMN),
+                Player.WHITE,
+                getFirstAvailableId());
         pieces[King.WHITE_KING_STARTING_ROW - 1][King.WHITE_KING_STARTING_COLUMN - 1] = whiteKing;
 
-        //          PEDINE NERE
-        
+        // PEDINE NERE
+
         // PEDONI NERI
         for (int i = 1; i <= COLUMNS; i++) {
             Pawn blackPawn = new Pawn(new Position(Pawn.BLACK_PAWNS_STARTING_ROW, i),
@@ -123,7 +127,7 @@ public class ChessBoard {
         pieces[Rook.BLACK_LEFTROOK_STARTING_COLUMN - 1][Rook.BLACK_LEFTROOK_STARTING_COLUMN
                 - 1] = blackRookLeft;
         whitePieces.add(blackRookLeft);
-        
+
         // SECONDA TORRE NERA
         Rook blackRookRight = new Rook(
                 new Position(Rook.BLACK_ROOKS_STARTING_ROW, Rook.BLACK_RIGHTROOK_STARTING_COLUMN),
@@ -180,27 +184,11 @@ public class ChessBoard {
 
         // RE NERO
         King blackKing = new King(
-            new Position(King.BLACK_KING_STARTING_ROW, King.BLACK_KING_STARTING_COLUMN),
-            Player.BLACK,
-            getFirstAvailableId());
-        pieces[King.BLACK_KING_STARTING_ROW - 1][King.BLACK_KING_STARTING_COLUMN - 1] = blackKing; 
-    
-    }
+                new Position(King.BLACK_KING_STARTING_ROW, King.BLACK_KING_STARTING_COLUMN),
+                Player.BLACK,
+                getFirstAvailableId());
+        pieces[King.BLACK_KING_STARTING_ROW - 1][King.BLACK_KING_STARTING_COLUMN - 1] = blackKing;
 
-    public ChessBoard(boolean[] ids, Piece[][] pieces) {
-        // Clonando la scacchiera
-        this.pieces = new Piece[ROWS][COLUMNS];
-        this.ids = new boolean[LAST_ID];
-
-        for (int i = 0; i < LAST_ID; i++) {
-            this.ids[i] = ids[i];
-        }
-
-        for (int i = 0; i < pieces.length; i++) {
-            for (int j = 0; j < pieces.length; j++) {
-                this.pieces[i][j] = pieces[i][j] == null ? null : pieces[i][j].clone();
-            }
-        }
     }
 
     public void createPiece(Piece piece) {
@@ -239,14 +227,26 @@ public class ChessBoard {
 
     public void applyMove(Move move) {
         Position precPosition = move.getPiece().getPosition();
-        System.out.println(
-                "Posizione precedente della pedina : " + precPosition.getRow() + ", " + precPosition.getColumn());
         this.pieces[precPosition.getRow() - 1][precPosition.getColumn() - 1] = null;
-        move.getPiece().moveTo(move.getPosition());
-        System.out.println(
-                "Posizione verso dove si muove la pedina : " + move.getPosition().getRow() + ", "
-                        + move.getPosition().getColumn());
+
+        if (this.simulationMode && this.simulatedMove == null) {
+            move.getPiece().setPosition(move.getPosition().clone());
+            this.simulatedMove = move;
+
+        } else if (!this.simulationMode && this.simulatedMove != null) {
+            move.getPiece().moveTo(move.getPosition());
+
+        } else if (!this.simulationMode) {
+            move.getPiece().moveTo(move.getPosition());
+
+        } else if (this.simulationMode && this.simulatedMove != null) {
+            System.out.println("Error , the board is in simulation mode but youre trying to apply another move");
+            return;
+        }
         this.pieces[move.getPosition().getRow() - 1][move.getPosition().getColumn() - 1] = move.getPiece();
+    }
+
+    public void revertSimulatedMove(Move move) {
     }
 
     public ArrayList<Piece> getPieces() {
@@ -261,7 +261,11 @@ public class ChessBoard {
         return returnedPieces;
     }
 
-    public ChessBoard clone() {
-        return new ChessBoard(this.ids, this.pieces);
+    public ArrayList<Piece> getWhitePieces() {
+        return this.whitePieces;
+    }
+
+    public ArrayList<Piece> getBlackPieces() {
+        return this.blackPieces;
     }
 }
