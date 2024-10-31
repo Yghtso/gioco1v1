@@ -9,6 +9,11 @@
 }
 
 .custom-anchorpane{
+    -fx-background-image: url('../imgs/SchermataSchacchiNoScritta.jpg');
+    -fx-background-size: cover;
+}
+
+.custom-anchorpaneS_C{
     -fx-background-image: url('../imgs/sfondoInziale.png');
     -fx-background-size: cover;
 }

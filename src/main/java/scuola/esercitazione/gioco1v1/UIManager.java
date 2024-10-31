@@ -9,6 +9,8 @@ import javafx.geometry.Bounds;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -22,6 +24,7 @@ public class UIManager {
     
     Game game = new Game();
 
+    //ScermataIniziale
     @FXML
     private AnchorPane AnchorPaneIniziale;
     @FXML
@@ -34,6 +37,26 @@ public class UIManager {
     private Button ClientButton;
     @FXML
     private Button ServerButton;
+
+    //SchermataServer
+    @FXML
+    private AnchorPane AnchorPaneServer;
+    @FXML
+    private Label LabelIP;
+    @FXML
+    private Label LabelTitoloIPServer;
+    @FXML
+    private Button ServerConnectButton;
+
+    //SchermataClient
+    @FXML
+    private AnchorPane AnchorPaneClient;
+    @FXML
+    private Button ClientConnectButton;
+    @FXML
+    private Label LabelTitoloIPClient;
+    @FXML
+    private TextField TextFieldIP;
 
     
     // UI RELATIVA ALLA PARTE DEL GAMEPLAY
@@ -135,26 +158,12 @@ public class UIManager {
 
 
     }
-    
-    @FXML
-    /*public void ServerButton(ActionEvent event) throws Exception{
-
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Scacchiera.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace(); 
-        }
-
-    }*/
 
      public void ServerButton(ActionEvent event) throws Exception {
 
         try {
+
+            
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Server.fxml"));
             Parent root = loader.load();
@@ -166,6 +175,8 @@ public class UIManager {
             newWindow.setScene(scene);
             newWindow.showAndWait();
 
+            ServerCollegamento();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -174,6 +185,8 @@ public class UIManager {
     public void ClientButton(ActionEvent event) throws Exception{
 
         try {
+
+            ClientCollegamento();
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Client.fxml"));
             Parent root = loader.load();
@@ -185,12 +198,26 @@ public class UIManager {
             newWindow.setScene(scene);
             newWindow.showAndWait();
 
+            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
-        
+
+    public void ServerCollegamento(){
+
+        LabelIP.setText("Cacca");
+
+    }
+
+
+    public void ClientCollegamento(){
+
+
+
+    }
         
 
     @FXML
