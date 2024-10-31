@@ -3,7 +3,7 @@ package scuola.esercitazione.gioco1v1;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class Piece implements Serializable{
+public abstract class Piece implements Serializable {
 
     protected Position position;
     protected Player owner;
@@ -35,6 +35,10 @@ public abstract class Piece implements Serializable{
         this.position = position;
     }
 
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -48,18 +52,29 @@ public abstract class Piece implements Serializable{
     // GETTERS DELLE MOSSE SPECIFICHE PER LE PEDINE
     // PEDONI
     public abstract Move getFORWARD1();
+
     public abstract Move getFORWARD2();
+
     public abstract Move getDIAGONALLEFT();
+
     public abstract Move getDIAGONALRIGHT();
+
     // TORRI
     public abstract ArrayList<Move> getTOP();
+
     public abstract ArrayList<Move> getRIGHT();
+
     public abstract ArrayList<Move> getBOTTOM();
+
     public abstract ArrayList<Move> getLEFT();
+
     // ALFIERI
     public abstract ArrayList<Move> getTOPLEFTDIAGONAL();
+
     public abstract ArrayList<Move> getTOPRIGHTDIAGONAL();
+
     public abstract ArrayList<Move> getBOTTOMLEFTDIAGONAL();
+
     public abstract ArrayList<Move> getBOTTOMRIGHTDIAGONAL();
 
 }

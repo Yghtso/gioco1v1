@@ -212,16 +212,22 @@ public class MoveChecker {
     private boolean leadsToKingCheck(Move move) {
         Player ownerMovedPiece = move.getPiece().getOwner();
 
-        ChessBoard alternativeBoard = this.board.clone();
-        alternativeBoard.applyMove(move);
-        MoveChecker checker = new MoveChecker(alternativeBoard);
+        if (ownerMovedPiece == Player.BLACK) {
+            for (Piece whitPiece : board.getWhitePieces()) {
 
-        for (Piece singlePiece : alternativeBoard.getPieces()) {
+            }
+        } else if (ownerMovedPiece == Player.WHITE) {
+            for (Piece blackPiece : board.getBlackPieces()) {
+
+            }
+        }
+
+        for (Piece singlePiece : board.getPieces()) {
             singlePiece.calculateMoves();
             // checker.checkMoves(singlePiece.getValidMoves());
             for (Move singleMove : singlePiece.getValidMoves()) {
-                if (alternativeBoard.getPiece(singleMove.getPosition()) instanceof King) {
-                    return ownerMovedPiece != alternativeBoard.getPiece(singleMove.getPosition()).getOwner();
+                if (board.getPiece(singleMove.getPosition()) instanceof King) {
+                    return ownerMovedPiece != board.getPiece(singleMove.getPosition()).getOwner();
                 }
             }
         }
