@@ -22,7 +22,7 @@ import javafx.util.Duration;
 
 public class UIManager {
     
-    Game game = new Game();
+    Game game = new Game(Player.WHITE);
 
     //ScermataIniziale
     @FXML
@@ -72,6 +72,13 @@ public class UIManager {
         Player pieceOwner = piece == null ? null : piece.getOwner();
         boolean clickedOwnedPiece = pieceOwner == game.getPlayer();
 
+        System.out.println(piece);
+        System.out.println(pieceOwner);
+
+        if (!game.getYourTurn()) {
+            return;
+        }
+
         if (!game.getIsPieceSelected() && clickedOwnedPiece) {
             game.setIsPieceSelected(true);
             game.setSelectedPiece(piece);
@@ -108,9 +115,7 @@ public class UIManager {
     // UI DELLA PARTE DI MENU
     @FXML
     public void PlayButton(ActionEvent event) {
-
         Animazione();
-
     }
     @FXML
     public void Animazione(){
@@ -163,8 +168,6 @@ public class UIManager {
 
         try {
 
-            
-
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Server.fxml"));
             Parent root = loader.load();
             Stage newWindow = new Stage();
@@ -175,7 +178,7 @@ public class UIManager {
             newWindow.setScene(scene);
             newWindow.showAndWait();
 
-            ServerCollegamento();
+            LabelIP.setText("Cacca");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -205,13 +208,6 @@ public class UIManager {
         }
 
     }
-
-    public void ServerCollegamento(){
-
-        LabelIP.setText("Cacca");
-
-    }
-
 
     public void ClientCollegamento(){
 

@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" stylesheets="@..\styles\Styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scuola.esercitazione.gioco1v1.UIManager">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" stylesheets="@..\styles\Styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scuola.esercitazione.gioco1v1.UIManager">
    <children>
       <SplitPane dividerPositions="0.6352163461538461" layoutX="606.0" prefHeight="700.0" prefWidth="1094.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -60,15 +60,15 @@
                            <children>
                               <ImageView fitHeight="75.0" fitWidth="75.0" layoutX="16.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../imgs/Pieces/ReNero.png" />
+                                    <Image url="@../imgs/Pieces/ReginaNero.png" />
                                  </image>
                               </ImageView>
                            </children></Pane>
                         <Pane onMouseClicked="#clickedSquare" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4">
                            <children>
-                              <ImageView fitHeight="75.0" fitWidth="75.0" layoutX="12.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="75.0" fitWidth="50.0" layoutX="18.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../imgs/Pieces/ReginaNero.png" />
+                                    <Image url="@../imgs/Pieces/ReNero.png" />
                                  </image>
                               </ImageView>
                            </children></Pane>

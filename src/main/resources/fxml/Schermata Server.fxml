@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="AnchorPaneServer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #000000;" styleClass="custom-anchorpaneS_C" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scuola.esercitazione.gioco1v1.UIManager">
+<AnchorPane fx:id="AnchorPaneServer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #000000;" styleClass="custom-anchorpaneS_C" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scuola.esercitazione.gioco1v1.UIManager">
    <children>
       <Label fx:id="LabelIP" alignment="CENTER" contentDisplay="CENTER" layoutX="136.0" layoutY="155.0" prefHeight="118.0" prefWidth="326.0" text="&quot;&quot;" textAlignment="CENTER" textFill="WHITE" />
       <Button fx:id="ServerConnectButton" disable="true" layoutX="137.0" layoutY="300.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="326.0" style="-fx-background-color: #FFFFFF;" styleClass="chess-button" text="Connettiti" />

@@ -11,16 +11,12 @@ public class Gioco1v1 extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Iniziale.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Scacchiera.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.setTitle("Scacchi");
             primaryStage.show();
-
-            //primaryStage.widthProperty().addListener((obs, oldVal, newVal) -> javax.swing.UIManager.Ridimensiona());
-            //primaryStage.heightProperty().addListener((obs, oldVal, newVal) -> Ridimensiona());s
-
         } catch (Exception e) {
             e.printStackTrace();
         }
