@@ -6,11 +6,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -23,6 +25,10 @@ import javafx.util.Duration;
 public class UIManager {
     
     Game game = new Game(Player.WHITE);
+
+    //SchermataScacchiera
+    @FXML
+    private GridPane GridPaneScacchiera;
 
     //ScermataIniziale
     @FXML
@@ -72,9 +78,6 @@ public class UIManager {
         Player pieceOwner = piece == null ? null : piece.getOwner();
         boolean clickedOwnedPiece = pieceOwner == game.getPlayer();
 
-        System.out.println(piece);
-        System.out.println(pieceOwner);
-
         if (!game.getYourTurn()) {
             return;
         }
@@ -82,16 +85,38 @@ public class UIManager {
         if (!game.getIsPieceSelected() && clickedOwnedPiece) {
             game.setIsPieceSelected(true);
             game.setSelectedPiece(piece);
-            // TODO: far vedere sulla scacchiera le mosse possibili
+
+            piece.calculateMoves();
+            game.getChecker().checkMoves(piece.getValidMoves());
+            
+            for (Move singlePieceMove : piece.getValidMoves()) {
+                Pane paneSquare = (Pane) getNodeByRowColumnIndex(8 - singlePieceMove.getPosition().getRow(), singlePieceMove.getPosition().getColumn() - 1, GridPaneScacchiera);
+                ImageView img = (ImageView) paneSquare.getChildren().getFirst();
+                img.setImage(new Image(getClass().getResource("/imgs/Cerchio.png").toExternalForm()));
+            }
             return;
         }
 
         
         if (game.getIsPieceSelected() && clickedOwnedPiece) {
+            for (Move singlePieceMove : game.getSelectedPiece().getValidMoves()) {
+                Pane paneSquare = (Pane) getNodeByRowColumnIndex(8 - singlePieceMove.getPosition().getRow(), singlePieceMove.getPosition().getColumn() - 1, GridPaneScacchiera);
+                ImageView img = (ImageView) paneSquare.getChildren().getFirst();
+                img.setImage(null);
+            }
+
             // TODO: CHECK DELL ARROCCO DA FARE
             game.setIsPieceSelected(true);
             game.setSelectedPiece(piece);
-            // TODO: far vedere sulla scacchiera le mosse possibili
+            
+            piece.calculateMoves();
+            game.getChecker().checkMoves(piece.getValidMoves());
+            
+            for (Move singlePieceMove : piece.getValidMoves()) {
+                Pane paneSquare = (Pane) getNodeByRowColumnIndex(8 - singlePieceMove.getPosition().getRow(), singlePieceMove.getPosition().getColumn() - 1, GridPaneScacchiera);
+                ImageView img = (ImageView) paneSquare.getChildren().getFirst();
+                img.setImage(new Image(getClass().getResource("/imgs/Cerchio.png").toExternalForm()));
+            }
             return;
         }
 
@@ -110,6 +135,21 @@ public class UIManager {
             game.setSelectedPiece(null);
             return;
         }
+    }
+
+    private static Node getNodeByRowColumnIndex(int row, int column, GridPane gridPane) {
+        for (Node node : gridPane.getChildren()) {
+            Integer nodeRow = GridPane.getRowIndex(node);
+            Integer nodeColumn = GridPane.getColumnIndex(node);
+
+            if (nodeRow == null) nodeRow = 0;
+            if (nodeColumn == null) nodeColumn = 0;
+
+            if (nodeRow == row && nodeColumn == column) {
+                return node;
+            }
+        }
+        return null;
     }
 
     // UI DELLA PARTE DI MENU
