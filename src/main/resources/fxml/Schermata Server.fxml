@@ -3,16 +3,29 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="AnchorPaneServer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #000000;" styleClass="custom-anchorpaneS_C" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scuola.esercitazione.gioco1v1.UIManager">
+<AnchorPane fx:id="AnchorPaneServer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="638.0" prefWidth="922.0" style="-fx-background-color: #000000;" styleClass="custom-anchorpaneS_C" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scuola.esercitazione.gioco1v1.UIManager">
    <children>
-      <Label fx:id="LabelIP" alignment="CENTER" contentDisplay="CENTER" layoutX="136.0" layoutY="155.0" prefHeight="118.0" prefWidth="326.0" text="&quot;&quot;" textAlignment="CENTER" textFill="WHITE" />
-      <Button fx:id="ServerConnectButton" disable="true" layoutX="137.0" layoutY="300.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="326.0" style="-fx-background-color: #FFFFFF;" styleClass="chess-button" text="Connettiti" />
-      <Label fx:id="LabelTitoloIPServer" layoutX="273.0" layoutY="43.0" text="IP" textFill="WHITE">
-         <font>
-            <Font size="64.0" />
-         </font>
-      </Label>
+      <StackPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Button fx:id="ServerBackButton" mnemonicParsing="false" onAction="#GoBack" prefHeight="63.0" prefWidth="326.0" styleClass="chess-button" text="INDIETRO" />
+         </children>
+      </StackPane>
+      <StackPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Label fx:id="LabelIP" alignment="CENTER" contentDisplay="CENTER" prefHeight="118.0" prefWidth="326.0" text="&quot;&quot;" textAlignment="CENTER" textFill="WHITE" />
+         </children>
+      </StackPane>
+      <StackPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="400.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Label fx:id="LabelTitoloIPServer" text="IP" textFill="WHITE">
+               <font>
+                  <Font size="64.0" />
+               </font>
+            </Label>
+         </children>
+      </StackPane>
    </children>
 </AnchorPane>

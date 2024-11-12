@@ -19,6 +19,8 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.scene.Node;
+
 
 public class UIManager {
     
@@ -46,17 +48,18 @@ public class UIManager {
     @FXML
     private Label LabelTitoloIPServer;
     @FXML
-    private Button ServerConnectButton;
+    private Button ServerBackButton;
 
     //SchermataClient
     @FXML
     private AnchorPane AnchorPaneClient;
     @FXML
-    private Button ClientConnectButton;
+    private Button ClientBackButton;
     @FXML
     private Label LabelTitoloIPClient;
     @FXML
-    private TextField TextFieldIP;
+    private TextField TextIp;
+
 
     
     // UI RELATIVA ALLA PARTE DEL GAMEPLAY
@@ -164,19 +167,19 @@ public class UIManager {
 
     }
 
-     public void ServerButton(ActionEvent event) throws Exception {
+    @FXML
+    public void ServerButton(ActionEvent event) throws Exception {
 
         try {
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Server.fxml"));
             Parent root = loader.load();
-            Stage newWindow = new Stage();
-            newWindow.setTitle("Server");
-            newWindow.initModality(Modality.APPLICATION_MODAL);
-            newWindow.setResizable(false);
+
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.setResizable(false);
+        
             Scene scene = new Scene(root);
-            newWindow.setScene(scene);
-            newWindow.showAndWait();
+            currentStage.setScene(scene);
 
             LabelIP.setText("Cacca");
 
@@ -189,19 +192,14 @@ public class UIManager {
 
         try {
 
-            ClientCollegamento();
-
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Client.fxml"));
             Parent root = loader.load();
-            Stage newWindow = new Stage();
-            newWindow.setTitle("Client");
-            newWindow.initModality(Modality.APPLICATION_MODAL);
-            newWindow.setResizable(false);
-            Scene scene = new Scene(root);
-            newWindow.setScene(scene);
-            newWindow.showAndWait();
 
-            
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.setResizable(false);
+        
+            Scene scene = new Scene(root);
+            currentStage.setScene(scene);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -209,9 +207,23 @@ public class UIManager {
 
     }
 
-    public void ClientCollegamento(){
+    @FXML
+    void GoBack(ActionEvent event) {
 
+        try {
 
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Iniziale.fxml"));
+            Parent root = loader.load();
+
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.setResizable(false);
+        
+            Scene scene = new Scene(root);
+            currentStage.setScene(scene);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
         
