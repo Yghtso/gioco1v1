@@ -29,12 +29,22 @@ public class ClientNetManager {
         }
     }
 
+    public boolean close() {
+        try {
+            socket.close();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     public ClientNetManager(Socket socket) {
         this.socket = socket;
     }
 
     public ClientNetManager() {
         this.socket = new Socket();
+        System.out.println("Client Aperto!!!!!!!!!!!!!!!!!!!!!!!!!");
     }
 
     public boolean connect(String ip) {

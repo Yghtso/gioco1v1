@@ -15,6 +15,7 @@ public class Gioco1v1 extends Application {
             Parent root = loader.load();
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
+            primaryStage.setResizable(false);
             primaryStage.setTitle("Scacchi");
             primaryStage.show();
         } catch (Exception e) {

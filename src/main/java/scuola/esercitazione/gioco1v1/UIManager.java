@@ -1,7 +1,10 @@
 package scuola.esercitazione.gioco1v1;
 
+import java.net.ServerSocket;
+
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +23,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import javafx.scene.Node;
 
@@ -27,6 +31,8 @@ import javafx.scene.Node;
 public class UIManager {
     
     Game game = new Game(Player.WHITE);
+    static ServerNetManager Server;
+    static ClientNetManager Client;
 
     //SchermataScacchiera
     @FXML
@@ -221,11 +227,21 @@ public class UIManager {
             Scene scene = new Scene(root);
             currentStage.setScene(scene);
 
-            LabelIP.setText("Cacca");
+            Server= new ServerNetManager(ServerNetManager.PORT);
+
+            AggiornaLabel();
+
+            GestoreChiusura(currentStage);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    void AggiornaLabel(){
+
+        LabelIP.setText("OIOIOIOIOIOI");
+
     }
 
     public void ClientButton(ActionEvent event) throws Exception{
@@ -237,9 +253,13 @@ public class UIManager {
 
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             currentStage.setResizable(false);
-        
+
             Scene scene = new Scene(root);
             currentStage.setScene(scene);
+
+            Client= new ClientNetManager();
+
+            GestoreChiusura(currentStage);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -251,6 +271,9 @@ public class UIManager {
     void GoBack(ActionEvent event) {
 
         try {
+
+            System.out.println(Server);
+            ChiudiConnessioni();
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Iniziale.fxml"));
             Parent root = loader.load();
@@ -267,6 +290,31 @@ public class UIManager {
 
     }
         
+    void GestoreChiusura(Stage stage){
+
+        stage.setOnCloseRequest((WindowEvent event) -> {
+            System.out.println(Server);
+            ChiudiConnessioni();
+            Platform.exit();  
+            System.exit(0);
+        });
+
+    }
+
+    void ChiudiConnessioni(){
+
+        boolean ServerClosed, ClientClosed;
+
+        if(Server instanceof ServerNetManager){
+            System.out.println("Li odio i negri");
+            ServerClosed= Server.close();
+        }
+        if(Client instanceof ClientNetManager){
+            System.out.println("Li odio i froci");
+            ClientClosed= Client.close();
+        }
+       
+    }
 
     @FXML
     void QuitButton(ActionEvent event) {
