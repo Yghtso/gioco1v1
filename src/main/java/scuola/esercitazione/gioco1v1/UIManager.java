@@ -38,6 +38,21 @@ public class UIManager {
     @FXML
     private GridPane GridPaneScacchiera;
 
+    //Immagini delle pedine della scacchiera
+    Image blackPawnImg = new Image(getClass().getResource("/imgs/Pieces/PedoneNero.png").toExternalForm());
+    Image blackRookImg = new Image(getClass().getResource("/imgs/Pieces/TorreNero.png").toExternalForm());
+    Image blackBishopImg = new Image(getClass().getResource("/imgs/Pieces/AlfiereNero.png").toExternalForm());
+    Image blackKnightImg = new Image(getClass().getResource("/imgs/Pieces/CavalloNero.png").toExternalForm());
+    Image blackQueenImg = new Image(getClass().getResource("/imgs/Pieces/ReginaNero.png").toExternalForm());
+    Image blackKingImg = new Image(getClass().getResource("/imgs/Pieces/ReNero.png").toExternalForm());
+
+    Image whitePawnImg = new Image(getClass().getResource("/imgs/Pieces/Pedone.png").toExternalForm());
+    Image whiteRookImg = new Image(getClass().getResource("/imgs/Pieces/Torre.png").toExternalForm());
+    Image whiteBishopImg = new Image(getClass().getResource("/imgs/Pieces/Alfiere.png").toExternalForm());
+    Image whiteKnightImg = new Image(getClass().getResource("/imgs/Pieces/Cavallo.png").toExternalForm());
+    Image whiteQueenImg = new Image(getClass().getResource("/imgs/Pieces/Regina.png").toExternalForm());
+    Image whiteKingImg = new Image(getClass().getResource("/imgs/Pieces/Re.png").toExternalForm());
+
     //ScermataIniziale
     @FXML
     private AnchorPane AnchorPaneIniziale;
@@ -98,21 +113,26 @@ public class UIManager {
             piece.calculateMoves();
             game.getChecker().checkMoves(piece.getValidMoves());
             
+            displayPieces();
+
             for (Move singlePieceMove : piece.getValidMoves()) {
-                Pane paneSquare = (Pane) getNodeByRowColumnIndex(8 - singlePieceMove.getPosition().getRow(), singlePieceMove.getPosition().getColumn() - 1, GridPaneScacchiera);
-                ImageView img = (ImageView) paneSquare.getChildren().getFirst();
-                img.setImage(new Image(getClass().getResource("/imgs/Cerchio.png").toExternalForm()));
+                Piece destPieceEachMove = game.getBoard().getPiece(singlePieceMove.getPosition());
+                Player destPieceOwnerSingleMove = destPieceEachMove == null ? null : destPieceEachMove.getOwner();
+
+                if (!((pieceOwner == Player.WHITE && destPieceOwnerSingleMove == Player.BLACK) || (pieceOwner == Player.BLACK && destPieceOwnerSingleMove == Player.WHITE))) {
+
+                    Pane paneSquare = (Pane) getNodeByRowColumnIndex(8 - singlePieceMove.getPosition().getRow(), singlePieceMove.getPosition().getColumn() - 1, GridPaneScacchiera);
+                    ImageView img = (ImageView) paneSquare.getChildren().getFirst();
+                    img.setImage(new Image(getClass().getResource("/imgs/Cerchio.png").toExternalForm()));
+                }
             }
             return;
         }
 
         
         if (game.getIsPieceSelected() && clickedOwnedPiece) {
-            for (Move singlePieceMove : game.getSelectedPiece().getValidMoves()) {
-                Pane paneSquare = (Pane) getNodeByRowColumnIndex(8 - singlePieceMove.getPosition().getRow(), singlePieceMove.getPosition().getColumn() - 1, GridPaneScacchiera);
-                ImageView img = (ImageView) paneSquare.getChildren().getFirst();
-                img.setImage(null);
-            }
+
+            displayPieces();
 
             // TODO: CHECK DELL ARROCCO DA FARE
             game.setIsPieceSelected(true);
@@ -122,14 +142,22 @@ public class UIManager {
             game.getChecker().checkMoves(piece.getValidMoves());
             
             for (Move singlePieceMove : piece.getValidMoves()) {
-                Pane paneSquare = (Pane) getNodeByRowColumnIndex(8 - singlePieceMove.getPosition().getRow(), singlePieceMove.getPosition().getColumn() - 1, GridPaneScacchiera);
-                ImageView img = (ImageView) paneSquare.getChildren().getFirst();
-                img.setImage(new Image(getClass().getResource("/imgs/Cerchio.png").toExternalForm()));
+
+                Piece destPieceEachMove = game.getBoard().getPiece(singlePieceMove.getPosition());
+                Player destPieceOwnerSingleMove = destPieceEachMove == null ? null : destPieceEachMove.getOwner();
+
+                if (!((pieceOwner == Player.WHITE && destPieceOwnerSingleMove == Player.BLACK) || (pieceOwner == Player.BLACK && destPieceOwnerSingleMove == Player.WHITE))) {
+                    Pane paneSquare = (Pane) getNodeByRowColumnIndex(8 - singlePieceMove.getPosition().getRow(), singlePieceMove.getPosition().getColumn() - 1, GridPaneScacchiera);
+                    ImageView img = (ImageView) paneSquare.getChildren().getFirst();
+                    img.setImage(new Image(getClass().getResource("/imgs/Cerchio.png").toExternalForm()));
+                }
             }
             return;
         }
 
         if (game.getIsPieceSelected() && !clickedOwnedPiece) {
+
+            displayPieces();
 
             Move move = new Move(new Position(row, column), game.getSelectedPiece(), false);
             game.getSelectedPiece().calculateMoves();
@@ -137,13 +165,65 @@ public class UIManager {
 
             for (Move singleMove : game.getSelectedPiece().getValidMoves()) {
                 if (singleMove.equals(move)) {
-                    System.out.println("Mossa valida");
+                    
+                    game.getBoard().applyMove(move);
+                
+                    displayPieces();
                 }
             }
             game.setIsPieceSelected(false);
             game.setSelectedPiece(null);
             return;
         }
+    }
+
+    private void displayPieces() {
+
+        for (Node node : GridPaneScacchiera.getChildren()) {
+            if (node instanceof Pane) {
+                Pane square = (Pane) node;
+                ImageView img = (ImageView) square.getChildren().getFirst();
+                img.setImage(null);
+            }
+        }
+
+        System.out.println(game.getBoard().getPieces().size());
+        for (Piece singlePiece : game.getBoard().getPieces()) {
+            Pane square = (Pane) getNodeByRowColumnIndex(8 - singlePiece.getPosition().getRow(), singlePiece.getPosition().getColumn() - 1, GridPaneScacchiera);
+            ImageView img = (ImageView) square.getChildren().getFirst();
+            System.out.println(square);
+            System.out.println(getImgByPiece(singlePiece));
+            img.setImage(getImgByPiece(singlePiece));
+        }
+    }
+
+    private Image getImgByPiece(Piece piece) {
+        if (piece instanceof Pawn && piece.getOwner() == Player.WHITE) {
+            return whitePawnImg;
+        } else if (piece instanceof Rook && piece.getOwner() == Player.WHITE) {
+            return whiteRookImg;
+        } else if (piece instanceof Bishop && piece.getOwner() == Player.WHITE) {
+            return whiteBishopImg;
+        } else if (piece instanceof Knight && piece.getOwner() == Player.WHITE) {
+            return whiteKnightImg;
+        } else if (piece instanceof Queen && piece.getOwner() == Player.WHITE) {
+            return whiteQueenImg;
+        } else if (piece instanceof King && piece.getOwner() == Player.WHITE) {
+            return whiteKingImg;
+        } if (piece instanceof Pawn && piece.getOwner() == Player.BLACK) {
+            return blackPawnImg;
+        } else if (piece instanceof Rook && piece.getOwner() == Player.BLACK) {
+            return blackRookImg;
+        } else if (piece instanceof Bishop && piece.getOwner() == Player.BLACK) {
+            return blackBishopImg;
+        } else if (piece instanceof Knight && piece.getOwner() == Player.BLACK) {
+            return blackKnightImg;
+        } else if (piece instanceof Queen && piece.getOwner() == Player.BLACK) {
+            return blackQueenImg;
+        } else if (piece instanceof King && piece.getOwner() == Player.BLACK) {
+            return blackKingImg;
+        }
+        return null;
     }
 
     private static Node getNodeByRowColumnIndex(int row, int column, GridPane gridPane) {
@@ -209,8 +289,6 @@ public class UIManager {
             ClientButton.setVisible(true);
 
         });
-
-
     }
 
     @FXML

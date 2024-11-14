@@ -15,11 +15,6 @@ public class MoveChecker {
         @SuppressWarnings("unchecked")
         ArrayList<Move> movesClone = (ArrayList<Move>) moves.clone();
 
-        System.out.println("Mossa tutte le mosse : ");
-        for (Move move : moves.get(0).getPiece().getValidMoves()) {
-            System.out.println("Mossa : " + move);
-        }
-
         for (Move move : movesClone) {
 
             if (destinationOwnedBySame(move)) {
@@ -38,7 +33,6 @@ public class MoveChecker {
             } else if (move.getPiece() instanceof Rook) {
 
                 if (!validForRooks(move)) {
-                    System.out.println("Mossa singola : " + move);
                     move.getPiece().getValidMoves().remove(move);
                 }
 
@@ -69,6 +63,10 @@ public class MoveChecker {
         boolean diagonalLeftOccupied = board.getPiece(((Pawn) move.getPiece()).getDIAGONALLEFT().getPosition()) != null;
         boolean diagonalRightOccupied = board
                 .getPiece(((Pawn) move.getPiece()).getDIAGONALRIGHT().getPosition()) != null;
+
+        if (move.equals(((Pawn) move.getPiece()).getFORWARD2())) {
+            return !frontOccupied;
+        }
 
         if (move.equals(((Pawn) move.getPiece()).getFORWARD2())) {
             return !frontOccupied;
