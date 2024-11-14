@@ -28,8 +28,10 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
-public class UIManager {
+public class UIManager{
     
     Game game;
     static ServerNetManager Server;
@@ -78,6 +80,8 @@ public class UIManager {
     private Label LabelTitoloIPServer;
     @FXML
     private Button ServerBackButton;
+    @FXML
+    private Button IPButton;
 
     //SchermataClient
     @FXML
@@ -137,8 +141,6 @@ public class UIManager {
         if (game.getIsPieceSelected() && clickedOwnedPiece) {
 
             displayPieces();
-
-            // TODO: CHECK DELL ARROCCO DA FARE
             game.setIsPieceSelected(true);
             game.setSelectedPiece(piece);
             
@@ -312,19 +314,32 @@ public class UIManager {
             Scene scene = new Scene(root);
             currentStage.setScene(scene);
 
-            Server= new ServerNetManager(ServerNetManager.PORT);
-            
-
-            GestoreChiusura(currentStage);
-            PauseTransition pause = new PauseTransition(Duration.seconds(1));            
+            GestoreChiusura(currentStage);          
             ApriServer(event);
           
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        Server= new ServerNetManager(ServerNetManager.PORT);
+        ApriServer(event);    
+
+    }
+
+    @FXML
+    void MostraIP(ActionEvent event) {
+
+        InetAddress localHost;
+        try {
+            localHost = InetAddress.getLocalHost();
+            LabelIP.setText(localHost.getHostAddress());
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
     }
 
     public void ApriServer(ActionEvent event){
+
         
         CompletableFuture<Boolean> listeningFuture = CompletableFuture.supplyAsync(() -> {
             Server.startListening();
@@ -349,7 +364,6 @@ public class UIManager {
                 e.printStackTrace();
             }
         });
-
 
     }
 

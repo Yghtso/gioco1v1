@@ -50,7 +50,6 @@ public class ClientNetManager {
     public boolean connect(String ip) {
         try {
             socket.connect(new InetSocketAddress(ip, ServerNetManager.PORT));
-            System.err.println(socket.getInetAddress());
             return true;
         } catch (Exception e) {
             return false;
