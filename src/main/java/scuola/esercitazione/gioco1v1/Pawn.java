@@ -30,7 +30,6 @@ public class Pawn extends Piece {
                 this.FORWARD2.setPosition(
                         new Position(this.position.getRow() + STARTING_PAWN_MOVE, this.position.getColumn()));
                 allPossibleMoves.add(FORWARD2);
-                this.firstMove = !this.firstMove;
             } else {
                 this.FORWARD2.setPosition(null);
             }
@@ -48,7 +47,6 @@ public class Pawn extends Piece {
                 this.FORWARD2.setPosition(
                         new Position(this.position.getRow() - STARTING_PAWN_MOVE, this.position.getColumn()));
                 allPossibleMoves.add(FORWARD2);
-                this.firstMove = !this.firstMove;
             } else {
                 this.FORWARD2.setPosition(null);
             }

@@ -1,0 +1,22 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Gioco1v1",
+            "request": "launch",
+            "mainClass": "scuola.esercitazione.gioco1v1.Gioco1v1",
+            "projectName": "Gioco1v1"
+        },
+        {
+            "type": "java",
+            "name": "Launch JavaFX Application",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "processId": "${command:PickProcess}",
+            "preLaunchTask": "maven build",
+            "mainClass": "<YourMainClassPath>"
+        }
+    ]
+  }  
