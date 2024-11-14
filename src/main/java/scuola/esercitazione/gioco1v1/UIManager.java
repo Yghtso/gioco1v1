@@ -40,6 +40,10 @@ public class UIManager{
     //SchermataScacchiera
     @FXML
     private GridPane GridPaneScacchiera;
+    @FXML
+    private Button StartButton;
+    @FXML
+    private Button SurrenderButton;
 
     //Immagini delle pedine della scacchiera
     Image blackPawnImg = new Image(getClass().getResource("/imgs/Pieces/PedoneNero.png").toExternalForm());
@@ -314,14 +318,12 @@ public class UIManager{
             currentStage.setScene(scene);
 
             GestoreChiusura(currentStage);          
-            ApriServer(event);
           
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        Server= new ServerNetManager(ServerNetManager.PORT);
-        ApriServer(event);    
+        Server= new ServerNetManager(ServerNetManager.PORT);   
 
     }
 
@@ -365,36 +367,6 @@ public class UIManager{
         serverThread.start();
             
     }
-
-    public void ApriServer(ActionEvent event){
-
-        
-        /*CompletableFuture<Boolean> listeningFuture = CompletableFuture.supplyAsync(() -> {
-            Server.startListening();
-            return true;
-        });
-
-        listeningFuture.thenAccept(result -> {
-            //game = new Game(Player.BLACK);
-
-            try {
-
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Scacchiera.fxml"));
-                Parent root = loader.load();
-    
-                Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                currentStage.setResizable(false);
-    
-                Scene scene = new Scene(root);
-                currentStage.setScene(scene);
-    
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });*/
-
-    }
-
 
     public void ClientButton(ActionEvent event) throws Exception{
 
@@ -518,4 +490,14 @@ public class UIManager{
     public void arrenditi(ActionEvent event) {
         System.out.println("Ti sei arreso");
     }
+
+    @FXML
+    void StartGame(ActionEvent event) {
+
+        System.out.println(GridPaneScacchiera);
+        StartButton.setVisible(false);
+        SurrenderButton.setVisible(true);
+
+    }
+
 }
