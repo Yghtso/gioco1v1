@@ -375,9 +375,8 @@ public class UIManager{
         });
 
         listeningFuture.thenAccept(result -> {
-            game = new Game(Player.BLACK);
+            //game = new Game(Player.BLACK);
 
-            System.out.println("CONNESSIONE");
             try {
 
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Scacchiera.fxml"));
