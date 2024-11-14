@@ -27,8 +27,10 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
-public class UIManager {
+public class UIManager{
     
     Game game;
     static ServerNetManager Server;
@@ -77,6 +79,8 @@ public class UIManager {
     private Label LabelTitoloIPServer;
     @FXML
     private Button ServerBackButton;
+    @FXML
+    private Button IPButton;
 
     //SchermataClient
     @FXML
@@ -311,16 +315,25 @@ public class UIManager {
             Scene scene = new Scene(root);
             currentStage.setScene(scene);
 
-            Server= new ServerNetManager(ServerNetManager.PORT);
-            
-
             GestoreChiusura(currentStage);
-            PauseTransition pause = new PauseTransition(Duration.seconds(1));            
-            ApriServer(event);
-          
-            pause.play();
 
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Server= new ServerNetManager(ServerNetManager.PORT);
+        ApriServer(event);    
+
+    }
+
+    @FXML
+    void MostraIP(ActionEvent event) {
+
+        InetAddress localHost;
+        try {
+            localHost = InetAddress.getLocalHost();
+            LabelIP.setText(localHost.getHostAddress());
+        } catch (UnknownHostException e) {
             e.printStackTrace();
         }
     }
@@ -329,18 +342,18 @@ public class UIManager {
         Thread serverThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                synchronized (ApriServer.this) {  
+                synchronized (this) {  
                     ClientServer = Server.startListening();
                     System.out.println("Dioosalsiccia");
                     System.out.println(ClientServer);
-                    ApriServer.this.notify(); 
+                    //this.notify(); 
                 }
             }
         });
     
         serverThread.start();
     
-        synchronized (this) { 
+        /*synchronized (this) { 
             try {
                 wait();  
             } catch (InterruptedException e) {
@@ -363,7 +376,7 @@ public class UIManager {
 
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
 
     }
 
