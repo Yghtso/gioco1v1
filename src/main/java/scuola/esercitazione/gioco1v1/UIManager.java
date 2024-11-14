@@ -4,6 +4,7 @@ package scuola.esercitazione.gioco1v1;
 import java.io.IOException;
 import java.net.Socket;
 
+import java.util.concurrent.*;
 import javafx.animation.ParallelTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
@@ -318,52 +319,38 @@ public class UIManager {
             PauseTransition pause = new PauseTransition(Duration.seconds(1));            
             ApriServer(event);
           
-            pause.play();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void ApriServer(ActionEvent event){
-        Thread serverThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                synchronized (ApriServer.this) {  
-                    ClientServer = Server.startListening();
-                    System.out.println("Dioosalsiccia");
-                    System.out.println(ClientServer);
-                    ApriServer.this.notify(); 
-                }
-            }
+        
+        CompletableFuture<Boolean> listeningFuture = CompletableFuture.supplyAsync(() -> {
+            Server.startListening();
+            return true;
         });
-    
-        serverThread.start();
-    
-        synchronized (this) { 
+
+        listeningFuture.thenAccept(result -> {
+            game = new Game(Player.BLACK);
+
+            System.out.println("CONNESSIONE");
             try {
-                wait();  
-            } catch (InterruptedException e) {
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Scacchiera.fxml"));
+                Parent root = loader.load();
+    
+                Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                currentStage.setResizable(false);
+    
+                Scene scene = new Scene(root);
+                currentStage.setScene(scene);
+    
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
+        });
 
-        game= new Game(Player.BLACK);
-
-        try {
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Scacchiera.fxml"));
-            Parent root = loader.load();
-
-            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            currentStage.setResizable(false);
-
-            Scene scene = new Scene(root);
-            currentStage.setScene(scene);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
     }
 
