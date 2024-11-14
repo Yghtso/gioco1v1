@@ -36,8 +36,7 @@ public class UIManager{
     Game game;
     static ServerNetManager Server;
     static ClientNetManager Client;
-    Socket ClientServer;
-
+ 
     //SchermataScacchiera
     @FXML
     private GridPane GridPaneScacchiera;
@@ -336,12 +335,41 @@ public class UIManager{
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
+        
+        Thread serverThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Client = new ClientNetManager(Server.startListening());
+                System.out.println(Client);
+                game = new Game(Player.BLACK);
+
+            System.out.println("CONNESSIONE");
+            try {
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Scacchiera.fxml"));
+                Parent root = loader.load();
+    
+                Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                
+    
+                Scene scene = new Scene(root);
+                Platform.runLater(() -> {
+                    currentStage.setScene(scene);
+                });
+    
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            }
+        });
+        serverThread.start();
+            
     }
 
     public void ApriServer(ActionEvent event){
 
         
-        CompletableFuture<Boolean> listeningFuture = CompletableFuture.supplyAsync(() -> {
+        /*CompletableFuture<Boolean> listeningFuture = CompletableFuture.supplyAsync(() -> {
             Server.startListening();
             return true;
         });
@@ -364,7 +392,7 @@ public class UIManager{
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        });
+        });*/
 
     }
 
@@ -432,6 +460,7 @@ public class UIManager{
         System.out.println(PlayButton);
         System.out.println(LabelIP);
         System.out.println(AnchorPaneServer);
+
 
         try {
 
