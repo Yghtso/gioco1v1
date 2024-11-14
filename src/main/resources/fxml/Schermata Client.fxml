@@ -10,11 +10,6 @@
 
 <AnchorPane fx:id="AnchorPaneClient" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="638.0" prefWidth="922.0" style="-fx-background-color: #000000;" styleClass="custom-anchorpaneS_C" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scuola.esercitazione.gioco1v1.UIManager">
    <children>
-      <StackPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-         <children>
-            <Button fx:id="ClientBackButton" mnemonicParsing="false" onAction="#GoBack" prefHeight="63.0" prefWidth="326.0" styleClass="chess-button" text="INDIETRO" />
-         </children>
-      </StackPane>
       <StackPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <Pane prefHeight="200.0" prefWidth="200.0">
@@ -33,5 +28,7 @@
             </Label>
          </children>
       </StackPane>
+      <Button fx:id="ClientBackButton" layoutX="135.0" layoutY="497.0" mnemonicParsing="false" onAction="#GoBack" prefHeight="63.0" prefWidth="326.0" styleClass="chess-button" text="INDIETRO" AnchorPane.leftAnchor="100.0" />
+      <Button fx:id="SendButton" layoutX="461.0" layoutY="497.0" mnemonicParsing="false" onAction="#LeggiText" prefHeight="63.0" prefWidth="326.0" styleClass="chess-button" text="INVIA" AnchorPane.rightAnchor="100.0" />
    </children>
 </AnchorPane>

@@ -1,8 +1,11 @@
 package scuola.esercitazione.gioco1v1;
 
-import java.net.ServerSocket;
+
+import java.io.IOException;
+import java.net.Socket;
 
 import javafx.animation.ParallelTransition;
+import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -21,18 +24,16 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
-import javafx.scene.Node;
-
 
 public class UIManager {
     
-    Game game = new Game(Player.WHITE);
+    Game game;
     static ServerNetManager Server;
     static ClientNetManager Client;
+    Socket ClientServer;
 
     //SchermataScacchiera
     @FXML
@@ -71,6 +72,8 @@ public class UIManager {
     private Label LabelTitoloIPClient;
     @FXML
     private TextField TextIp;
+    @FXML
+    private Button SendButton;
 
 
     
@@ -164,6 +167,9 @@ public class UIManager {
     // UI DELLA PARTE DI MENU
     @FXML
     public void PlayButton(ActionEvent event) {
+        System.out.println(PlayButton);
+        System.out.println(LabelIP);
+        System.out.println(AnchorPaneServer);
         Animazione();
     }
     @FXML
@@ -228,21 +234,61 @@ public class UIManager {
             currentStage.setScene(scene);
 
             Server= new ServerNetManager(ServerNetManager.PORT);
-
-            AggiornaLabel();
+            
 
             GestoreChiusura(currentStage);
+            PauseTransition pause = new PauseTransition(Duration.seconds(1));            
+            ApriServer(event);
+          
+            pause.play();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    void AggiornaLabel(){
+    public void ApriServer(ActionEvent event){
+        Thread serverThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                synchronized (ApriServer.this) {  
+                    ClientServer = Server.startListening();
+                    System.out.println("Dioosalsiccia");
+                    System.out.println(ClientServer);
+                    ApriServer.this.notify(); 
+                }
+            }
+        });
+    
+        serverThread.start();
+    
+        synchronized (this) { 
+            try {
+                wait();  
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
 
-        LabelIP.setText("OIOIOIOIOIOI");
+        game= new Game(Player.BLACK);
+
+        try {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Scacchiera.fxml"));
+            Parent root = loader.load();
+
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.setResizable(false);
+
+            Scene scene = new Scene(root);
+            currentStage.setScene(scene);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
+
 
     public void ClientButton(ActionEvent event) throws Exception{
 
@@ -258,6 +304,7 @@ public class UIManager {
             currentStage.setScene(scene);
 
             Client= new ClientNetManager();
+            
 
             GestoreChiusura(currentStage);
 
@@ -268,7 +315,44 @@ public class UIManager {
     }
 
     @FXML
+    void LeggiText(ActionEvent event) {
+
+        String Testo = TextIp.getText();
+        System.out.println(Testo);
+        boolean Connesso= Client.connect(Testo);
+        System.out.println(Connesso);
+
+        if(Connesso ){
+
+            System.out.println("Ensdragongo");
+            game= new Game(Player.WHITE);
+            try {
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Scacchiera.fxml"));
+                Parent root = loader.load();
+    
+                Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                currentStage.setResizable(false);
+    
+                Scene scene = new Scene(root);
+                currentStage.setScene(scene);
+    
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+        else 
+            System.out.println("Spacco qualche pisello");
+
+    }
+
+    @FXML
     void GoBack(ActionEvent event) {
+
+        System.out.println(PlayButton);
+        System.out.println(LabelIP);
+        System.out.println(AnchorPaneServer);
 
         try {
 
