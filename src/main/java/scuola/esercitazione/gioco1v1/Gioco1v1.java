@@ -15,12 +15,9 @@ public class Gioco1v1 extends Application {
             Parent root = loader.load();
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
+            primaryStage.setResizable(false);
             primaryStage.setTitle("Scacchi");
             primaryStage.show();
-
-            //primaryStage.widthProperty().addListener((obs, oldVal, newVal) -> javax.swing.UIManager.Ridimensiona());
-            //primaryStage.heightProperty().addListener((obs, oldVal, newVal) -> Ridimensiona());s
-
         } catch (Exception e) {
             e.printStackTrace();
         }

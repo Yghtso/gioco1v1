@@ -4,20 +4,34 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="AnchorPaneClient" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="custom-anchorpaneS_C" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scuola.esercitazione.gioco1v1.UIManager">
+<AnchorPane fx:id="AnchorPaneClient" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="638.0" prefWidth="922.0" style="-fx-background-color: #000000;" styleClass="custom-anchorpaneS_C" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scuola.esercitazione.gioco1v1.UIManager">
    <children>
-      <Button fx:id="ClientConnectButton" disable="true" layoutX="137.0" layoutY="300.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="326.0" styleClass="chess-button" text="Connettiti" />
-      <Label fx:id="LabelTitoloIPClient" layoutX="273.0" layoutY="43.0" text="IP" textFill="WHITE">
-         <font>
-            <Font size="64.0" />
-         </font>
-      </Label>
-      <TextField fx:id="TextFieldIP" alignment="CENTER" layoutX="136.0" layoutY="155.0" prefHeight="118.0" prefWidth="326.0" promptText="Inserire l'IP del server" style="-fx-background-color: trasparent; -fx-text-fill: #FFFFFF;">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </TextField>
+      <StackPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Button fx:id="ClientBackButton" mnemonicParsing="false" onAction="#GoBack" prefHeight="63.0" prefWidth="326.0" styleClass="chess-button" text="INDIETRO" />
+         </children>
+      </StackPane>
+      <StackPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Pane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <TextField fx:id="TextIp" alignment="CENTER" layoutX="311.0" layoutY="75.0" prefHeight="50.0" prefWidth="300.0" promptText="Inseririe IP Server" />
+               </children>
+            </Pane>
+         </children>
+      </StackPane>
+      <StackPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="400.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Label fx:id="LabelTitoloIPClient" text="IP" textFill="WHITE">
+               <font>
+                  <Font size="64.0" />
+               </font>
+            </Label>
+         </children>
+      </StackPane>
    </children>
 </AnchorPane>

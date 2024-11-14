@@ -5,8 +5,9 @@ public class Game {
     private boolean isPieceSelected = false;
     private Piece selectedPiece = null;
     private ChessBoard board = new ChessBoard();
-    private Player player = Player.WHITE;
+    private Player player;
     private MoveChecker checker = new MoveChecker(board);
+    private boolean yourTurn;
 
     public void setIsPieceSelected(boolean isPieceSelected) {
         this.isPieceSelected = isPieceSelected;
@@ -34,6 +35,20 @@ public class Game {
 
     public MoveChecker getChecker() {
         return this.checker;
+    }
+
+    public boolean getYourTurn() {
+        return this.yourTurn;
+    }
+
+    public Game(Player player) {
+        this.player = player;
+        this.yourTurn = player == Player.WHITE;
+
+    }
+
+    public void changeTurn() {
+        this.yourTurn = !this.yourTurn;
     }
 }
 

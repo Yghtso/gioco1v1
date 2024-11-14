@@ -115,8 +115,8 @@ public class ChessBoard {
             Pawn blackPawn = new Pawn(new Position(Pawn.BLACK_PAWNS_STARTING_ROW, i),
                     Player.BLACK,
                     getFirstAvailableId());
-            pieces[Pawn.WHITE_PAWNS_STARTING_ROW - 1][i - 1] = blackPawn;
-            whitePieces.add(blackPawn);
+            pieces[Pawn.BLACK_PAWNS_STARTING_ROW - 1][i - 1] = blackPawn;
+            blackPieces.add(blackPawn);
         }
 
         // PRIMA TORRE NERA
@@ -124,9 +124,9 @@ public class ChessBoard {
                 new Position(Rook.BLACK_ROOKS_STARTING_ROW, Rook.BLACK_LEFTROOK_STARTING_COLUMN),
                 Player.BLACK,
                 getFirstAvailableId());
-        pieces[Rook.BLACK_LEFTROOK_STARTING_COLUMN - 1][Rook.BLACK_LEFTROOK_STARTING_COLUMN
+        pieces[Rook.BLACK_ROOKS_STARTING_ROW - 1][Rook.BLACK_LEFTROOK_STARTING_COLUMN
                 - 1] = blackRookLeft;
-        whitePieces.add(blackRookLeft);
+        blackPieces.add(blackRookLeft);
 
         // SECONDA TORRE NERA
         Rook blackRookRight = new Rook(
@@ -135,25 +135,25 @@ public class ChessBoard {
                 getFirstAvailableId());
         pieces[Rook.BLACK_RIGHTROOK_STARTING_COLUMN - 1][Rook.BLACK_RIGHTROOK_STARTING_COLUMN
                 - 1] = blackRookRight;
-        whitePieces.add(blackRookRight);
+        blackPieces.add(blackRookRight);
 
         // PRIMO CAVALLO NERO
         Knight blackKnightLeft = new Knight(
                 new Position(Knight.BLACK_KNIGHTS_STARTING_ROW, Knight.BLACK_LEFTKNIGHT_STARTING_COLUMN),
                 Player.BLACK,
                 getFirstAvailableId());
-        pieces[Knight.BLACK_LEFTKNIGHT_STARTING_COLUMN - 1][Knight.BLACK_LEFTKNIGHT_STARTING_COLUMN
+        pieces[Knight.BLACK_KNIGHTS_STARTING_ROW - 1][Knight.BLACK_LEFTKNIGHT_STARTING_COLUMN
                 - 1] = blackKnightLeft;
-        whitePieces.add(blackKnightLeft);
+        blackPieces.add(blackKnightLeft);
 
         // SECONDO CAVALLO NERO
         Knight blackKnightRight = new Knight(
                 new Position(Knight.BLACK_KNIGHTS_STARTING_ROW, Knight.BLACK_RIGHTKNIGHT_STARTING_COLUMN),
                 Player.BLACK,
                 getFirstAvailableId());
-        pieces[Knight.BLACK_RIGHTKNIGHT_STARTING_COLUMN - 1][Knight.BLACK_RIGHTKNIGHT_STARTING_COLUMN
+        pieces[Knight.BLACK_KNIGHTS_STARTING_ROW - 1][Knight.BLACK_RIGHTKNIGHT_STARTING_COLUMN
                 - 1] = blackKnightRight;
-        whitePieces.add(blackKnightRight);
+        blackPieces.add(blackKnightRight);
 
         // PRIMO ALFIERE NERO
         Bishop blackBishopLeft = new Bishop(
@@ -162,7 +162,7 @@ public class ChessBoard {
                 getFirstAvailableId());
         pieces[Bishop.BLACK_BISHOPS_STARTING_ROW - 1][Bishop.BLACK_LEFTBISHOP_STARTING_COLUMN
                 - 1] = blackBishopLeft;
-        whitePieces.add(blackBishopLeft);
+        blackPieces.add(blackBishopLeft);
 
         // SECONDO ALFIERE NERO
         Bishop blackBishopRight = new Bishop(
@@ -171,16 +171,16 @@ public class ChessBoard {
                 getFirstAvailableId());
         pieces[Bishop.BLACK_BISHOPS_STARTING_ROW - 1][Bishop.BLACK_RIGHTBISHOP_STARTING_COLUMN
                 - 1] = blackBishopRight;
-        whitePieces.add(blackBishopRight);
+        blackPieces.add(blackBishopRight);
 
         // REGINA NERA
-        Bishop blackQueen = new Bishop(
+        Queen blackQueen = new Queen(
                 new Position(Queen.BLACK_QUEEN_STARTING_ROW, Queen.BLACK_QUEEN_STARTING_COLUMN),
                 Player.BLACK,
                 getFirstAvailableId());
         pieces[Queen.BLACK_QUEEN_STARTING_ROW - 1][Queen.BLACK_QUEEN_STARTING_COLUMN
                 - 1] = blackQueen;
-        whitePieces.add(blackQueen);
+        blackPieces.add(blackQueen);
 
         // RE NERO
         King blackKing = new King(
@@ -188,7 +188,7 @@ public class ChessBoard {
                 Player.BLACK,
                 getFirstAvailableId());
         pieces[King.BLACK_KING_STARTING_ROW - 1][King.BLACK_KING_STARTING_COLUMN - 1] = blackKing;
-
+        blackPieces.add(blackKing);
     }
 
     public void createPiece(Piece piece) {

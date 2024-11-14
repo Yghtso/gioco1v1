@@ -29,6 +29,7 @@ public class ServerNetManager {
     public ServerNetManager(int port) throws IOException {
         try {
             this.socket = new ServerSocket(PORT);
+            System.out.println("Server Aperto!!!!!!!!!!!!!!!!!!!!!!!!!");
         } catch (Exception e) {
             throw e;
         }

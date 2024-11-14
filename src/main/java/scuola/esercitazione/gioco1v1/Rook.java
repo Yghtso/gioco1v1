@@ -32,7 +32,6 @@ public class Rook extends Piece {
         
         Move calculatedMove;
         Position calculatedPosition = new Position(row + 1, col);
-        
 
         while (calculatedPosition.isInBoard()) {
             calculatedMove = new Move(calculatedPosition.clone(), this , false);

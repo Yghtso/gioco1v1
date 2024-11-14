@@ -1,16 +1,21 @@
 package scuola.esercitazione.gioco1v1;
 
+import java.net.ServerSocket;
+
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -18,11 +23,20 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
+import javafx.scene.Node;
+
 
 public class UIManager {
     
-    Game game = new Game();
+    Game game = new Game(Player.WHITE);
+    static ServerNetManager Server;
+    static ClientNetManager Client;
+
+    //SchermataScacchiera
+    @FXML
+    private GridPane GridPaneScacchiera;
 
     //ScermataIniziale
     @FXML
@@ -46,17 +60,18 @@ public class UIManager {
     @FXML
     private Label LabelTitoloIPServer;
     @FXML
-    private Button ServerConnectButton;
+    private Button ServerBackButton;
 
     //SchermataClient
     @FXML
     private AnchorPane AnchorPaneClient;
     @FXML
-    private Button ClientConnectButton;
+    private Button ClientBackButton;
     @FXML
     private Label LabelTitoloIPClient;
     @FXML
-    private TextField TextFieldIP;
+    private TextField TextIp;
+
 
     
     // UI RELATIVA ALLA PARTE DEL GAMEPLAY
@@ -72,19 +87,45 @@ public class UIManager {
         Player pieceOwner = piece == null ? null : piece.getOwner();
         boolean clickedOwnedPiece = pieceOwner == game.getPlayer();
 
+        if (!game.getYourTurn()) {
+            return;
+        }
+
         if (!game.getIsPieceSelected() && clickedOwnedPiece) {
             game.setIsPieceSelected(true);
             game.setSelectedPiece(piece);
-            // TODO: far vedere sulla scacchiera le mosse possibili
+
+            piece.calculateMoves();
+            game.getChecker().checkMoves(piece.getValidMoves());
+            
+            for (Move singlePieceMove : piece.getValidMoves()) {
+                Pane paneSquare = (Pane) getNodeByRowColumnIndex(8 - singlePieceMove.getPosition().getRow(), singlePieceMove.getPosition().getColumn() - 1, GridPaneScacchiera);
+                ImageView img = (ImageView) paneSquare.getChildren().getFirst();
+                img.setImage(new Image(getClass().getResource("/imgs/Cerchio.png").toExternalForm()));
+            }
             return;
         }
 
         
         if (game.getIsPieceSelected() && clickedOwnedPiece) {
+            for (Move singlePieceMove : game.getSelectedPiece().getValidMoves()) {
+                Pane paneSquare = (Pane) getNodeByRowColumnIndex(8 - singlePieceMove.getPosition().getRow(), singlePieceMove.getPosition().getColumn() - 1, GridPaneScacchiera);
+                ImageView img = (ImageView) paneSquare.getChildren().getFirst();
+                img.setImage(null);
+            }
+
             // TODO: CHECK DELL ARROCCO DA FARE
             game.setIsPieceSelected(true);
             game.setSelectedPiece(piece);
-            // TODO: far vedere sulla scacchiera le mosse possibili
+            
+            piece.calculateMoves();
+            game.getChecker().checkMoves(piece.getValidMoves());
+            
+            for (Move singlePieceMove : piece.getValidMoves()) {
+                Pane paneSquare = (Pane) getNodeByRowColumnIndex(8 - singlePieceMove.getPosition().getRow(), singlePieceMove.getPosition().getColumn() - 1, GridPaneScacchiera);
+                ImageView img = (ImageView) paneSquare.getChildren().getFirst();
+                img.setImage(new Image(getClass().getResource("/imgs/Cerchio.png").toExternalForm()));
+            }
             return;
         }
 
@@ -105,12 +146,25 @@ public class UIManager {
         }
     }
 
+    private static Node getNodeByRowColumnIndex(int row, int column, GridPane gridPane) {
+        for (Node node : gridPane.getChildren()) {
+            Integer nodeRow = GridPane.getRowIndex(node);
+            Integer nodeColumn = GridPane.getColumnIndex(node);
+
+            if (nodeRow == null) nodeRow = 0;
+            if (nodeColumn == null) nodeColumn = 0;
+
+            if (nodeRow == row && nodeColumn == column) {
+                return node;
+            }
+        }
+        return null;
+    }
+
     // UI DELLA PARTE DI MENU
     @FXML
     public void PlayButton(ActionEvent event) {
-
         Animazione();
-
     }
     @FXML
     public void Animazione(){
@@ -159,46 +213,53 @@ public class UIManager {
 
     }
 
-     public void ServerButton(ActionEvent event) throws Exception {
+    @FXML
+    public void ServerButton(ActionEvent event) throws Exception {
 
         try {
 
-            
-
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Server.fxml"));
             Parent root = loader.load();
-            Stage newWindow = new Stage();
-            newWindow.setTitle("Server");
-            newWindow.initModality(Modality.APPLICATION_MODAL);
-            newWindow.setResizable(false);
-            Scene scene = new Scene(root);
-            newWindow.setScene(scene);
-            newWindow.showAndWait();
 
-            ServerCollegamento();
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.setResizable(false);
+        
+            Scene scene = new Scene(root);
+            currentStage.setScene(scene);
+
+            Server= new ServerNetManager(ServerNetManager.PORT);
+
+            AggiornaLabel();
+
+            GestoreChiusura(currentStage);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    void AggiornaLabel(){
+
+        LabelIP.setText("OIOIOIOIOIOI");
+
     }
 
     public void ClientButton(ActionEvent event) throws Exception{
 
         try {
 
-            ClientCollegamento();
-
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Client.fxml"));
             Parent root = loader.load();
-            Stage newWindow = new Stage();
-            newWindow.setTitle("Client");
-            newWindow.initModality(Modality.APPLICATION_MODAL);
-            newWindow.setResizable(false);
-            Scene scene = new Scene(root);
-            newWindow.setScene(scene);
-            newWindow.showAndWait();
 
-            
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.setResizable(false);
+
+            Scene scene = new Scene(root);
+            currentStage.setScene(scene);
+
+            Client= new ClientNetManager();
+
+            GestoreChiusura(currentStage);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -206,19 +267,54 @@ public class UIManager {
 
     }
 
-    public void ServerCollegamento(){
+    @FXML
+    void GoBack(ActionEvent event) {
 
-        LabelIP.setText("Cacca");
+        try {
 
-    }
+            System.out.println(Server);
+            ChiudiConnessioni();
 
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Iniziale.fxml"));
+            Parent root = loader.load();
 
-    public void ClientCollegamento(){
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.setResizable(false);
+        
+            Scene scene = new Scene(root);
+            currentStage.setScene(scene);
 
-
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
         
+    void GestoreChiusura(Stage stage){
+
+        stage.setOnCloseRequest((WindowEvent event) -> {
+            System.out.println(Server);
+            ChiudiConnessioni();
+            Platform.exit();  
+            System.exit(0);
+        });
+
+    }
+
+    void ChiudiConnessioni(){
+
+        boolean ServerClosed, ClientClosed;
+
+        if(Server instanceof ServerNetManager){
+            System.out.println("Li odio i negri");
+            ServerClosed= Server.close();
+        }
+        if(Client instanceof ClientNetManager){
+            System.out.println("Li odio i froci");
+            ClientClosed= Client.close();
+        }
+       
+    }
 
     @FXML
     void QuitButton(ActionEvent event) {
