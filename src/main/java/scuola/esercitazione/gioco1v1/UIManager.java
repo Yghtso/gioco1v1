@@ -196,12 +196,9 @@ public class UIManager{
             }
         }
 
-        System.out.println(game.getBoard().getPieces().size());
         for (Piece singlePiece : game.getBoard().getPieces()) {
             Pane square = (Pane) getNodeByRowColumnIndex(8 - singlePiece.getPosition().getRow(), singlePiece.getPosition().getColumn() - 1, GridPaneScacchiera);
             ImageView img = (ImageView) square.getChildren().getFirst();
-            System.out.println(square);
-            System.out.println(getImgByPiece(singlePiece));
             img.setImage(getImgByPiece(singlePiece));
         }
     }
@@ -253,9 +250,6 @@ public class UIManager{
     // UI DELLA PARTE DI MENU
     @FXML
     public void PlayButton(ActionEvent event) {
-        System.out.println(PlayButton);
-        System.out.println(LabelIP);
-        System.out.println(AnchorPaneServer);
         Animazione();
     }
     @FXML
@@ -342,11 +336,9 @@ public class UIManager{
             @Override
             public void run() {
                 Client = new ClientNetManager(Server.startListening());
-                System.out.println(Client);
                 game = new Game(Player.BLACK);
 
-            System.out.println("CONNESSIONE");
-            try {
+                try {
 
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Scacchiera.fxml"));
                 Parent root = loader.load();
@@ -396,13 +388,10 @@ public class UIManager{
     void LeggiText(ActionEvent event) {
 
         String Testo = TextIp.getText();
-        System.out.println(Testo);
         boolean Connesso= Client.connect(Testo);
-        System.out.println(Connesso);
 
         if(Connesso ){
 
-            System.out.println("Ensdragongo");
             game= new Game(Player.WHITE);
             try {
 
@@ -420,22 +409,13 @@ public class UIManager{
             }
 
         }
-        else 
-            System.out.println("Spacco qualche pisello");
-
     }
 
     @FXML
     void GoBack(ActionEvent event) {
 
-        System.out.println(PlayButton);
-        System.out.println(LabelIP);
-        System.out.println(AnchorPaneServer);
-
-
         try {
 
-            System.out.println(Server);
             ChiudiConnessioni();
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Iniziale.fxml"));
@@ -456,7 +436,6 @@ public class UIManager{
     void GestoreChiusura(Stage stage){
 
         stage.setOnCloseRequest((WindowEvent event) -> {
-            System.out.println(Server);
             ChiudiConnessioni();
             Platform.exit();  
             System.exit(0);
@@ -469,11 +448,9 @@ public class UIManager{
         boolean ServerClosed, ClientClosed;
 
         if(Server instanceof ServerNetManager){
-            System.out.println("Li odio i negri");
             ServerClosed= Server.close();
         }
         if(Client instanceof ClientNetManager){
-            System.out.println("Li odio i froci");
             ClientClosed= Client.close();
         }
        
@@ -488,13 +465,11 @@ public class UIManager{
 
     @FXML
     public void arrenditi(ActionEvent event) {
-        System.out.println("Ti sei arreso");
     }
 
     @FXML
     void StartGame(ActionEvent event) {
 
-        System.out.println(GridPaneScacchiera);
         StartButton.setVisible(false);
         SurrenderButton.setVisible(true);
 

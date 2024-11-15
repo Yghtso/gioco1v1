@@ -44,7 +44,6 @@ public class ClientNetManager {
 
     public ClientNetManager() {
         this.socket = new Socket();
-        System.out.println("Client Aperto!!!!!!!!!!!!!!!!!!!!!!!!!");
     }
 
     public boolean connect(String ip) {
