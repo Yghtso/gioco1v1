@@ -30,8 +30,8 @@ import javafx.util.Duration;
 public class UIManager{
     
     static Game game;
-    static ServerNetManager Server;
-    static ClientNetManager Client;
+    static ServerNetManager servNetMng;
+    static ClientNetManager clientNetMng;
  
     //SchermataScacchiera
     @FXML
@@ -313,7 +313,7 @@ public class UIManager{
             e.printStackTrace();
         }
 
-        Server= new ServerNetManager(ServerNetManager.PORT);   
+        servNetMng = new ServerNetManager(ServerNetManager.PORT);   
 
     }
 
@@ -331,7 +331,7 @@ public class UIManager{
         Thread serverThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                Client = new ClientNetManager(Server.startListening());
+                clientNetMng = new ClientNetManager(servNetMng.startListening());
                 game = new Game(Player.BLACK);
 
                 try {
@@ -357,7 +357,7 @@ public class UIManager{
             
     }
 
-    public void ClientButton(ActionEvent event) throws Exception{
+    public void ClientButton(ActionEvent event) {
 
         try {
 
@@ -370,7 +370,7 @@ public class UIManager{
             Scene scene = new Scene(root);
             currentStage.setScene(scene);
 
-            Client= new ClientNetManager();
+            clientNetMng = new ClientNetManager();
             
 
             GestoreChiusura(currentStage);
@@ -385,7 +385,7 @@ public class UIManager{
     void LeggiText(ActionEvent event) {
 
         String Testo = TextIp.getText();
-        boolean Connesso= Client.connect(Testo);
+        boolean Connesso = clientNetMng.connect(Testo);
 
         if(Connesso){
 
@@ -434,23 +434,16 @@ public class UIManager{
 
         stage.setOnCloseRequest((WindowEvent event) -> {
             ChiudiConnessioni();
-            Platform.exit();  
+            Platform.exit();
             System.exit(0);
         });
 
     }
 
-    void ChiudiConnessioni(){
+    boolean ChiudiConnessioni(){
+        
+        return servNetMng.close() && clientNetMng.close();
 
-        boolean ServerClosed, ClientClosed;
-
-        if(Server instanceof ServerNetManager){
-            ServerClosed= Server.close();
-        }
-        if(Client instanceof ClientNetManager){
-            ClientClosed= Client.close();
-        }
-       
     }
 
     @FXML

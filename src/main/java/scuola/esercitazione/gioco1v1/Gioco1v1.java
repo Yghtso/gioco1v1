@@ -15,12 +15,8 @@ public class Gioco1v1 extends Application {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Iniziale.fxml"));
             Parent root = loader.load();
 
-            FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/fxml/Schermata Server.fxml"));
-            Parent root1 = loader1.load();
-            Scene scene1= new Scene(root1);
-
-            Scene scene = new Scene(root);
-            primaryStage.setScene(scene);
+            Scene Startscene = new Scene(root);
+            primaryStage.setScene(Startscene);
             primaryStage.setResizable(false);
             primaryStage.setTitle("Scacchi");
             primaryStage.show();
