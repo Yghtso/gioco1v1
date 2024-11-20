@@ -4,11 +4,18 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="AnchorPaneIniziale" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="638.0" prefWidth="922.0" style="-fx-background-image: &quot; ..\imgs\SchermataScacchiNoScritta.jpg&quot;;" styleClass="custom-anchorpane" stylesheets="@..\styles\Styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scuola.esercitazione.gioco1v1.UIManager">
    <children>
-      <Button fx:id="PlayButton" alignment="CENTER" contentDisplay="CENTER" layoutX="334.0" layoutY="306.0" mnemonicParsing="false" onAction="#PlayButton" prefHeight="75.0" prefWidth="250.0" styleClass="chess-button" stylesheets="@../styles/Styles.css" text="GIOCA" AnchorPane.topAnchor="300.0" />
-      <Button fx:id="QuitButton" alignment="CENTER" contentDisplay="CENTER" layoutX="335.0" layoutY="450.0" mnemonicParsing="false" onAction="#QuitButton" prefHeight="75.0" prefWidth="250.0" styleClass="chess-button" stylesheets="@../styles/Styles.css" text="ESCI" AnchorPane.topAnchor="450.0" />
+      <Button fx:id="PlayButton" alignment="CENTER" contentDisplay="CENTER" layoutX="334.0" layoutY="306.0" mnemonicParsing="false" onAction="#PlayButton" prefHeight="75.0" prefWidth="250.0" styleClass="chess-button" stylesheets="@../styles/Styles.css" text="GIOCA" AnchorPane.topAnchor="300.0">
+         <font>
+            <Font name="Arial Bold" size="15.0" />
+         </font></Button>
+      <Button fx:id="QuitButton" alignment="CENTER" contentDisplay="CENTER" layoutX="335.0" layoutY="450.0" mnemonicParsing="false" onAction="#QuitButton" prefHeight="75.0" prefWidth="250.0" styleClass="chess-button" stylesheets="@../styles/Styles.css" text="ESCI" AnchorPane.topAnchor="450.0">
+         <font>
+            <Font name="Arial" size="15.0" />
+         </font></Button>
       <ImageView fx:id="Logo" fitHeight="195.0" fitWidth="200.0" layoutX="362.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="50.0">
          <image>
             <Image url="@../imgs/ChessLogo-removebg-preview.png" />

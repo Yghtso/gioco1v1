@@ -54,4 +54,8 @@ public class ClientNetManager {
             return false;
         }
     }
+
+    public Socket getUnderlineSocket() {
+        return this.socket;
+    }
 }

@@ -8,13 +8,16 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="AnchorPaneClient" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="638.0" prefWidth="922.0" style="-fx-background-color: #000000;" styleClass="custom-anchorpaneS_C" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scuola.esercitazione.gioco1v1.UIManager">
+<AnchorPane fx:id="AnchorPaneClient" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="638.0" prefWidth="922.0" style="-fx-background-color: #000000;" styleClass="custom-anchorpaneS_C" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scuola.esercitazione.gioco1v1.UIManager">
    <children>
       <StackPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <Pane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <TextField fx:id="TextIp" alignment="CENTER" layoutX="311.0" layoutY="75.0" prefHeight="50.0" prefWidth="300.0" promptText="Inseririe IP Server" />
+                  <TextField fx:id="TextIp" alignment="CENTER" layoutX="283.0" layoutY="60.0" prefHeight="80.0" prefWidth="357.0" promptText="Inseririe IP Server">
+                     <font>
+                        <Font size="30.0" />
+                     </font></TextField>
                </children>
             </Pane>
          </children>
@@ -28,7 +31,13 @@
             </Label>
          </children>
       </StackPane>
-      <Button fx:id="ClientBackButton" layoutX="135.0" layoutY="497.0" mnemonicParsing="false" onAction="#GoBack" prefHeight="63.0" prefWidth="326.0" styleClass="chess-button" text="INDIETRO" AnchorPane.leftAnchor="100.0" />
-      <Button fx:id="SendButton" layoutX="461.0" layoutY="497.0" mnemonicParsing="false" onAction="#LeggiText" prefHeight="63.0" prefWidth="326.0" styleClass="chess-button" text="INVIA" AnchorPane.rightAnchor="100.0" />
+      <Button fx:id="ClientBackButton" layoutX="135.0" layoutY="497.0" mnemonicParsing="false" onAction="#GoBack" prefHeight="63.0" prefWidth="326.0" styleClass="chess-button" text="INDIETRO" AnchorPane.leftAnchor="100.0">
+         <font>
+            <Font name="Arial" size="15.0" />
+         </font></Button>
+      <Button fx:id="SendButton" layoutX="461.0" layoutY="497.0" mnemonicParsing="false" onAction="#LeggiText" prefHeight="63.0" prefWidth="326.0" styleClass="chess-button" text="INVIA" AnchorPane.rightAnchor="100.0">
+         <font>
+            <Font name="Arial" size="15.0" />
+         </font></Button>
    </children>
 </AnchorPane>

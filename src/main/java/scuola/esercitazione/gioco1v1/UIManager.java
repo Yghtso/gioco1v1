@@ -32,6 +32,7 @@ public class UIManager{
     static Game game;
     static ServerNetManager servNetMng;
     static ClientNetManager clientNetMng;
+    static Thread serverThread;
  
     //SchermataScacchiera
     @FXML
@@ -79,8 +80,6 @@ public class UIManager{
     private Label LabelTitoloIPServer;
     @FXML
     private Button ServerBackButton;
-    @FXML
-    private Button IPButton;
 
     //SchermataClient
     @FXML
@@ -294,67 +293,66 @@ public class UIManager{
     }
 
     @FXML
-    public void ServerButton(ActionEvent event) throws Exception {
+    public void ServerButton(ActionEvent event) {
 
         try {
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Server.fxml"));
             Parent root = loader.load();
-
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             currentStage.setResizable(false);
-        
             Scene scene = new Scene(root);
             currentStage.setScene(scene);
+            GestoreChiusura(currentStage);
+            servNetMng = new ServerNetManager(ServerNetManager.PORT);
 
-            GestoreChiusura(currentStage);          
-          
+            Label labelIP = (Label) root.lookup("#LabelIP");
+            InetAddress localHost;
+            try {
+                localHost = InetAddress.getLocalHost();
+                labelIP.setText(localHost.getHostAddress());
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            }
+
+            UIManager.serverThread = StartThreadListener(currentStage);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        servNetMng = new ServerNetManager(ServerNetManager.PORT);   
-
     }
 
-    @FXML
-    void MostraIP(ActionEvent event) {
-
-        InetAddress localHost;
-        try {
-            localHost = InetAddress.getLocalHost();
-            LabelIP.setText(localHost.getHostAddress());
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-        
+    private Thread StartThreadListener(Stage stage) {
         Thread serverThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 clientNetMng = new ClientNetManager(servNetMng.startListening());
-                game = new Game(Player.BLACK);
 
-                try {
+                if (clientNetMng.getUnderlineSocket() != null) {
+                    UIManager.game = new Game(Player.BLACK);
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Scacchiera.fxml"));
-                Parent root = loader.load();
-    
-                Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                
-    
-                Scene scene = new Scene(root);
-                Platform.runLater(() -> {
-                    UIManager.game = new Game(Player.WHITE);
-                    currentStage.setScene(scene);
-                });
-    
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+                    try {
+
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Scacchiera.fxml"));
+                        Parent root = loader.load();
+        
+                        Stage currentStage = stage;
+                        //System.out.println(previousScene);
+        
+                        Scene scene = new Scene(root);
+                        Platform.runLater(() -> {
+                            currentStage.setScene(scene);
+                        });
+        
+                    } catch (Exception e) {
+                        //e.printStackTrace();
+                    }
+                } else { clientNetMng = null; }
             }
         });
+
         serverThread.start();
-            
+        return serverThread;
     }
 
     public void ClientButton(ActionEvent event) {
@@ -382,7 +380,7 @@ public class UIManager{
     }
 
     @FXML
-    void LeggiText(ActionEvent event) {
+    public void LeggiText(ActionEvent event) {
 
         String Testo = TextIp.getText();
         boolean Connesso = clientNetMng.connect(Testo);
@@ -430,7 +428,7 @@ public class UIManager{
 
     }
         
-    void GestoreChiusura(Stage stage){
+    private void GestoreChiusura(Stage stage) {
 
         stage.setOnCloseRequest((WindowEvent event) -> {
             ChiudiConnessioni();
@@ -440,14 +438,21 @@ public class UIManager{
 
     }
 
-    boolean ChiudiConnessioni(){
+    private boolean ChiudiConnessioni() {
         
-        return servNetMng.close() && clientNetMng.close();
+        boolean serverSocketClosed = false, clientSocketClosed = false;
 
+        if(servNetMng == null) {    serverSocketClosed = true;  }
+        else {  serverSocketClosed = servNetMng.close();    }
+
+        if(clientNetMng == null) {    clientSocketClosed = true;  } 
+        else {  clientSocketClosed = clientNetMng.close();    }
+
+        return serverSocketClosed && clientSocketClosed;
     }
 
     @FXML
-    void QuitButton(ActionEvent event) {
+    public void QuitButton(ActionEvent event) {
 
         System.exit(0);
 
@@ -458,7 +463,7 @@ public class UIManager{
     }
 
     @FXML
-    void StartGame(ActionEvent event) {
+    public void StartGame(ActionEvent event) {
 
         StartButton.setVisible(false);
         SurrenderButton.setVisible(true);

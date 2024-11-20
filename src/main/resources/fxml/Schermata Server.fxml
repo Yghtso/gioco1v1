@@ -12,7 +12,7 @@
          <children>
             <Label fx:id="LabelIP" alignment="CENTER" contentDisplay="CENTER" prefHeight="231.0" prefWidth="553.0" textAlignment="CENTER" textFill="WHITE">
                <font>
-                  <Font size="22.0" />
+                  <Font name="Arial" size="30.0" />
                </font></Label>
          </children>
       </StackPane>
@@ -25,7 +25,9 @@
             </Label>
          </children>
       </StackPane>
-      <Button fx:id="ServerBackButton" layoutX="135.0" layoutY="497.0" mnemonicParsing="false" onAction="#GoBack" prefHeight="63.0" prefWidth="326.0" styleClass="chess-button" text="INDIETRO" AnchorPane.leftAnchor="100.0" />
-      <Button fx:id="IPButton" layoutX="461.0" layoutY="497.0" mnemonicParsing="false" onAction="#MostraIP" prefHeight="63.0" prefWidth="326.0" styleClass="chess-button" text="MOSTRA IP" AnchorPane.rightAnchor="100.0" />
+      <Button fx:id="ServerBackButton" layoutX="298.0" layoutY="499.0" mnemonicParsing="false" onAction="#GoBack" prefHeight="63.0" prefWidth="326.0" styleClass="chess-button" text="INDIETRO" AnchorPane.leftAnchor="298.0">
+         <font>
+            <Font name="Arial" size="15.0" />
+         </font></Button>
    </children>
 </AnchorPane>
