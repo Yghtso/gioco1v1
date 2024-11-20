@@ -1,12 +1,10 @@
 package scuola.esercitazione.gioco1v1;
 
 
-import java.io.IOException;
-import java.net.Socket;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
-import java.util.concurrent.*;
 import javafx.animation.ParallelTransition;
-import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -28,12 +26,10 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 public class UIManager{
     
-    Game game;
+    static Game game;
     static ServerNetManager Server;
     static ClientNetManager Client;
  
@@ -348,8 +344,8 @@ public class UIManager{
     
                 Scene scene = new Scene(root);
                 Platform.runLater(() -> {
+                    UIManager.game = new Game(Player.WHITE);
                     currentStage.setScene(scene);
-                    game = new Game(Player.WHITE);
                 });
     
             } catch (Exception e) {
