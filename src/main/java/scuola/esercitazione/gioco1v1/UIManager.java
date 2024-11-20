@@ -349,6 +349,7 @@ public class UIManager{
                 Scene scene = new Scene(root);
                 Platform.runLater(() -> {
                     currentStage.setScene(scene);
+                    game = new Game(Player.WHITE);
                 });
     
             } catch (Exception e) {
@@ -390,9 +391,9 @@ public class UIManager{
         String Testo = TextIp.getText();
         boolean Connesso= Client.connect(Testo);
 
-        if(Connesso ){
+        if(Connesso){
 
-            game= new Game(Player.WHITE);
+            game = new Game(Player.WHITE);
             try {
 
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Scacchiera.fxml"));
