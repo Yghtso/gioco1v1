@@ -29,11 +29,11 @@ public class Bishop extends Piece {
         int currentRow = this.getPosition().getRow();
 
         Position calculatedPosition = new Position(currentRow + 1, currentCol - 1);
-        Move calculatedMove = new Move(null, this, false);
+        Move calculatedMove = new Move(null, this, false, false);
 
         // DIAGONALE PRINCIPALE
         while (calculatedPosition.isInBoard()) {
-            calculatedMove = new Move(calculatedPosition.clone(), this, false);
+            calculatedMove = new Move(calculatedPosition.clone(), this, false, false);
 
             this.validMoves.add(calculatedMove);
             this.TOPLEFTDIAGONAL.add(calculatedMove);
@@ -45,7 +45,7 @@ public class Bishop extends Piece {
         calculatedPosition = new Position(currentRow - 1, currentCol + 1);
 
         while (calculatedPosition.isInBoard()) {
-            calculatedMove = new Move(calculatedPosition.clone(), this, false);
+            calculatedMove = new Move(calculatedPosition.clone(), this, false, false);
 
             this.validMoves.add(calculatedMove);
             this.BOTTOMRIGHTDIAGONAL.add(calculatedMove);
@@ -58,7 +58,7 @@ public class Bishop extends Piece {
 
         // DIAGONALE SECONDARIA
         while (calculatedPosition.isInBoard()) {
-            calculatedMove = new Move(calculatedPosition.clone(), this, false);
+            calculatedMove = new Move(calculatedPosition.clone(), this, false, false);
 
             this.validMoves.add(calculatedMove);
             this.BOTTOMLEFTDIAGONAL.add(calculatedMove);
@@ -70,7 +70,7 @@ public class Bishop extends Piece {
         calculatedPosition = new Position(currentRow + 1, currentCol + 1);
 
         while (calculatedPosition.isInBoard()) {
-            calculatedMove = new Move(calculatedPosition.clone(), this, false);
+            calculatedMove = new Move(calculatedPosition.clone(), this, false, false);
 
             this.validMoves.add(calculatedMove);
             this.TOPRIGHTDIAGONAL.add(calculatedMove);

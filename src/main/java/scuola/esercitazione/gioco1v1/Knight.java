@@ -19,20 +19,20 @@ public class Knight extends Piece {
         int col = this.position.getColumn();
 
         // MOSSE IN AVANTI
-        this.validMoves.add(new Move(new Position(row + 2, col + 1), this, false));
-        this.validMoves.add(new Move(new Position(row + 2, col - 1), this, false));
+        this.validMoves.add(new Move(new Position(row + 2, col + 1), this, false, false));
+        this.validMoves.add(new Move(new Position(row + 2, col - 1), this, false, false));
 
         // MOSSE VERSO DESTRA
-        this.validMoves.add(new Move(new Position(row + 1, col + 2), this, false));
-        this.validMoves.add(new Move(new Position(row - 1, col + 2), this, false));
+        this.validMoves.add(new Move(new Position(row + 1, col + 2), this, false, false));
+        this.validMoves.add(new Move(new Position(row - 1, col + 2), this, false, false));
 
         // MOSSE VERSO SINISTRA
-        this.validMoves.add(new Move(new Position(row + 1, col - 2), this, false));
-        this.validMoves.add(new Move(new Position(row - 1, col - 2), this, false));
+        this.validMoves.add(new Move(new Position(row + 1, col - 2), this, false, false));
+        this.validMoves.add(new Move(new Position(row - 1, col - 2), this, false, false));
 
         // MOSSE IN BASSO
-        this.validMoves.add(new Move(new Position(row - 2, col + 1), this, false));
-        this.validMoves.add(new Move(new Position(row - 2, col - 1), this, false));
+        this.validMoves.add(new Move(new Position(row - 2, col + 1), this, false, false));
+        this.validMoves.add(new Move(new Position(row - 2, col - 1), this, false, false));
 
         @SuppressWarnings("unchecked")
         ArrayList<Move> validMovesTEMP = (ArrayList<Move>) this.validMoves.clone();

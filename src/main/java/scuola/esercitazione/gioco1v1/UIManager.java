@@ -33,6 +33,9 @@ public class UIManager{
     static ServerNetManager servNetMng;
     static ClientNetManager clientNetMng;
     static Thread serverThread;
+
+    static boolean yourStartAccept;
+    static boolean otherStartAccept;
  
     //SchermataScacchiera
     @FXML
@@ -163,7 +166,7 @@ public class UIManager{
 
             displayPieces();
 
-            Move move = new Move(new Position(row, column), game.getSelectedPiece(), false);
+            Move move = new Move(new Position(row, column), game.getSelectedPiece(), false, false);
             game.getSelectedPiece().calculateMoves();
             game.getChecker().checkMoves(game.getSelectedPiece().getValidMoves());
 
@@ -247,6 +250,7 @@ public class UIManager{
     public void PlayButton(ActionEvent event) {
         Animazione();
     }
+
     @FXML
     public void Animazione(){
 
@@ -326,9 +330,9 @@ public class UIManager{
         Thread serverThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                clientNetMng = new ClientNetManager(servNetMng.startListening());
+                UIManager.clientNetMng = new ClientNetManager(servNetMng.startListening());
 
-                if (clientNetMng.getUnderlineSocket() != null) {
+                if (clientNetMng.getUnderlineSocket() != null && clientNetMng.getUnderlineSocket().isConnected()) {
                     UIManager.game = new Game(Player.BLACK);
 
                     try {
@@ -343,9 +347,10 @@ public class UIManager{
                         Platform.runLater(() -> {
                             currentStage.setScene(scene);
                         });
+                        syncronizeToStart();
         
                     } catch (Exception e) {
-                        //e.printStackTrace();
+                        e.printStackTrace();
                     }
                 } else { clientNetMng = null; }
             }
@@ -357,6 +362,8 @@ public class UIManager{
 
     public void ClientButton(ActionEvent event) {
 
+        UIManager.clientNetMng = new ClientNetManager();
+
         try {
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Client.fxml"));
@@ -366,10 +373,7 @@ public class UIManager{
             currentStage.setResizable(false);
 
             Scene scene = new Scene(root);
-            currentStage.setScene(scene);
-
-            clientNetMng = new ClientNetManager();
-            
+            currentStage.setScene(scene);            
 
             GestoreChiusura(currentStage);
 
@@ -379,15 +383,48 @@ public class UIManager{
 
     }
 
+    public void syncronizeToStart() {
+        
+        Thread startReceiverThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                Move startMove;
+
+                do { 
+                    startMove = UIManager.clientNetMng.read();
+                    otherStartAccept = startMove.getStartMatch();
+
+                } while (!startMove.getStartMatch());
+                
+                if (otherStartAccept && yourStartAccept) {
+                    startMainLoop();
+                }
+            }
+        });
+        startReceiverThread.start();
+    }
+
+    public void startMainLoop() {
+        Thread startReceiverThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (otherStartAccept) {
+                    
+                }
+            }
+        });
+    }
+
     @FXML
     public void LeggiText(ActionEvent event) {
 
         String Testo = TextIp.getText();
         boolean Connesso = clientNetMng.connect(Testo);
 
-        if(Connesso){
-
+        if(Connesso) {
             game = new Game(Player.WHITE);
+
             try {
 
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Scacchiera.fxml"));
@@ -398,7 +435,8 @@ public class UIManager{
     
                 Scene scene = new Scene(root);
                 currentStage.setScene(scene);
-    
+                
+                syncronizeToStart();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -407,11 +445,11 @@ public class UIManager{
     }
 
     @FXML
-    void GoBack(ActionEvent event) {
+    public void GoBack(ActionEvent event) {
 
         try {
 
-            ChiudiConnessioni();
+            System.out.println(ChiudiConnessioni());
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Iniziale.fxml"));
             Parent root = loader.load();
@@ -465,9 +503,12 @@ public class UIManager{
     @FXML
     public void StartGame(ActionEvent event) {
 
-        StartButton.setVisible(false);
-        SurrenderButton.setVisible(true);
+        UIManager.yourStartAccept = true;
+        UIManager.clientNetMng.send(new Move(null, null, false, true));
 
+        if (otherStartAccept && yourStartAccept) {
+            startMainLoop();
+        }
     }
 
 }

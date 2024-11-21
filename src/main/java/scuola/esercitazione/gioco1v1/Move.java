@@ -7,11 +7,13 @@ public class Move implements Serializable {
     private Position position;
     private Piece piece;
     private boolean surrender;
+    private boolean startMatch;
 
-    public Move(Position position, Piece piece, boolean surrender) {
+    public Move(Position position, Piece piece, boolean surrender, boolean startMatch) {
         this.position = position;
         this.piece = piece;
         this.surrender = surrender;
+        this.startMatch = startMatch;
     }
 
     public Position getPosition() {
@@ -26,6 +28,10 @@ public class Move implements Serializable {
         return this.surrender;
     }
 
+    public boolean getStartMatch() {
+        return this.startMatch;
+    }
+
     public void setPosition(Position position) {
         this.position = position;
     }
@@ -38,6 +44,10 @@ public class Move implements Serializable {
         this.piece = piece;
     }
 
+    public void setStartMatch(boolean startMatch) {
+        this.startMatch = startMatch;
+    }
+
     public boolean equals(Move other) {
         if (other.getPosition() == null) {
             return false;
@@ -47,6 +57,6 @@ public class Move implements Serializable {
     }
 
     public Move clone() {
-        return new Move(position.clone(), piece.clone(), this.surrender);
+        return new Move(position.clone(), piece.clone(), this.surrender, this.startMatch);
     }
 }

@@ -34,11 +34,11 @@ public class Queen extends Piece {
         int currentRow = this.getPosition().getRow();
 
         Position calculatedPosition = new Position(currentRow + 1, currentCol - 1);
-        Move calculatedMove = new Move(null, this, false);
+        Move calculatedMove = new Move(null, this, false, false);
 
         // DIAGONALE PRINCIPALE
         while (calculatedPosition.isInBoard()) {
-            calculatedMove = new Move(calculatedPosition.clone(), this, false);
+            calculatedMove = new Move(calculatedPosition.clone(), this, false, false);
 
             this.validMoves.add(calculatedMove);
             this.TOPLEFTDIAGONAL.add(calculatedMove);
@@ -50,7 +50,7 @@ public class Queen extends Piece {
         calculatedPosition = new Position(currentRow - 1, currentCol + 1);
 
         while (calculatedPosition.isInBoard()) {
-            calculatedMove = new Move(calculatedPosition.clone(), this, false);
+            calculatedMove = new Move(calculatedPosition.clone(), this, false, false);
 
             this.validMoves.add(calculatedMove);
             this.BOTTOMRIGHTDIAGONAL.add(calculatedMove);
@@ -63,7 +63,7 @@ public class Queen extends Piece {
 
         // DIAGONALE SECONDARIA
         while (calculatedPosition.isInBoard()) {
-            calculatedMove = new Move(calculatedPosition.clone(), this, false);
+            calculatedMove = new Move(calculatedPosition.clone(), this, false, false);
 
             this.validMoves.add(calculatedMove);
             this.BOTTOMLEFTDIAGONAL.add(calculatedMove);
@@ -75,7 +75,7 @@ public class Queen extends Piece {
         calculatedPosition = new Position(currentRow + 1, currentCol + 1);
 
         while (calculatedPosition.isInBoard()) {
-            calculatedMove = new Move(calculatedPosition.clone(), this, false);
+            calculatedMove = new Move(calculatedPosition.clone(), this, false, false);
 
             this.validMoves.add(calculatedMove);
             this.TOPRIGHTDIAGONAL.add(calculatedMove);
@@ -89,7 +89,7 @@ public class Queen extends Piece {
         
 
         while (calculatedPosition.isInBoard()) {
-            calculatedMove = new Move(calculatedPosition.clone(), this , false);
+            calculatedMove = new Move(calculatedPosition.clone(), this , false, false);
 
             validMoves.add(calculatedMove);
             TOP.add(calculatedMove);
@@ -101,7 +101,7 @@ public class Queen extends Piece {
         calculatedPosition.setColumn(currentCol + 1);
 
         while (calculatedPosition.isInBoard()) {
-            calculatedMove = new Move(calculatedPosition.clone(), this , false);
+            calculatedMove = new Move(calculatedPosition.clone(), this , false, false);
 
             validMoves.add(calculatedMove);
             RIGHT.add(calculatedMove);
@@ -113,7 +113,7 @@ public class Queen extends Piece {
         calculatedPosition.setColumn(currentCol);
 
         while (calculatedPosition.isInBoard()) {
-            calculatedMove = new Move(calculatedPosition.clone(), this , false);
+            calculatedMove = new Move(calculatedPosition.clone(), this , false, false);
 
             validMoves.add(calculatedMove);
             BOTTOM.add(calculatedMove);
@@ -125,7 +125,7 @@ public class Queen extends Piece {
         calculatedPosition.setColumn(currentCol - 1);
 
         while (calculatedPosition.isInBoard()) {
-            calculatedMove = new Move(calculatedPosition.clone(), this , false);
+            calculatedMove = new Move(calculatedPosition.clone(), this , false, false);
             
             validMoves.add(calculatedMove);
             LEFT.add(calculatedMove);

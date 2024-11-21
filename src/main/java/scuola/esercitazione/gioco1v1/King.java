@@ -12,14 +12,14 @@ public class King extends Piece {
 
     public void calculateMoves() {
         this.validMoves.clear();
-        validMoves.add(new Move(new Position(this.getPosition().getRow() + 1, this.getPosition().getColumn() - 1), this, false));
-        validMoves.add(new Move(new Position(this.getPosition().getRow() + 1, this.getPosition().getColumn()), this, false));
-        validMoves.add(new Move(new Position(this.getPosition().getRow() + 1, this.getPosition().getColumn() + 1), this, false));
-        validMoves.add(new Move(new Position(this.getPosition().getRow(), this.getPosition().getColumn() - 1), this, false));
-        validMoves.add(new Move(new Position(this.getPosition().getRow(), this.getPosition().getColumn() + 1), this, false));
-        validMoves.add(new Move(new Position(this.getPosition().getRow() - 1, this.getPosition().getColumn() - 1), this, false));
-        validMoves.add(new Move(new Position(this.getPosition().getRow() - 1, this.getPosition().getColumn()), this, false));
-        validMoves.add(new Move(new Position(this.getPosition().getRow() - 1, this.getPosition().getColumn() + 1), this, false));
+        validMoves.add(new Move(new Position(this.getPosition().getRow() + 1, this.getPosition().getColumn() - 1), this, false, false));
+        validMoves.add(new Move(new Position(this.getPosition().getRow() + 1, this.getPosition().getColumn()), this, false, false));
+        validMoves.add(new Move(new Position(this.getPosition().getRow() + 1, this.getPosition().getColumn() + 1), this, false, false));
+        validMoves.add(new Move(new Position(this.getPosition().getRow(), this.getPosition().getColumn() - 1), this, false, false));
+        validMoves.add(new Move(new Position(this.getPosition().getRow(), this.getPosition().getColumn() + 1), this, false, false));
+        validMoves.add(new Move(new Position(this.getPosition().getRow() - 1, this.getPosition().getColumn() - 1), this, false, false));
+        validMoves.add(new Move(new Position(this.getPosition().getRow() - 1, this.getPosition().getColumn()), this, false, false));
+        validMoves.add(new Move(new Position(this.getPosition().getRow() - 1, this.getPosition().getColumn() + 1), this, false, false));
 
         @SuppressWarnings("unchecked")
         ArrayList<Move> validMovesClone = (ArrayList<Move>) this.validMoves.clone();

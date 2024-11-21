@@ -34,7 +34,7 @@ public class Rook extends Piece {
         Position calculatedPosition = new Position(row + 1, col);
 
         while (calculatedPosition.isInBoard()) {
-            calculatedMove = new Move(calculatedPosition.clone(), this , false);
+            calculatedMove = new Move(calculatedPosition.clone(), this , false, false);
 
             validMoves.add(calculatedMove);
             TOP.add(calculatedMove);
@@ -46,7 +46,7 @@ public class Rook extends Piece {
         calculatedPosition.setColumn(col + 1);
 
         while (calculatedPosition.isInBoard()) {
-            calculatedMove = new Move(calculatedPosition.clone(), this , false);
+            calculatedMove = new Move(calculatedPosition.clone(), this , false, false);
 
             validMoves.add(calculatedMove);
             RIGHT.add(calculatedMove);
@@ -58,7 +58,7 @@ public class Rook extends Piece {
         calculatedPosition.setColumn(col);
 
         while (calculatedPosition.isInBoard()) {
-            calculatedMove = new Move(calculatedPosition.clone(), this , false);
+            calculatedMove = new Move(calculatedPosition.clone(), this , false, false);
 
             validMoves.add(calculatedMove);
             BOTTOM.add(calculatedMove);
@@ -70,7 +70,7 @@ public class Rook extends Piece {
         calculatedPosition.setColumn(col - 1);
 
         while (calculatedPosition.isInBoard()) {
-            calculatedMove = new Move(calculatedPosition.clone(), this , false);
+            calculatedMove = new Move(calculatedPosition.clone(), this , false, false);
             
             validMoves.add(calculatedMove);
             LEFT.add(calculatedMove);

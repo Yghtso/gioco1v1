@@ -13,10 +13,10 @@ public class Pawn extends Piece {
     public final static int BLACK_PAWNS_STARTING_ROW = 7;
 
 
-    private Move FORWARD1 = new Move(null, this, false);
-    private Move FORWARD2 = new Move(null, this, false);
-    private Move DIAGONALLEFT = new Move(null, this, false);
-    private Move DIAGONALRIGHT = new Move(null, this, false);
+    private Move FORWARD1 = new Move(null, this, false, false);
+    private Move FORWARD2 = new Move(null, this, false, false);
+    private Move DIAGONALLEFT = new Move(null, this, false, false);
+    private Move DIAGONALRIGHT = new Move(null, this, false, false);
 
     public void calculateMoves() {
         validMoves.clear();
