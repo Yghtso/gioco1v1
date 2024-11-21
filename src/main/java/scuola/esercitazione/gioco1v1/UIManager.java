@@ -380,7 +380,7 @@ public class UIManager{
                 
                 if (otherStartAccept && yourStartAccept) {
                     matchStarted = true;
-                    Button startButton= (Button) UIManager.currentStage.getScene().getRoot().lookup("#StartButton");
+                    Button startButton = (Button) UIManager.currentStage.getScene().getRoot().lookup("#StartButton");
                     startButton.setVisible(false);
                     if (!game.getYourTurn()) {
                         handleOpponentMove();

@@ -239,4 +239,26 @@ public class MoveChecker {
         return false;
     }
 
+    public boolean check(Player player) {
+        ArrayList<Piece> opponentPieces;
+
+        if (player == Player.WHITE) {
+            opponentPieces = board.getBlackPieces();
+        } else {
+            opponentPieces = board.getWhitePieces();
+        }
+
+        for (Piece piece : opponentPieces) {
+            for (Move move : piece.getValidMoves()) {
+                if (board.getPiece(move.getPosition()) instanceof King) {
+                    if (board.getPiece(move.getPosition()).getOwner() == player) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
 }
