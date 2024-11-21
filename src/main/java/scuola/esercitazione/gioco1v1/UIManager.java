@@ -341,13 +341,12 @@ public class UIManager{
                         Parent root = loader.load();
         
                         Stage currentStage = stage;
-                        //System.out.println(previousScene);
         
                         Scene scene = new Scene(root);
                         Platform.runLater(() -> {
                             currentStage.setScene(scene);
                         });
-                        syncronizeToStart();
+                        syncronizeToStart(root);
         
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -383,7 +382,7 @@ public class UIManager{
 
     }
 
-    public void syncronizeToStart() {
+    public void syncronizeToStart(Parent loader) {
         
         Thread startReceiverThread = new Thread(new Runnable() {
             @Override
@@ -399,6 +398,7 @@ public class UIManager{
                 
                 if (otherStartAccept && yourStartAccept) {
                     matchStarted = true;
+                    Button startButton = (Button) loader.lookup("#StartButton");
                     StartButton.setVisible(false);
                     if (!game.getYourTurn()) {
                         handleOpponentMove();
@@ -451,7 +451,7 @@ public class UIManager{
                 Scene scene = new Scene(root);
                 currentStage.setScene(scene);
                 
-                syncronizeToStart();
+                syncronizeToStart(root);
             } catch (Exception e) {
                 e.printStackTrace();
             }
