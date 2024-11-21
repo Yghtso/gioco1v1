@@ -33,6 +33,7 @@ public class UIManager{
     static ServerNetManager servNetMng;
     static ClientNetManager clientNetMng;
     static Thread serverThread;
+    static boolean matchStarted = false;
 
     static boolean yourStartAccept;
     static boolean otherStartAccept;
@@ -115,7 +116,7 @@ public class UIManager{
             return;
         }
 
-        if (!game.getIsPieceSelected() && clickedOwnedPiece) {
+        if (!game.getIsPieceSelected() && clickedOwnedPiece && matchStarted) {
             game.setIsPieceSelected(true);
             game.setSelectedPiece(piece);
 
@@ -139,7 +140,7 @@ public class UIManager{
         }
 
         
-        if (game.getIsPieceSelected() && clickedOwnedPiece) {
+        if (game.getIsPieceSelected() && clickedOwnedPiece && matchStarted) {
 
             displayPieces();
             game.setIsPieceSelected(true);
@@ -162,7 +163,7 @@ public class UIManager{
             return;
         }
 
-        if (game.getIsPieceSelected() && !clickedOwnedPiece) {
+        if (game.getIsPieceSelected() && !clickedOwnedPiece && matchStarted) {
 
             displayPieces();
 
@@ -378,24 +379,39 @@ public class UIManager{
                 } while (!startMove.getStartMatch());
                 
                 if (otherStartAccept && yourStartAccept) {
-                    startMainLoop();
+                    matchStarted = true;
+                    StartButton.setVisible(false);
+                    if (!game.getYourTurn()) {
+                        handleOpponentMove();
+                    }
                 }
             }
         });
         startReceiverThread.start();
     }
 
-    public void startMainLoop() {
-        Thread startReceiverThread = new Thread(new Runnable() {
+    public void handleOpponentMove() {
+
+        Thread mainLoopThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                if (otherStartAccept) {
-                    
+                if (!game.getYourTurn()) {
+                    Move move = clientNetMng.read();
+
+                    if (move.getSurrender()) {
+                        // metti la schermata hai vinto
+                        
+                    } else {
+                        game.getBoard().applyMove(move);
+                        displayPieces();
+                        game.changeTurn();
+                    }
+
                 }
             }
         });
     }
-
+    
     @FXML
     public void LeggiText(ActionEvent event) {
 
@@ -477,7 +493,11 @@ public class UIManager{
         UIManager.clientNetMng.send(new Move(null, null, false, true));
 
         if (otherStartAccept && yourStartAccept) {
-            startMainLoop();
+            matchStarted = true;
+            StartButton.setVisible(false);
+            if (!game.getYourTurn()) {
+                handleOpponentMove();
+            }
         }
     }
 
