@@ -335,17 +335,11 @@ public class UIManager{
                     UIManager.game = new Game(Player.BLACK);
 
                     try {
-
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Scacchiera.fxml"));
-                        Parent root = loader.load();
         
                         Stage currentStage = stage;
-                        //System.out.println(previousScene);
         
-                        Scene scene = new Scene(root);
-                        Platform.runLater(() -> {
-                            currentStage.setScene(scene);
-                        });
+                        ShowSchermataScacchiera(currentStage);
+
                         syncronizeToStart();
         
                     } catch (Exception e) {
@@ -363,22 +357,9 @@ public class UIManager{
 
         UIManager.clientNetMng = new ClientNetManager();
 
-        try {
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Client.fxml"));
-            Parent root = loader.load();
-
-            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            currentStage.setResizable(false);
-
-            Scene scene = new Scene(root);
-            currentStage.setScene(scene);            
-
-            GestoreChiusura(currentStage);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        ShowSchermataClient(currentStage);
 
     }
 
@@ -426,14 +407,9 @@ public class UIManager{
 
             try {
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Scacchiera.fxml"));
-                Parent root = loader.load();
-    
                 Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                currentStage.setResizable(false);
-    
-                Scene scene = new Scene(root);
-                currentStage.setScene(scene);
+
+                ShowSchermataScacchiera(currentStage);
                 
                 syncronizeToStart();
             } catch (Exception e) {
@@ -448,16 +424,11 @@ public class UIManager{
 
         try {
 
-            System.out.println(ChiudiConnessioni());
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Iniziale.fxml"));
-            Parent root = loader.load();
+            ChiudiConnessioni();
 
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            currentStage.setResizable(false);
-        
-            Scene scene = new Scene(root);
-            currentStage.setScene(scene);
+
+            ShowSchermataIniziale(currentStage);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -510,4 +481,151 @@ public class UIManager{
         }
     }
 
+    public void ShowSchermataIniziale(Stage currentStage) {
+
+        try {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Iniziale.fxml"));
+            Parent root = loader.load();
+
+            currentStage.setResizable(false);
+        
+            Scene scene = new Scene(root);
+            currentStage.setScene(scene);
+
+            GestoreChiusura(currentStage);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void ShowSchermataServer(ActionEvent event) {
+
+        try {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Server.fxml"));
+            Parent root = loader.load();
+
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.setResizable(false);
+        
+            Scene scene = new Scene(root);
+            currentStage.setScene(scene);
+
+            GestoreChiusura(currentStage);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void ShowSchermataClient(Stage currentStage) {
+
+        try {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Client.fxml"));
+            Parent root = loader.load();
+
+            currentStage.setResizable(false);
+        
+            Scene scene = new Scene(root);
+            currentStage.setScene(scene);
+
+            GestoreChiusura(currentStage);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void ShowSchermataScacchiera(Stage currentStage) {
+
+        try {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Scacchiera.fxml"));
+            Parent root = loader.load();
+
+            currentStage.setResizable(false);
+        
+            Scene scene = new Scene(root);
+            currentStage.setScene(scene);
+
+            GestoreChiusura(currentStage);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void ShowSchermataConnessione(ActionEvent event) {
+
+        try {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Connessione.fxml"));
+            Parent root = loader.load();
+
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.setResizable(false);
+        
+            Scene scene = new Scene(root);
+            currentStage.setScene(scene);
+
+            GestoreChiusura(currentStage);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void ShowSchermataVittoria(ActionEvent event) {
+
+        try {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Vittoria.fxml"));
+            Parent root = loader.load();
+
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.setResizable(false);
+        
+            Scene scene = new Scene(root);
+            currentStage.setScene(scene);
+
+            GestoreChiusura(currentStage);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void ShowSchermataSconfitta(ActionEvent event) {
+
+        try {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Sconfitta.fxml"));
+            Parent root = loader.load();
+
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage.setResizable(false);
+        
+            Scene scene = new Scene(root);
+            currentStage.setScene(scene);
+
+            GestoreChiusura(currentStage);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
 }
+
+

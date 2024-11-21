@@ -13,7 +13,7 @@ public class Gioco1v1 extends Application {
 
         try {
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Scacchiera.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Iniziale.fxml"));
             Parent root = loader.load();
 
             Scene Startscene = new Scene(root);
