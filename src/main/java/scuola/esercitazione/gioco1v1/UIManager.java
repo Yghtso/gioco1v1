@@ -37,6 +37,8 @@ public class UIManager{
 
     static boolean yourStartAccept;
     static boolean otherStartAccept;
+
+    static Stage currentStage;
  
     //SchermataScacchiera
     @FXML
@@ -336,16 +338,11 @@ public class UIManager{
                     UIManager.game = new Game(Player.BLACK);
 
                     try {
-        
+
                         Stage currentStage = stage;
-                        //System.out.println(previousScene);
-        
-                        Scene scene = new Scene();
-                        Platform.runLater(() -> {
-                            currentStage.setScene(scene);
-                        });
+                        ShowSchermataScacchiera(currentStage);
                         syncronizeToStart();
-        
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -367,7 +364,7 @@ public class UIManager{
 
     }
 
-    public void syncronizeToStart(Parent loader) {
+    public void syncronizeToStart() {
         
         Thread startReceiverThread = new Thread(new Runnable() {
             @Override
@@ -383,8 +380,7 @@ public class UIManager{
                 
                 if (otherStartAccept && yourStartAccept) {
                     matchStarted = true;
-                    Button startButton = (Button) loader.lookup("#StartButton");
-                    StartButton.setVisible(false);
+                    UIManager.currentStage.getScene().getRoot().lookup("#StartButton").setVisible(false);;
                     if (!game.getYourTurn()) {
                         handleOpponentMove();
                     }
@@ -526,13 +522,14 @@ public class UIManager{
     }
 
     public void ShowSchermataServer(ActionEvent event) {
-
         try {
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Server.fxml"));
             Parent root = loader.load();
 
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            UIManager.currentStage = currentStage;
+
             currentStage.setResizable(false);
         
             Scene scene = new Scene(root);
@@ -549,6 +546,7 @@ public class UIManager{
     public void ShowSchermataClient(Stage currentStage) {
 
         try {
+            UIManager.currentStage = currentStage;
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Client.fxml"));
             Parent root = loader.load();
@@ -576,7 +574,9 @@ public class UIManager{
             currentStage.setResizable(false);
         
             Scene scene = new Scene(root);
-            currentStage.setScene(scene);
+            Platform.runLater(() -> {
+                currentStage.setScene(scene);
+            });
 
             GestoreChiusura(currentStage);
 
