@@ -45,3 +45,25 @@
     -fx-effect: innershadow(three-pass-box, rgba(0, 0, 0, 0.6), 6, 0.2, 0, 1); 
 }
 
+#victory-root {
+    -fx-background-color: #000000; 
+}
+
+#defeat-root {
+    -fx-background-color: #2c2c2c; 
+}
+
+.title-label {
+    -fx-font-size: 72px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #333333; 
+    -fx-font-family: "Arial", sans-serif;
+}
+
+#defeat-root .title-label {
+    -fx-text-fill: #e63946; 
+}
+
+#victory-root .title-label {
+    -fx-text-fill: #1d3557; 
+}

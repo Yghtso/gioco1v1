@@ -10,6 +10,7 @@ public class Gioco1v1 extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+
         try {
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Iniziale.fxml"));
@@ -19,6 +20,7 @@ public class Gioco1v1 extends Application {
             primaryStage.setScene(Startscene);
             primaryStage.setResizable(false);
             primaryStage.setTitle("Scacchi");
+
             primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();
@@ -26,6 +28,7 @@ public class Gioco1v1 extends Application {
     }
 
     public static void main(String[] args) {
+
         launch(args);
     }
 }
