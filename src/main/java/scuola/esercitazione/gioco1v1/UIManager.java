@@ -247,6 +247,7 @@ public class UIManager{
     public void PlayButton(ActionEvent event) {
         Animazione();
     }
+    
     @FXML
     public void Animazione(){
 
