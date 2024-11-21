@@ -305,7 +305,7 @@ public class UIManager{
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Server.fxml"));
             Parent root = loader.load();
-            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             currentStage.setResizable(false);
             Scene scene = new Scene(root);
             currentStage.setScene(scene);
@@ -380,7 +380,8 @@ public class UIManager{
                 
                 if (otherStartAccept && yourStartAccept) {
                     matchStarted = true;
-                    UIManager.currentStage.getScene().getRoot().lookup("#StartButton").setVisible(false);;
+                    Button startButton= (Button) UIManager.currentStage.getScene().getRoot().lookup("#StartButton");
+                    startButton.setVisible(false);
                     if (!game.getYourTurn()) {
                         handleOpponentMove();
                     }
