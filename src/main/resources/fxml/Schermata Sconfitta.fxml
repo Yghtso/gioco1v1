@@ -5,7 +5,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="victory-root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="638.0" prefWidth="922.0" style="-fx-background-image: &quot; ..\imgs\SchermataScacchiNoScritta.jpg&quot;;" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="victory-root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="638.0" prefWidth="922.0" style="-fx-background-image: &quot; ..\imgs\SchermataScacchiNoScritta.jpg&quot;;" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="scuola.esercitazione.gioco1v1.UIManager">
    <children>
       <ImageView fitHeight="638.0" fitWidth="922.0" layoutY="77.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="42.375" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="77.0">
          <image>
@@ -18,6 +18,6 @@
          </image>
       </ImageView>
       <Button layoutX="350.0" layoutY="403.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="222.0" styleClass="chess-button" text="RIGIOCA" />
-      <Button layoutX="350.0" layoutY="521.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="222.0" styleClass="chess-button" text="TORNA AL MENU" />
+      <Button layoutX="350.0" layoutY="521.0" mnemonicParsing="false" onAction="#GoBack" prefHeight="75.0" prefWidth="222.0" styleClass="chess-button" text="TORNA AL MENU" />
    </children>
 </AnchorPane>
