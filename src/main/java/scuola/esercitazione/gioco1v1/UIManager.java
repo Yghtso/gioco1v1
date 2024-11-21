@@ -39,6 +39,9 @@ public class UIManager{
     static boolean otherStartAccept;
 
     static Stage currentStage;
+
+    static Timer TimerBianco;
+    static Timer TimerNero;
  
     //SchermataScacchiera
     @FXML
@@ -62,6 +65,11 @@ public class UIManager{
     Image whiteKnightImg = new Image(getClass().getResource("/imgs/Pieces/Cavallo.png").toExternalForm());
     Image whiteQueenImg = new Image(getClass().getResource("/imgs/Pieces/Regina.png").toExternalForm());
     Image whiteKingImg = new Image(getClass().getResource("/imgs/Pieces/Re.png").toExternalForm());
+
+    @FXML
+    private Label LabelTimerBianco;
+    @FXML
+    private Label LabelTimerNero;
 
     //ScermataIniziale
     @FXML
@@ -179,6 +187,8 @@ public class UIManager{
                     game.getBoard().applyMove(move);
                 
                     displayPieces();
+                    clientNetMng.send(move);
+                    handleOpponentMove(game.getPlayer());
                 }
             }
             game.setIsPieceSelected(false);
@@ -383,7 +393,7 @@ public class UIManager{
                     Button startButton= (Button) UIManager.currentStage.getScene().getRoot().lookup("#StartButton");
                     startButton.setVisible(false);
                     if (!game.getYourTurn()) {
-                        handleOpponentMove();
+                        handleOpponentMove(game.getPlayer());
                     }
                 }
             }
@@ -391,24 +401,31 @@ public class UIManager{
         startReceiverThread.start();
     }
 
-    public void handleOpponentMove() {
+    public void handleOpponentMove(Player player) {
 
         Thread mainLoopThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                if (!game.getYourTurn()) {
-                    Move move = clientNetMng.read();
+                
+                Move move = clientNetMng.read();
 
-                    if (move.getSurrender()) {
-                        // metti la schermata hai vinto
+                if (move.getSurrender()) {
+                    // metti la schermata hai vinto
                         
-                    } else {
-                        game.getBoard().applyMove(move);
-                        displayPieces();
+                } else {
+                    game.getBoard().applyMove(move);
+                    displayPieces();
+                    if(player== player.BLACK){
+                        TimerNero.startTimer();
+                        TimerBianco.stopTimer();
+                        game.changeTurn();
+                    }else{
+                        TimerBianco.startTimer();
+                        TimerNero.stopTimer();
                         game.changeTurn();
                     }
-
                 }
+                
             }
         });
     }
@@ -497,7 +514,9 @@ public class UIManager{
             matchStarted = true;
             StartButton.setVisible(false);
             if (!game.getYourTurn()) {
-                handleOpponentMove();
+                handleOpponentMove(game.getPlayer());
+            }else{
+                TimerBianco= new Timer(600,LabelTimerBianco);
             }
         }
     }
