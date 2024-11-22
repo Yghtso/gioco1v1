@@ -1,6 +1,5 @@
 package scuola.esercitazione.gioco1v1;
 
-
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -27,8 +26,8 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
-public class UIManager{
-    
+public class UIManager {
+
     static Game game;
     static ServerNetManager servNetMng;
     static ClientNetManager clientNetMng;
@@ -42,8 +41,8 @@ public class UIManager{
 
     static Timer TimerBianco;
     static Timer TimerNero;
- 
-    //SchermataScacchiera
+
+    // SchermataScacchiera
     @FXML
     private GridPane GridPaneScacchiera;
     @FXML
@@ -51,7 +50,7 @@ public class UIManager{
     @FXML
     private Button SurrenderButton;
 
-    //Immagini delle pedine della scacchiera
+    // Immagini delle pedine della scacchiera
     Image blackPawnImg = new Image(getClass().getResource("/imgs/Pieces/PedoneNero.png").toExternalForm());
     Image blackRookImg = new Image(getClass().getResource("/imgs/Pieces/TorreNero.png").toExternalForm());
     Image blackBishopImg = new Image(getClass().getResource("/imgs/Pieces/AlfiereNero.png").toExternalForm());
@@ -71,7 +70,7 @@ public class UIManager{
     @FXML
     private Label LabelTimerNero;
 
-    //ScermataIniziale
+    // ScermataIniziale
     @FXML
     private AnchorPane AnchorPaneIniziale;
     @FXML
@@ -85,7 +84,7 @@ public class UIManager{
     @FXML
     private Button ServerButton;
 
-    //SchermataServer
+    // SchermataServer
     @FXML
     private AnchorPane AnchorPaneServer;
     @FXML
@@ -95,7 +94,7 @@ public class UIManager{
     @FXML
     private Button ServerBackButton;
 
-    //SchermataClient
+    // SchermataClient
     @FXML
     private AnchorPane AnchorPaneClient;
     @FXML
@@ -107,15 +106,14 @@ public class UIManager{
     @FXML
     private Button SendButton;
 
-
-    
     // UI RELATIVA ALLA PARTE DEL GAMEPLAY
     @FXML
     public void clickedSquare(MouseEvent event) {
         Pane clickedSquare = (Pane) event.getSource();
 
         Integer row = GridPane.getRowIndex(clickedSquare) == null ? 8 : 8 - GridPane.getRowIndex(clickedSquare);
-        Integer column = GridPane.getColumnIndex(clickedSquare) == null ? 1 : GridPane.getColumnIndex(clickedSquare) + 1;
+        Integer column = GridPane.getColumnIndex(clickedSquare) == null ? 1
+                : GridPane.getColumnIndex(clickedSquare) + 1;
         Position pos = new Position(row.intValue(), column.intValue());
 
         Piece piece = game.getBoard().getPiece(pos);
@@ -135,16 +133,18 @@ public class UIManager{
 
             piece.calculateMoves();
             game.getChecker().checkMoves(piece.getValidMoves());
-            
+
             displayPieces();
 
             for (Move singlePieceMove : piece.getValidMoves()) {
                 Piece destPieceEachMove = game.getBoard().getPiece(singlePieceMove.getPosition());
                 Player destPieceOwnerSingleMove = destPieceEachMove == null ? null : destPieceEachMove.getOwner();
 
-                if (!((pieceOwner == Player.WHITE && destPieceOwnerSingleMove == Player.BLACK) || (pieceOwner == Player.BLACK && destPieceOwnerSingleMove == Player.WHITE))) {
+                if (!((pieceOwner == Player.WHITE && destPieceOwnerSingleMove == Player.BLACK)
+                        || (pieceOwner == Player.BLACK && destPieceOwnerSingleMove == Player.WHITE))) {
 
-                    Pane paneSquare = (Pane) getNodeByRowColumnIndex(8 - singlePieceMove.getPosition().getRow(), singlePieceMove.getPosition().getColumn() - 1, GridPaneScacchiera);
+                    Pane paneSquare = (Pane) getNodeByRowColumnIndex(8 - singlePieceMove.getPosition().getRow(),
+                            singlePieceMove.getPosition().getColumn() - 1, GridPaneScacchiera);
                     ImageView img = (ImageView) paneSquare.getChildren().getFirst();
                     img.setImage(new Image(getClass().getResource("/imgs/Cerchio.png").toExternalForm()));
                 }
@@ -152,23 +152,24 @@ public class UIManager{
             return;
         }
 
-        
         if (game.getIsPieceSelected() && clickedOwnedPiece && matchStarted) {
 
             displayPieces();
             game.setIsPieceSelected(true);
             game.setSelectedPiece(piece);
-            
+
             piece.calculateMoves();
             game.getChecker().checkMoves(piece.getValidMoves());
-            
+
             for (Move singlePieceMove : piece.getValidMoves()) {
 
                 Piece destPieceEachMove = game.getBoard().getPiece(singlePieceMove.getPosition());
                 Player destPieceOwnerSingleMove = destPieceEachMove == null ? null : destPieceEachMove.getOwner();
 
-                if (!((pieceOwner == Player.WHITE && destPieceOwnerSingleMove == Player.BLACK) || (pieceOwner == Player.BLACK && destPieceOwnerSingleMove == Player.WHITE))) {
-                    Pane paneSquare = (Pane) getNodeByRowColumnIndex(8 - singlePieceMove.getPosition().getRow(), singlePieceMove.getPosition().getColumn() - 1, GridPaneScacchiera);
+                if (!((pieceOwner == Player.WHITE && destPieceOwnerSingleMove == Player.BLACK)
+                        || (pieceOwner == Player.BLACK && destPieceOwnerSingleMove == Player.WHITE))) {
+                    Pane paneSquare = (Pane) getNodeByRowColumnIndex(8 - singlePieceMove.getPosition().getRow(),
+                            singlePieceMove.getPosition().getColumn() - 1, GridPaneScacchiera);
                     ImageView img = (ImageView) paneSquare.getChildren().getFirst();
                     img.setImage(new Image(getClass().getResource("/imgs/Cerchio.png").toExternalForm()));
                 }
@@ -186,9 +187,9 @@ public class UIManager{
 
             for (Move singleMove : game.getSelectedPiece().getValidMoves()) {
                 if (singleMove.equals(move)) {
-                    
+
                     game.getBoard().applyMove(move);
-                
+
                     displayPieces();
                     clientNetMng.send(move);
                     game.changeTurn();
@@ -215,7 +216,8 @@ public class UIManager{
         }
 
         for (Piece singlePiece : game.getBoard().getPieces()) {
-            Pane square = (Pane) getNodeByRowColumnIndex(8 - singlePiece.getPosition().getRow(), singlePiece.getPosition().getColumn() - 1, GridPaneScacchiera);
+            Pane square = (Pane) getNodeByRowColumnIndex(8 - singlePiece.getPosition().getRow(),
+                    singlePiece.getPosition().getColumn() - 1, GridPaneScacchiera);
             ImageView img = (ImageView) square.getChildren().getFirst();
             img.setImage(getImgByPiece(singlePiece));
         }
@@ -234,7 +236,8 @@ public class UIManager{
             return whiteQueenImg;
         } else if (piece instanceof King && piece.getOwner() == Player.WHITE) {
             return whiteKingImg;
-        } if (piece instanceof Pawn && piece.getOwner() == Player.BLACK) {
+        }
+        if (piece instanceof Pawn && piece.getOwner() == Player.BLACK) {
             return blackPawnImg;
         } else if (piece instanceof Rook && piece.getOwner() == Player.BLACK) {
             return blackRookImg;
@@ -255,8 +258,10 @@ public class UIManager{
             Integer nodeRow = GridPane.getRowIndex(node);
             Integer nodeColumn = GridPane.getColumnIndex(node);
 
-            if (nodeRow == null) nodeRow = 0;
-            if (nodeColumn == null) nodeColumn = 0;
+            if (nodeRow == null)
+                nodeRow = 0;
+            if (nodeColumn == null)
+                nodeColumn = 0;
 
             if (nodeRow == row && nodeColumn == column) {
                 return node;
@@ -270,29 +275,31 @@ public class UIManager{
     public void PlayButton(ActionEvent event) {
         Animazione();
     }
-    @FXML
-    public void Animazione(){
 
-        TranslateTransition AnimazioneLogo= new TranslateTransition(Duration.seconds(1), Logo);
+    @FXML
+    public void Animazione() {
+
+        TranslateTransition AnimazioneLogo = new TranslateTransition(Duration.seconds(1), Logo);
 
         double centerXLogo = (Logo.getScene().getWidth() - Logo.getFitWidth()) / 2;
-        double centerXButton = (Logo.getScene().getWidth() -PlayButton.getWidth()) / 2;
-        double centerYButton = (Logo.getScene().getHeight()-PlayButton.getHeight()) / 2;
+        double centerXButton = (Logo.getScene().getWidth() - PlayButton.getWidth()) / 2;
+        double centerYButton = (Logo.getScene().getHeight() - PlayButton.getHeight()) / 2;
 
         AnimazioneLogo.setToX(centerXLogo - Logo.getLayoutX());
         AnimazioneLogo.setToY(-(Logo.getLayoutY() - 50));
 
-        TranslateTransition AnimazioneBottone1= new TranslateTransition(Duration.seconds(1), PlayButton);
+        TranslateTransition AnimazioneBottone1 = new TranslateTransition(Duration.seconds(1), PlayButton);
 
-        AnimazioneBottone1.setToX(centerXButton - PlayButton.getLayoutX()- centerXButton/2);
-        AnimazioneBottone1.setToY((centerYButton) - PlayButton.getLayoutY()+150);
+        AnimazioneBottone1.setToX(centerXButton - PlayButton.getLayoutX() - centerXButton / 2);
+        AnimazioneBottone1.setToY((centerYButton) - PlayButton.getLayoutY() + 150);
 
-        TranslateTransition AnimazioneBottone2= new TranslateTransition(Duration.seconds(1),QuitButton);
+        TranslateTransition AnimazioneBottone2 = new TranslateTransition(Duration.seconds(1), QuitButton);
 
-        AnimazioneBottone2.setToX(centerXButton - PlayButton.getLayoutX()+ centerXButton/2);
+        AnimazioneBottone2.setToX(centerXButton - PlayButton.getLayoutX() + centerXButton / 2);
         AnimazioneBottone2.setToY(centerYButton - PlayButton.getLayoutY());
 
-        ParallelTransition parallelTransition = new ParallelTransition(AnimazioneLogo, AnimazioneBottone1, AnimazioneBottone2);
+        ParallelTransition parallelTransition = new ParallelTransition(AnimazioneLogo, AnimazioneBottone1,
+                AnimazioneBottone2);
 
         parallelTransition.play();
 
@@ -363,7 +370,9 @@ public class UIManager{
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                } else { clientNetMng = null; }
+                } else {
+                    clientNetMng = null;
+                }
             }
         });
 
@@ -382,18 +391,18 @@ public class UIManager{
     }
 
     public void syncronizeToStart() {
-        
+
         Thread startReceiverThread = new Thread(new Runnable() {
             @Override
             public void run() {
 
                 Move startMove;
 
-                do { 
+                do {
                     startMove = UIManager.clientNetMng.read();
                     otherStartAccept = startMove.getStartMatch();
                 } while (!startMove.getStartMatch());
-                
+
                 if (otherStartAccept && yourStartAccept) {
 
                     TimerBianco.start();
@@ -425,6 +434,10 @@ public class UIManager{
 
                     matchStarted = true;
                     Button startButton = (Button) UIManager.currentStage.getScene().getRoot().lookup("#StartButton");
+                    Button surrenderButton = (Button) UIManager.currentStage.getScene().getRoot()
+                            .lookup("#StartButton");
+                    startButton.setVisible(false);
+                    surrenderButton.setVisible(true);
                     startButton.setVisible(false);
                     if (!game.getYourTurn()) {
                         handleOpponentMove(game.getPlayer());
@@ -440,7 +453,7 @@ public class UIManager{
         Thread mainLoopTharead = new Thread(new Runnable() {
             @Override
             public void run() {
-                
+
                 Move move = clientNetMng.read();
 
                 if (move.getSurrender()) {
@@ -508,19 +521,19 @@ public class UIManager{
                         game.changeTurn();
                     }
                 }
-                
+
             }
         });
         mainLoopTharead.start();
     }
-    
+
     @FXML
     public void LeggiText(ActionEvent event) {
 
         String Testo = TextIp.getText();
         boolean Connesso = clientNetMng.connect(Testo);
 
-        if(Connesso) {
+        if (Connesso) {
             game = new Game(Player.WHITE);
 
             try {
@@ -528,7 +541,7 @@ public class UIManager{
                 Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
                 ShowSchermataScacchiera(currentStage);
-                
+
                 syncronizeToStart();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -553,7 +566,7 @@ public class UIManager{
         }
 
     }
-        
+
     private void GestoreChiusura(Stage stage) {
 
         stage.setOnCloseRequest((WindowEvent event) -> {
@@ -565,14 +578,20 @@ public class UIManager{
     }
 
     private boolean ChiudiConnessioni() {
-        
+
         boolean serverSocketClosed = false, clientSocketClosed = false;
 
-        if(servNetMng == null) {    serverSocketClosed = true;  }
-        else {  serverSocketClosed = servNetMng.close();    }
+        if (servNetMng == null) {
+            serverSocketClosed = true;
+        } else {
+            serverSocketClosed = servNetMng.close();
+        }
 
-        if(clientNetMng == null) {    clientSocketClosed = true;  } 
-        else {  clientSocketClosed = clientNetMng.close();    }
+        if (clientNetMng == null) {
+            clientSocketClosed = true;
+        } else {
+            clientSocketClosed = clientNetMng.close();
+        }
 
         return serverSocketClosed && clientSocketClosed;
     }
@@ -638,7 +657,7 @@ public class UIManager{
             Parent root = loader.load();
 
             currentStage.setResizable(false);
-        
+
             Scene scene = new Scene(root);
             currentStage.setScene(scene);
 
@@ -660,7 +679,7 @@ public class UIManager{
             UIManager.currentStage = currentStage;
 
             currentStage.setResizable(false);
-        
+
             Scene scene = new Scene(root);
             currentStage.setScene(scene);
 
@@ -681,7 +700,7 @@ public class UIManager{
             Parent root = loader.load();
 
             currentStage.setResizable(false);
-        
+
             Scene scene = new Scene(root);
             currentStage.setScene(scene);
 
@@ -703,7 +722,7 @@ public class UIManager{
             Parent root = loader.load();
 
             currentStage.setResizable(false);
-        
+
             Scene scene = new Scene(root);
             Platform.runLater(() -> {
                 currentStage.setScene(scene);
@@ -726,7 +745,7 @@ public class UIManager{
 
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             currentStage.setResizable(false);
-        
+
             Scene scene = new Scene(root);
             currentStage.setScene(scene);
 
@@ -746,7 +765,7 @@ public class UIManager{
             Parent root = loader.load();
 
             currentStage.setResizable(false);
-        
+
             Scene scene = new Scene(root);
             currentStage.setScene(scene);
 
@@ -767,7 +786,7 @@ public class UIManager{
 
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             currentStage.setResizable(false);
-        
+
             Scene scene = new Scene(root);
             currentStage.setScene(scene);
 
@@ -779,7 +798,4 @@ public class UIManager{
 
     }
 
-
 }
-
-
