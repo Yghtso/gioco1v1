@@ -228,21 +228,6 @@ public class ChessBoard {
     public void applyMove(Move move) {
         Position precPosition = move.getPiece().getPosition();
         this.pieces[precPosition.getRow() - 1][precPosition.getColumn() - 1] = null;
-        /* 
-        if (this.simulationMode && this.simulatedMove == null) {
-            move.getPiece().setPosition(move.getPosition().clone());
-            this.simulatedMove = move;
-
-        } else if (!this.simulationMode && this.simulatedMove != null) {
-            move.getPiece().moveTo(move.getPosition());
-
-        } else if (!this.simulationMode) {
-            move.getPiece().moveTo(move.getPosition());
-
-        } else if (this.simulationMode && this.simulatedMove != null) {
-            System.out.println("Error , the board is in simulation mode but youre trying to apply another move");
-            return;
-        } */
         move.getPiece().moveTo(move.getPosition());
         this.pieces[move.getPosition().getRow() - 1][move.getPosition().getColumn() - 1] = move.getPiece();
     }

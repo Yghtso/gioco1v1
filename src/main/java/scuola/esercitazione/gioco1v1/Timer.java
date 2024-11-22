@@ -22,9 +22,9 @@ public class Timer extends Thread {
     public void run() {
         while (seconds > 0 && running) {
             try {
-
                 Thread.sleep(1000);
                 seconds--;
+                
             } catch (InterruptedException e) {
                 break;
             }

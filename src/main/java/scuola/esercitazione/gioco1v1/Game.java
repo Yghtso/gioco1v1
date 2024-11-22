@@ -48,6 +48,7 @@ public class Game {
     }
 
     public void changeTurn() {
+        System.out.println("Cambiato il turno in : " + !this.yourTurn);
         this.yourTurn = !this.yourTurn;
     }
 }

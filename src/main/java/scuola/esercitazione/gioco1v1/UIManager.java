@@ -120,6 +120,9 @@ public class UIManager{
 
         Piece piece = game.getBoard().getPiece(pos);
         Player pieceOwner = piece == null ? null : piece.getOwner();
+        System.out.println("Piece owner : " + pieceOwner);
+        System.out.println("Game owner : " +game.getPlayer());
+
         boolean clickedOwnedPiece = pieceOwner == game.getPlayer();
 
         if (!game.getYourTurn()) {
@@ -188,6 +191,8 @@ public class UIManager{
                 
                     displayPieces();
                     clientNetMng.send(move);
+                    game.changeTurn();
+                    
                     handleOpponentMove(game.getPlayer());
                 }
             }
@@ -198,6 +203,8 @@ public class UIManager{
     }
 
     private void displayPieces() {
+
+        GridPane GridPaneScacchiera = (GridPane) UIManager.currentStage.getScene().getRoot().lookup("#GridPaneScacchiera");
 
         for (Node node : GridPaneScacchiera.getChildren()) {
             if (node instanceof Pane) {
@@ -385,10 +392,37 @@ public class UIManager{
                 do { 
                     startMove = UIManager.clientNetMng.read();
                     otherStartAccept = startMove.getStartMatch();
-
                 } while (!startMove.getStartMatch());
                 
                 if (otherStartAccept && yourStartAccept) {
+
+                    TimerBianco.start();
+                    TimerBianco.startTimer();
+                    Thread TimerThread = new Thread(new Runnable(){
+                        @Override
+                        public void run() {
+
+                        while(TimerBianco.getSecondsRemaining() >= 0){
+
+                            try {
+                                Thread.sleep(1000);
+                                Platform.runLater(() -> {
+                                    Label labelTimerBianco = (Label) UIManager.currentStage.getScene().getRoot().lookup("#LabelTimerBianco");
+                                    if(TimerBianco.getSecondsRemaining() < 10){
+                                        labelTimerBianco.setText(TimerBianco.getMinutesRemaining()+":0"+TimerBianco.getSecondsRemaining());
+                                    }
+                                    else {
+                                        labelTimerBianco.setText(TimerBianco.getMinutesRemaining()+":"+TimerBianco.getSecondsRemaining());
+                                    }
+                                });
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                }
+            }
+        });
+        TimerThread.start();
+
                     matchStarted = true;
                     Button startButton = (Button) UIManager.currentStage.getScene().getRoot().lookup("#StartButton");
                     startButton.setVisible(false);
@@ -403,31 +437,81 @@ public class UIManager{
 
     public void handleOpponentMove(Player player) {
 
-        Thread mainLoopThread = new Thread(new Runnable() {
+        Thread mainLoopTharead = new Thread(new Runnable() {
             @Override
             public void run() {
                 
                 Move move = clientNetMng.read();
 
                 if (move.getSurrender()) {
-                    // metti la schermata hai vinto
+
+                    ShowSchermataVittoria(currentStage);
                         
                 } else {
                     game.getBoard().applyMove(move);
                     displayPieces();
-                    if(player== player.BLACK){
+                    if(player == player.BLACK){
                         TimerNero.startTimer();
                         TimerBianco.stopTimer();
-                        game.changeTurn();
-                    }else{
+                        Thread TimerThread = new Thread(new Runnable(){
+                            @Override
+                            public void run(){
+            
+                            while(TimerNero.getSecondsRemaining()>= 0){
+            
+                                try {
+                                    Thread.sleep(1000);
+                                    Platform.runLater(() -> {
+                                        Label labelTimerNero = (Label) UIManager.currentStage.getScene().getRoot().lookup("#LabelTimerNero");
+                                        if(TimerBianco.getSecondsRemaining()<10){
+                                        labelTimerNero.setText(TimerNero.getMinutesRemaining()+":0"+TimerNero.getSecondsRemaining());
+                                        }
+                                        else{
+                                        labelTimerNero.setText(TimerNero.getMinutesRemaining()+":"+TimerNero.getSecondsRemaining());
+                                        }
+                                    });
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    });
+                    TimerThread.start();
+                    game.changeTurn();
+                    }else {
                         TimerBianco.startTimer();
                         TimerNero.stopTimer();
+                        Thread TimerThread = new Thread(new Runnable(){
+                            @Override
+                            public void run(){
+            
+                            while(TimerBianco.getSecondsRemaining() >= 0){
+            
+                                try {
+                                    Thread.sleep(1000);
+                                    Platform.runLater(() -> {
+                                        Label labelTimerBianco = (Label) UIManager.currentStage.getScene().getRoot().lookup("#LabelTimerBianco");
+                                        if(TimerBianco.getSecondsRemaining() < 10){
+                                        labelTimerBianco.setText(TimerBianco.getMinutesRemaining()+":0"+TimerBianco.getSecondsRemaining());
+                                        }
+                                        else{
+                                        labelTimerBianco.setText(TimerBianco.getMinutesRemaining()+":"+TimerBianco.getSecondsRemaining());
+                                        }
+                                    });
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                        });
+                        TimerThread.start();
                         game.changeTurn();
                     }
                 }
                 
             }
         });
+        mainLoopTharead.start();
     }
     
     @FXML
@@ -513,10 +597,35 @@ public class UIManager{
         if (otherStartAccept && yourStartAccept) {
             matchStarted = true;
             StartButton.setVisible(false);
+
+            TimerBianco.start();
+            TimerBianco.startTimer();
+            Thread TimerThread = new Thread(new Runnable(){
+                @Override
+                public void run(){
+
+                while(TimerBianco.getSecondsRemaining()>= 0){
+
+                    try {
+                        Thread.sleep(1000);
+                        Platform.runLater(() -> {
+                            Label labelTimerBianco = (Label) UIManager.currentStage.getScene().getRoot().lookup("#LabelTimerBianco");
+                            if(TimerBianco.getSecondsRemaining()<10){
+                            labelTimerBianco.setText(TimerBianco.getMinutesRemaining()+":0"+TimerBianco.getSecondsRemaining());
+                            }
+                            else{
+                            labelTimerBianco.setText(TimerBianco.getMinutesRemaining()+":"+TimerBianco.getSecondsRemaining());
+                            }
+                        });
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        TimerThread.start();
             if (!game.getYourTurn()) {
                 handleOpponentMove(game.getPlayer());
-            }else{
-                TimerBianco= new Timer(600,LabelTimerBianco);
             }
         }
     }
@@ -585,6 +694,8 @@ public class UIManager{
     }
 
     public void ShowSchermataScacchiera(Stage currentStage) {
+        TimerBianco = new Timer(600,LabelTimerBianco);
+        TimerNero = new Timer(600,LabelTimerBianco);
 
         try {
 
@@ -627,14 +738,13 @@ public class UIManager{
 
     }
 
-    public void ShowSchermataVittoria(ActionEvent event) {
+    public void ShowSchermataVittoria(Stage currentStage) {
 
         try {
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Schermata Vittoria.fxml"));
             Parent root = loader.load();
 
-            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             currentStage.setResizable(false);
         
             Scene scene = new Scene(root);
